@@ -1,0 +1,12 @@
+{
+  "slug": "skill-sudo-persist",
+  "title": "Maintenance Installer with Persistence",
+  "kind": "vulnerable",
+  "summary": "An installer skill whose helper requests root and installs a launchd agent plus a shell-profile hook that re-runs remote code.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": ["rogue-agent"],
+  "tags": ["persistence", "privilege-escalation", "launchd", "sudo"],
+  "added": "2026-09-12",
+  "notes": "The script refuses to install anything unless ALLOW_PERSIST=1, and the payload URLs are .invalid. The pattern — sudo, launchd, shell-profile hook, remote re-fetch — is what scanners should flag."
+}

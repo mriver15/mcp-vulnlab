@@ -21,6 +21,16 @@ Capabilities, all driven by profile fields rather than per-scanner Python:
     When set, the runner renders the template per challenge, writes it out, and
     substitutes the path for ``{config}`` in the argv.
 
+``message_join``
+    Build the normalized finding message by joining several source fields (e.g.
+    a summary plus the matched evidence snippet) instead of taking the first
+    non-empty candidate.
+
+``{env:VAR}``
+    A command may reference an environment variable pointing at a scanner
+    install that lives outside the repo (e.g. a cloned tool such as
+    repo-forensics). Resolved at render time; a missing variable is an error.
+
 ``text``
     One finding per matching line, using a named-group regex. The escape hatch
     for tools that refuse to emit structured output.
@@ -29,6 +39,7 @@ Capabilities, all driven by profile fields rather than per-scanner Python:
 from __future__ import annotations
 
 import json
+import os
 import re
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -66,6 +77,10 @@ DEFAULT_FIELD_MAP: dict[str, list[str]] = {
 #: Matches `{word}` only — so `{'findings': []}` and `{2,8}` are left alone.
 _BARE_PLACEHOLDER = re.compile(r"\{([a-z_][a-z0-9_]*)\}")
 
+#: Matches `{env:NAME}` — an environment variable whose value points at a scanner
+#: install that lives outside the repo (e.g. a cloned tool). Resolved at render time.
+_ENV_PLACEHOLDER = re.compile(r"\{env:([A-Za-z_][A-Za-z0-9_]*)\}")
+
 #: Placeholders that may appear in a command but are resolved later (or never).
 _DEFERRED_PLACEHOLDERS = frozenset({"config"})
 
@@ -102,6 +117,22 @@ def substitution_values(
     }
 
 
+def _substitute_env(part: str, scanner: str) -> str:
+    """Replace `{env:NAME}` with the environment variable's value."""
+
+    def _replace(match: re.Match[str]) -> str:
+        name = match.group(1)
+        value = os.environ.get(name)
+        if value is None:
+            raise AdapterError(
+                f"scanner {scanner!r}: environment variable {name!r} referenced in its "
+                "command is not set"
+            )
+        return value
+
+    return _ENV_PLACEHOLDER.sub(_replace, part)
+
+
 def _substitute_tree(node: Any, values: dict[str, str]) -> Any:
     """Recursively substitute placeholders inside a nested JSON-shaped template."""
     if isinstance(node, str):
@@ -135,6 +166,13 @@ class ScannerProfile:
     json_path: str = "$"
     sarif: bool = False
     field_map: dict[str, list[str]] = field(default_factory=lambda: dict(DEFAULT_FIELD_MAP))
+
+    #: Build the normalized `message` by joining these fields (in order) rather
+    #: than taking the first non-empty candidate from `field_map["message"]`.
+    #: Some scanners put the human-readable summary in one field and the matched
+    #: evidence in another (e.g. repo-forensics `description` + `snippet`); both
+    #: belong in the finding's matchable text.
+    message_join: list[str] | None = None
     regex: dict[str, Any] | None = None
 
     #: Explode a nested `{name: result}` mapping into one object per entry, merged
@@ -196,6 +234,7 @@ class ScannerProfile:
             for name in SUBSTITUTION_KEYS:
                 if name in values:
                     part = part.replace("{" + name + "}", values[name])
+            part = _substitute_env(part, self.name)
             unknown = sorted(set(_BARE_PLACEHOLDER.findall(part)) - known)
             if unknown:
                 raise AdapterError(
@@ -235,6 +274,7 @@ class ScannerProfile:
             json_path=raw.get("json_path", "$"),
             sarif=bool(raw.get("sarif", False)),
             field_map=field_map,
+            message_join=list(raw["message_join"]) if raw.get("message_join") else None,
             require=raw.get("require"),
             regex=raw.get("regex"),
             flatten_from=raw.get("flatten_from"),
@@ -406,7 +446,16 @@ def _finding_from_item(profile: ScannerProfile, slug: str, item: Any) -> Finding
         item = {"message": str(item)}
 
     values: dict[str, str | None] = {}
+    if profile.message_join:
+        parts: list[str] = []
+        for field_name in profile.message_join:
+            text = _as_text(_pluck(item, field_name))
+            if text:
+                parts.append(text)
+        values["message"] = " | ".join(parts) or None
     for name in NORMALIZED_FIELDS:
+        if values.get(name):
+            continue  # message already joined from multiple fields
         for candidate in profile.field_map.get(name, ()):
             text = _as_text(_pluck(item, candidate))
             if text:

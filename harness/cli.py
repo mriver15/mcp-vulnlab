@@ -20,11 +20,13 @@ from harness.adapters import AdapterError, ScannerProfile, load_profiles, select
 from harness.corpus import (
     build_index,
     discover_servers,
+    discover_skills,
     repo_root,
     validate_corpus,
+    validate_skills,
     write_index,
 )
-from harness.model import CATEGORIES, Scorecard
+from harness.model import MCP_CATEGORIES, Scorecard
 from harness.report import render_comparison, render_json, render_markdown, render_text
 from harness.runner import run_scanner, score_outcome, smoke, write_results
 
@@ -90,7 +92,7 @@ def _load_scorecards(paths: list[str]) -> list[Scorecard]:
 
 
 def cmd_validate(args: argparse.Namespace) -> int:
-    report = validate_corpus()
+    report = validate_skills() if args.skills else validate_corpus()
     print(report.render())
     if args.json:
         print(
@@ -123,9 +125,20 @@ def cmd_corpus(args: argparse.Namespace) -> int:
         print(f"{spec.slug:<24}{spec.kind:<12}{len(spec.labels):>7}  {categories}")
     print()
     print("labels by category")
-    for category in CATEGORIES:
+    for category in MCP_CATEGORIES:
         bucket = index["categories"].get(category, {"labels": 0, "servers": []})
         print(f"  {category:<24}{bucket['labels']:>3}  {', '.join(bucket['servers']) or '-'}")
+    return 0
+
+
+def cmd_skills(args: argparse.Namespace) -> int:
+    specs = discover_skills(strict=True)
+    print(f"{len(specs)} skills")
+    print()
+    print(f"{'slug':<28}{'kind':<12}{'labels':>7}  categories")
+    for spec in specs:
+        categories = ", ".join(spec.categories) or "-"
+        print(f"{spec.slug:<28}{spec.kind:<12}{len(spec.labels):>7}  {categories}")
     return 0
 
 
@@ -167,7 +180,7 @@ def cmd_smoke(args: argparse.Namespace) -> int:
 
 def cmd_run(args: argparse.Namespace) -> int:
     root = _root()
-    specs = discover_servers(strict=True)
+    specs = discover_skills(strict=True) if args.skills else discover_servers(strict=True)
     if args.server:
         wanted = set(args.server)
         specs = [spec for spec in specs if spec.slug in wanted]
@@ -178,6 +191,10 @@ def cmd_run(args: argparse.Namespace) -> int:
     profiles = _load_profiles(args.scanners)
     names = _resolve_names(args.scanner, profiles)
     out_root = Path(args.out) if args.out else root / DEFAULT_RESULTS_DIR
+    # Skills and MCP servers share scanner names, so skill runs always nest under
+    # a `skills/` subdirectory to avoid overwriting the MCP scorecards.
+    if args.skills:
+        out_root = out_root / "skills"
 
     exit_code = 0
     for name in names:
@@ -233,10 +250,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_validate = subparsers.add_parser("validate", help="validate every label and manifest")
     p_validate.add_argument("--json", action="store_true", help="also emit machine-readable output")
+    p_validate.add_argument("--skills", action="store_true", help="validate the agent-skill corpus")
     p_validate.set_defaults(func=cmd_validate)
 
-    p_corpus = subparsers.add_parser("corpus", help="print the corpus inventory")
+    p_corpus = subparsers.add_parser("corpus", help="print the MCP-server corpus inventory")
     p_corpus.set_defaults(func=cmd_corpus)
+
+    p_skills = subparsers.add_parser("skills", help="print the agent-skill corpus inventory")
+    p_skills.set_defaults(func=cmd_skills)
 
     p_index = subparsers.add_parser("index", help="regenerate corpus/labels/index.json")
     p_index.add_argument("--out", help="destination path (default: corpus/labels/index.json)")
@@ -256,6 +277,9 @@ def build_parser() -> argparse.ArgumentParser:
         "Default: all.",
     )
     p_run.add_argument("--server", action="append", help="limit to these slugs; repeatable")
+    p_run.add_argument(
+        "--skills", action="store_true", help="score the agent-skill corpus instead of MCP servers"
+    )
     p_run.add_argument("--scanners", help=f"profiles file (default: {DEFAULT_SCANNERS_FILE})")
     p_run.add_argument("--out", help=f"output directory (default: {DEFAULT_RESULTS_DIR}/<scanner>)")
     p_run.add_argument(

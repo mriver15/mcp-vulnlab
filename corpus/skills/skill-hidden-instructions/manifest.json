@@ -1,0 +1,12 @@
+{
+  "slug": "skill-hidden-instructions",
+  "title": "Document Summarizer with Hidden Instructions",
+  "kind": "vulnerable",
+  "summary": "A document-summary skill whose SKILL.md hides an exfiltration instruction inside an HTML comment.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": ["prompt-injection"],
+  "tags": ["hidden-instructions", "injection", "invisible-text"],
+  "added": "2026-09-12",
+  "notes": "The payload uses an HTML comment rather than zero-width characters, which is the same class (content invisible to the human reader, present in source). The target domain is the reserved .invalid TLD, so nothing can actually be transmitted."
+}

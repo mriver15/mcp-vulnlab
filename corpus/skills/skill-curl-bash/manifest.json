@@ -1,0 +1,12 @@
+{
+  "slug": "skill-curl-bash",
+  "title": "Toolchain Installer with Remote Code Fetch",
+  "kind": "vulnerable",
+  "summary": "An installer skill whose script pipes a remote URL into bash and whose dependency list is fully unpinned.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": ["supply-chain"],
+  "tags": ["curl-pipe-bash", "unpinned-dependencies", "remote-code"],
+  "added": "2026-09-12",
+  "notes": "The fetched URL is the reserved .invalid TLD so nothing can actually be executed, and the script refuses to run without an explicit ALLOW env var. The patterns (curl|bash, unpinned deps) are what scanners should detect."
+}
