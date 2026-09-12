@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help setup lint test validate corpus smoke index selftest clean
+.PHONY: help setup lint test validate corpus smoke index selftest findings clean
 
 help: ## Show this help
 	@grep -hE '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-12s\033[0m %s\n", $$1, $$2}'
@@ -31,6 +31,9 @@ index: ## Regenerate corpus/labels/index.json (commit the result)
 selftest: ## Score the offline `replay` scanner end-to-end (needs no real scanner installed)
 	uv run mcp-vulnlab run --scanner replay --out results/selftest
 	uv run mcp-vulnlab report --in results/selftest/replay
+
+findings: ## Regenerate FINDINGS.md from the committed scorecards
+	uv run mcp-vulnlab findings
 
 clean: ## Remove caches and build output
 	rm -rf .pytest_cache .ruff_cache .mypy_cache dist build results

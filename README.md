@@ -12,19 +12,20 @@ Eleven deliberately vulnerable MCP servers, 14 labeled exploitable weaknesses
 across 8 threat categories, 3 benign controls for false-positive measurement, and
 a harness that points any MCP scanner at the corpus and produces a
 detection-rate scorecard. A parallel **skills corpus** does the same for agent
-skills — 9 vulnerable skills, 9 labels across 8 categories, and a harness that
+skills — 9 vulnerable skills, 9 labels across 7 categories, and a harness that
 scores skill scanners.
 
 ---
 
 ## Summary
 
-Seven scanners were measured against the corpus. The best recall is
-`cisco-mcp-scanner` at **85.7%** (12/14 labels); the best precision is
-`mcp-armor` at **50.0%** recall with a 58.8% false-positive rate, and it is the
-only one to catch both prompt-injection labels with a local, offline model.
-Snyk's scanner could not be automated headlessly, and the rest of the field is
-either static/adjacent or a different tier (proxy firewalls, hosted gateways).
+Seven scanners were run against the corpus (one could not be automated). The
+best recall is `cisco-mcp-scanner` at **85.7%** (12/14 labels); the best
+precision is `mcp-armor` at **50.0%** recall with a 58.8% false-positive rate,
+and it is the only one to catch both prompt-injection labels with a local,
+offline model. Snyk's scanner could not be automated headlessly, and the rest
+of the field is either static/adjacent or a different tier (proxy firewalls,
+hosted gateways).
 
 | scanner | recall | detected | false-positive rate |
 |---|---:|---:|---:|
@@ -37,10 +38,10 @@ either static/adjacent or a different tier (proxy firewalls, hosted gateways).
 | `snyk-agent-scan` 0.6.3 | *not run* | — | — |
 
 The headline finding: **`MCPV-004` — a path-traversal defence explicitly
-disabled, not absent — is missed by every scanner that ran.** Full breakdown,
-per-category recall, caveats, and reproduction commands:
-**[docs/scorecard.md](docs/scorecard.md)**. The raw scanner output behind these
-numbers is committed under [`results/`](results/).
+disabled, not absent — is missed by every scanner that ran.** The canonical,
+generated report is **[FINDINGS.md](FINDINGS.md)** (rebuild with `make
+findings`); how to read the numbers is in **[docs/methodology.md](docs/methodology.md)**.
+The raw scanner output behind the numbers is committed under [`results/`](results/).
 
 ---
 
@@ -71,18 +72,19 @@ Honest accounting of what is and is not done:
 
 | | State |
 |---|---|
-| Corpus — 11 servers, 14 labels, 8 categories, 3 controls · 9 skills, 9 labels, 8 categories | ✅ complete, schema-validated in CI |
+| Corpus — 11 servers, 14 labels, 8 categories, 3 controls · 9 skills, 9 labels, 7 categories | ✅ complete, schema-validated in CI |
 | Harness — runner, adapters, scorer, reporter, CLI | ✅ complete, 116 tests |
 | Corpus liveness — every server boots and exposes what its labels claim | ✅ enforced by CI |
 | Scorecard reproducibility — identical output across runs | ✅ enforced by CI |
-| **Real scanner runs (6 scanners)** | ✅ **done — see [docs/scorecard.md](docs/scorecard.md)** |
+| **Real scanner runs — 7 scanners across 2 corpora** | ✅ **done — see [FINDINGS.md](FINDINGS.md)** |
 
-The first real measurement is in: **Cisco 83% recall, mcp-armor 50%, NVIDIA
-SkillSpector 25%, agent-audit 8%, mcp-shield 0% (keyless), Snyk not automatable
-headlessly** — and `MCPV-004`, the one label where a security control is
-*deliberately disabled* rather than absent, is missed by every scanner that ran.
-Full numbers and the caveats they require are in
-[docs/scorecard.md](docs/scorecard.md).
+The first real measurement is in: **Cisco 85.7% recall, mcp-armor 50%, NVIDIA
+SkillSpector 28.6% (MCP) / 100% (skills), agent-audit 7.1%, repo-forensics 77.8%
+(skills), mcp-shield 0% (keyless), Snyk not automatable headlessly** — and
+`MCPV-004`, the one label where a security control is *deliberately disabled*
+rather than absent, is missed by every scanner that ran. Full numbers are in
+[FINDINGS.md](FINDINGS.md); the caveats they require are in
+[docs/methodology.md](docs/methodology.md).
 
 ## The corpus
 
@@ -108,7 +110,7 @@ correctly-built code, and the scorecard will say so.
 ## The skills corpus
 
 The same idea, applied to **agent skills** — the `SKILL.md` folders agents load
-and follow with implicit trust. Nine deliberately vulnerable skills across eight
+and follow with implicit trust. Nine deliberately vulnerable skills across seven
 categories, plus one benign control:
 
 | Skill | Category | The weakness |
@@ -123,7 +125,7 @@ categories, plus one benign control:
 | `skill-memory-poisoning` | memory-poisoning | Instructions plant a persistent directive in agent memory |
 | `control-skill` | — | Benign false-positive control |
 
-Research, taxonomy, and sources: **[docs/skills-vulnerabilities.md](docs/skills-vulnerabilities.md)**.
+Research, taxonomy, and sources: **[docs/research/skills.md](docs/research/skills.md)**.
 Inventory and conventions: **[corpus/skills/README.md](corpus/skills/README.md)**.
 
 Score a skill scanner the same way, with `--skills`:
@@ -138,7 +140,7 @@ mcp-vulnlab run --scanner agent-audit --skills --out results      # -> results/s
 First result: SkillSpector recalls **9/9 skill labels (100%)**; `repo-forensics`
 recalls **7/9** (misses only unpinned deps and unbounded agency); `agent-audit`
 — a generic agent-code analyzer, not a skill scanner — finds just **1/9**. See
-the skills scorecard in [docs/scorecard.md](docs/scorecard.md).
+the generated [FINDINGS.md](FINDINGS.md).
 
 ## Quickstart
 
@@ -215,9 +217,10 @@ corpus and inflate recall — `corpus/labels/README.md` calls this out as a rule
 
 ## Scorecard
 
-The headline table is in the [Summary](#summary) above; the full per-category
-breakdown, the caveats these numbers require, and the reproduction commands are
-in **[docs/scorecard.md](docs/scorecard.md)**.
+The headline table is in the [Summary](#summary) above; the canonical generated
+report, per-category breakdown, and the missed-by-everyone labels are in
+**[FINDINGS.md](FINDINGS.md)** (`make findings`), and the caveats these numbers
+require are in **[docs/methodology.md](docs/methodology.md)**.
 
 The headline finding: **`MCPV-004` — a path-traversal defence explicitly
 disabled, not absent — is missed by every scanner that ran.** Its mirror image is
@@ -228,7 +231,7 @@ disabled validation; tools tuned to check protocol conformance miss semantic
 weaknesses. No scanner in this measurement does both.
 
 These numbers are honest but not the last word, for reasons spelled out in
-[docs/scorecard.md](docs/scorecard.md): SkillSpector was run static-only and
+[docs/methodology.md](docs/methodology.md): SkillSpector was run static-only and
 scans agent skills rather than MCP servers; `agent-audit` is a generic agent-code
 analyzer; Cisco's FP rate is largely its "missing defence" readiness taxonomy;
 `mcp-shield` emits a "Verified" checklist rather than findings without an API

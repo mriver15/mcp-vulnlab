@@ -259,6 +259,39 @@ def test_cli_report_comparison_across_directories(
     assert "## Headline" in capsys.readouterr().out
 
 
+# --------------------------------------------------------------------------- #
+# Findings — the canonical, generated report
+# --------------------------------------------------------------------------- #
+
+
+def test_findings_renders_deterministically_from_committed_scorecards(root: Path) -> None:
+    from harness.findings import render_findings
+
+    first = render_findings(root)
+    second = render_findings(root)
+    assert first == second, "FINDINGS.md must be reproducible (no wall-clock in it)"
+    assert first.startswith("# MCP VulnLab — Findings")
+    assert "cisco-mcp-scanner" in first
+    assert "MCPV-004" in first, "the disabled-control label belongs in the findings"
+
+
+def test_findings_exclude_self_test_scanners(root: Path) -> None:
+    from harness.findings import render_findings
+
+    rendered = render_findings(root)
+    assert "`replay`" not in rendered
+    assert "text-only-example" not in rendered
+
+
+def test_cli_findings_writes_the_file(
+    root: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    target = tmp_path / "FINDINGS.md"
+    assert main(["findings", "--out", str(target)]) == 0
+    assert target.read_text(encoding="utf-8").startswith("# MCP VulnLab — Findings")
+    assert "wrote" in capsys.readouterr().out
+
+
 def test_cli_rejects_an_unknown_scanner(root: Path, capsys: pytest.CaptureFixture[str]) -> None:
     assert main(["run", "--scanner", "no-such-scanner"]) == 2
     assert "unknown scanner" in capsys.readouterr().err

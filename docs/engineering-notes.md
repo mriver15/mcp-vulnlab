@@ -1,4 +1,4 @@
-# Findings log
+# Engineering notes
 
 Running notes from building the corpus and harness. Each entry is tagged by how
 much it is worth:
@@ -7,9 +7,10 @@ much it is worth:
 - **[observed]** — seen while working, not yet isolated
 - **[hypothesis]** — a design assumption that still needs a real scanner run
 
-This file is the seed of the project postmortem. When real scanner runs happen,
-their results belong here too — including, especially, the ones that contradict
-an assumption below.
+This is the build log: discoveries about the SDK and the scanners while the
+corpus was assembled. The *measured* results — recall, false-positive rates,
+and what they mean — live in the generated [`FINDINGS.md`](../FINDINGS.md).
+Keep the two separate: this file records process, `FINDINGS.md` records numbers.
 
 ---
 
@@ -121,20 +122,8 @@ numbers look good has no value.
 
 `uv tool install snyk-agent-scan` gives a working binary, but it fails every
 automated run: it emits **no stdout**, writes only debug logs to stderr, and
-exi~~Does any scanner flag a *disabled* control (`MCPV-004`, `MCPV-011`) as opposed
-   to an absent one?~~ **Answered: no.** Both scanners that ran missed `MCPV-004`.
-2. Do scanners distinguish `MCPV-009` (unauthenticated read, high) from
-   `MCPV-010` (ungated destructive delete, critical), or do they emit one generic
-   "missing auth" finding per server? Cisco detected both; SkillSpector detected
-   one — the granularity question is still open.
-3. Does anyone detect `MCPV-012` (floating dependency manifest), which is not
-   attributable to a tool at all? SkillSpector did; Cisco did not.
-4. How much does the prompt-injection category — the one with the least
-   deterministic detection story — drag down every scanner's average? Partially
-   answered for static-only runs; still open for full-capability runs.
-5. Can `snyk-agent-scan` be made to emit machine-readable output at all
-   (a Snyk account, a newer version, or a different invocation)ep is
-   cloud-side and fails silently without it.
+exits 1. The analysis itself is cloud-side, so without a usable account/network
+path the CLI fails silently.
 
 The harness records this as `not run` — which is the honest outcome and the one
 the scoring design guarantees. A scanner that cannot be automated is a finding
@@ -170,8 +159,9 @@ matches no label is a false positive) yields a 75% FP rate.
 That is a definitional mismatch, not a scanner bug: Cisco's notion of a finding
 ("a hardening step was not taken") is broader than the corpus's notion of a
 label ("an exploitable weakness exists"). The fair comparison is the per-category
-recall table in `docs/scorecard.md`; the FP rate still deserves reporting because
-it measures exactly the triage cost a security team pays for the extra coverage.
+recall table in [`docs/methodology.md`](methodology.md); the FP rate still
+deserves reporting because it measures exactly the triage cost a security team
+pays for the extra coverage.
 
 ## F11 — The disabled control is invisible to every scanner that ran **[verified]**
 
@@ -179,7 +169,27 @@ it measures exactly the triage cost a security team pays for the extra coverage.
 `ResourceSecurity(exempt_params={"path"})` — was missed by both scanners that
 ran. It is the single strongest result from the first measurement, and it
 confirms F2: tools tuned to detect *missing* validation do not detect *disabled*
-validation. See `docs/scorecard.md`.
+validation. See [`docs/methodology.md`](methodology.md) and
+[`FINDINGS.md`](../FINDINGS.md).
+
+## Open questions
+
+Unanswered at the time of the first measurement; some are now answered by the
+generated [`FINDINGS.md`](../FINDINGS.md):
+
+1. ~~Does any scanner flag a *disabled* control (`MCPV-004`, `MCPV-011`)?~~
+   **Answered: no** — it is still the only label missed by every scanner.
+2. Do scanners distinguish `MCPV-009` (unauthenticated read, high) from
+   `MCPV-010` (ungated destructive delete, critical), or do they emit one generic
+   "missing auth" finding per server? Cisco detected both; SkillSpector detected
+   one — the granularity question is still open.
+3. Does anyone detect `MCPV-012` (floating dependency manifest), which is not
+   attributable to a tool at all? SkillSpector did; Cisco did not.
+4. How much does the prompt-injection category — the one with the least
+   deterministic detection story — drag down every scanner's average? Partially
+   answered for static-only runs; still open for full-capability runs.
+5. Can `snyk-agent-scan` be made to emit machine-readable output at all (a Snyk
+   account, a newer version, or a different invocation)?
 
 ## F12 — mcp-armor catches prompt injection with a local model, at the best precision **[verified]**
 

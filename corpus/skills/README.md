@@ -8,7 +8,7 @@ The agent-skill counterpart of `corpus/servers/`. Where the server corpus models
 MCP weaknesses, this one models the attack surface of **agent skills** — the
 `SKILL.md` folders agents load and follow with implicit trust. Research,
 taxonomy, and sources are in
-[`docs/skills-vulnerabilities.md`](../../docs/skills-vulnerabilities.md).
+[`docs/research/skills.md`](../../docs/research/skills.md).
 
 ## What a skill challenge is
 
@@ -39,7 +39,7 @@ corpus/skills/<slug>/
 | `skill-memory-poisoning` | memory-poisoning | 1 | Instructions plant a persistent directive in agent memory |
 | `control-skill` | — | 0 | Benign false-positive control |
 
-**9 skills, 9 labels across 8 categories, 1 control.** Label ids use the `SKLV-`
+**9 skills, 9 labels across 7 categories, 1 control.** Label ids use the `SKLV-`
 prefix to stay distinct from the `MCPV-` server labels in the scorecard.
 
 ## Safety rules

@@ -49,6 +49,12 @@ jobs:
           diff -u corpus/labels/index.json "$RUNNER_TEMP/index.json"
           echo "::notice::corpus/labels/index.json is up to date"
 
+      - name: Committed findings are current
+        run: |
+          uv run mcp-vulnlab findings --out "$RUNNER_TEMP/FINDINGS.md"
+          diff -u FINDINGS.md "$RUNNER_TEMP/FINDINGS.md"
+          echo "::notice::FINDINGS.md is up to date"
+
   test:
     name: Test (Python ${{ matrix.python }})
     runs-on: ubuntu-latest

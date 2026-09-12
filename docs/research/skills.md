@@ -151,7 +151,7 @@ unmatched) — the same high-recall/low-precision profile it showed against the 
 corpus, and for the same reason: it also scans the corpus's own `README.md` and
 `exploits.json` ground-truth files. `repo-forensics` caught all three added
 skills, including a clean tool-name hit on the Python env exfil via its dataflow
-scanner. Full scorecards in [`results/skills/`](../results/skills/).
+scanner. Full scorecards in [`results/skills/`](../../results/skills/).
 
 ## Sources
 
