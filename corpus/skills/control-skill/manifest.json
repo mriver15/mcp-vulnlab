@@ -1,0 +1,12 @@
+{
+  "slug": "control-skill",
+  "title": "Benign Markdown Formatter",
+  "kind": "control",
+  "summary": "A false-positive control: a normal formatting skill that asks for confirmation before writing and grants no unusual authority.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": [],
+  "tags": ["false-positive-control", "benign"],
+  "added": "2026-09-12",
+  "notes": "A scanner that flags every skill with instructions, or every skill that mentions files, will fire here. The skill asks for confirmation before writing — a scanner should read that before calling it risky."
+}

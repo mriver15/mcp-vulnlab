@@ -1,0 +1,288 @@
+{
+  "target": "/Users/river/Projects/mcp-vulnlab/corpus/skills/control-skill",
+  "mode": "skill",
+  "scanner_count": 17,
+  "scanners": [
+    {
+      "name": "agent_skills",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 1,
+      "findings": [
+        {
+          "scanner": "agent_skills",
+          "severity": "medium",
+          "title": "Missing skill author in frontmatter (unattributed skill)",
+          "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+          "file": "SKILL.md",
+          "line": 1,
+          "snippet": "name: control-skill\ndescription: Formats markdown documents consistently. Use when the user wants text cleaned up or for",
+          "category": "frontmatter",
+          "rule_id": "",
+          "confidence": 0.6,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "7c75f9dd8169",
+          "needs_adjudication": true
+        }
+      ]
+    },
+    {
+      "name": "archive",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "bytecode",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dataflow",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dead_anchors",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "devcontainer",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "lifecycle",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "manifest_drift",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "mcp_security",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "oversize",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "provenance",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "runtime_dynamism",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "sast",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "secrets",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "skill_threats",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "splitstream",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "yara",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": [],
+      "stderr": "[!] scan_yara: yara-python not found; signature scan skipped (install yara-python to enable)"
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 0,
+    "total": 1
+  },
+  "verdicts": {
+    "block": 0,
+    "warn": 1,
+    "info": 0,
+    "suppressed": 0
+  },
+  "exit_code": 1,
+  "findings": [
+    {
+      "scanner": "agent_skills",
+      "severity": "medium",
+      "title": "Missing skill author in frontmatter (unattributed skill)",
+      "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+      "file": "SKILL.md",
+      "line": 1,
+      "snippet": "name: control-skill\ndescription: Formats markdown documents consistently. Use when the user wants text cleaned up or for",
+      "category": "frontmatter",
+      "rule_id": "",
+      "confidence": 0.6,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "7c75f9dd8169",
+      "needs_adjudication": true
+    }
+  ],
+  "suppressed": [],
+  "coverage_status": {
+    "overall": "COMPLETE",
+    "per_scanner": {
+      "agent_skills": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "archive": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "bytecode": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dataflow": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dead_anchors": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "devcontainer": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "lifecycle": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "manifest_drift": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "mcp_security": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "oversize": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "provenance": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "runtime_dynamism": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "sast": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "secrets": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "skill_threats": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "splitstream": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "yara": {
+        "status": "COMPLETE",
+        "reasons": []
+      }
+    },
+    "gaps": []
+  },
+  "core_verdict": {
+    "tier": "warn",
+    "exit_code": 1,
+    "block": 0,
+    "warn": 1,
+    "info": 0,
+    "suppressed": 0,
+    "total": 1
+  },
+  "enrichment_status": {
+    "overall": "DEGRADED",
+    "vulns": "complete",
+    "rulepack_feed": "ok",
+    "dead_anchors": "complete",
+    "adjudication": "pending",
+    "adjudication_annotations": [],
+    "capability_gaps": [
+      {
+        "scanner": "yara",
+        "reason": "missing-tool",
+        "category": "capability"
+      }
+    ]
+  },
+  "capability_ledger": {
+    "declared": false,
+    "source": "",
+    "capabilities": [],
+    "annotations": [],
+    "error": null
+  }
+}

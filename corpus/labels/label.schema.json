@@ -21,8 +21,8 @@
   "properties": {
     "id": {
       "type": "string",
-      "pattern": "^MCPV-[0-9]{3}$",
-      "description": "Stable label id. Never reused, never renumbered, even if the challenge changes."
+      "pattern": "^(MCPV|SKLV)-[0-9]{3}$",
+      "description": "Stable label id. Never reused, never renumbered, even if the challenge changes. MCPV- prefix labels MCP-server challenges; SKLV- labels agent-skill challenges."
     },
     "slug": {
       "type": "string",
@@ -43,7 +43,9 @@
         "overbroad-tool-schema",
         "missing-auth",
         "pii-disclosure",
-        "supply-chain"
+        "supply-chain",
+        "rogue-agent",
+        "excessive-agency"
       ]
     },
     "severity": {

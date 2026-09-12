@@ -1,0 +1,61 @@
+{
+  "version": "0.19.2",
+  "scan_timestamp": "2026-09-12T15:45:46.212217",
+  "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-sudo-persist",
+  "scanned_files": 1,
+  "summary": {
+    "total": 1,
+    "actionable": 1,
+    "suppressed": 0,
+    "by_severity": {
+      "high": 1
+    },
+    "by_category": {
+      "identity_privilege_abuse": 1
+    },
+    "by_tier": {
+      "BLOCK": 0,
+      "WARN": 1,
+      "INFO": 0,
+      "SUPPRESSED": 0
+    },
+    "risk_score": 1.4,
+    "risk_label": "LOW"
+  },
+  "findings": [
+    {
+      "rule_id": "AGENT-043",
+      "title": "Daemon Privilege Escalation",
+      "description": "Agent registers as system daemon/service, gaining persistent elevated privileges. Daemon processes often run with elevated permissions and can survive user logout.",
+      "severity": "high",
+      "category": "identity_privilege_abuse",
+      "location": {
+        "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-sudo-persist/scripts/setup.sh",
+        "start_line": 30,
+        "end_line": 30,
+        "start_column": null,
+        "end_column": null,
+        "snippet": "launchctl load \"$PLIST\" 2>/dev/null"
+      },
+      "confidence": 0.8,
+      "tier": "WARN",
+      "suppressed": false,
+      "suppressed_reason": null,
+      "suppressed_by": null,
+      "needs_review": false,
+      "cwe_id": "CWE-250",
+      "owasp_id": "ASI-03",
+      "asi_categories": [
+        "ASI-03"
+      ],
+      "remediation": {
+        "description": "Run agents with minimal required privileges using dedicated service accounts. Implement proper privilege separation.",
+        "code_example": null,
+        "reference_url": null
+      },
+      "metadata": {},
+      "detected_at": "2026-09-12T15:45:46.208458",
+      "reason": "Agent registers as system daemon/service, gaining persistent elevated privileges. Daemon processes often run with elevated permissions and can survive user logout."
+    }
+  ]
+}

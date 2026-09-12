@@ -54,7 +54,9 @@
           "overbroad-tool-schema",
           "missing-auth",
           "pii-disclosure",
-          "supply-chain"
+          "supply-chain",
+          "rogue-agent",
+          "excessive-agency"
         ]
       },
       "description": "Convenience mirror of the categories present in exploits.json. Must agree with it — validation cross-checks this."

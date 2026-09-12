@@ -265,7 +265,13 @@ def test_parse_output_rejects_unknown_modes() -> None:
 def test_shipped_profiles_load(root) -> None:
     profiles = load_profiles(root / "scanners.yaml")
     names = {p.name for p in profiles}
-    assert {"replay", "skillspector", "snyk-agent-scan", "cisco-mcp-scanner"} <= names
+    assert {
+        "replay",
+        "skillspector",
+        "snyk-agent-scan",
+        "cisco-mcp-scanner",
+        "repo-forensics",
+    } <= names
 
 
 def test_shipped_profiles_all_have_an_executable(root) -> None:
@@ -428,3 +434,88 @@ def test_shipped_conformance_profile_requires_failed_checks(root) -> None:
     profiles = load_profiles(root / "scanners.yaml")
     conformance = select_profile(profiles, "mcp-security-scanner")
     assert conformance.require == {"field": "passed", "equals": False}
+
+
+# --------------------------------------------------------------------------- #
+# env placeholders — scanners installed outside the repo (repo-forensics)
+# --------------------------------------------------------------------------- #
+
+
+def test_render_command_substitutes_env_placeholders(monkeypatch: pytest.MonkeyPatch) -> None:
+    from pathlib import Path
+
+    monkeypatch.setenv("REPO_FORENSICS_HOME", "/tools/repo-forensics")
+    cloned = profile(command=["bash", "{env:REPO_FORENSICS_HOME}/run.sh", "{server_dir}"])
+    rendered = cloned.render_command(
+        server_dir=Path("/corpus/x"), entrypoint=Path("/corpus/x/SKILL.md"), slug="x", python="py"
+    )
+    assert rendered == ["bash", "/tools/repo-forensics/run.sh", "/corpus/x"]
+
+
+def test_render_command_reports_missing_env_placeholder(monkeypatch: pytest.MonkeyPatch) -> None:
+    from pathlib import Path
+
+    monkeypatch.delenv("REPO_FORENSICS_HOME", raising=False)
+    cloned = profile(command=["bash", "{env:REPO_FORENSICS_HOME}/run.sh", "{server_dir}"])
+    with pytest.raises(AdapterError, match="REPO_FORENSICS_HOME"):
+        cloned.render_command(
+            server_dir=Path("/corpus/x"),
+            entrypoint=Path("/corpus/x/SKILL.md"),
+            slug="x",
+            python="py",
+        )
+
+
+def test_shipped_repo_forensics_profile_uses_env_placeholder(root) -> None:
+    profiles = load_profiles(root / "scanners.yaml")
+    repo_forensics = select_profile(profiles, "repo-forensics")
+    assert any("{env:REPO_FORENSICS_HOME}" in part for part in repo_forensics.command)
+
+
+# --------------------------------------------------------------------------- #
+# message_join — concatenate several source fields into the message
+# --------------------------------------------------------------------------- #
+
+
+def test_message_join_concatenates_description_and_snippet() -> None:
+    joined = profile(
+        json_path="$.findings",
+        message_join=["description", "snippet"],
+        field_map={"message": ["title"], "rule_id": ["scanner"], "tool": ["file"]},
+    )
+    document = json.dumps(
+        {
+            "findings": [
+                {
+                    "scanner": "skill_threats",
+                    "description": "Matched in prompt-injection scan",
+                    "snippet": "ignore all previous instructions",
+                    "title": "Instruction override directive",
+                    "file": "SKILL.md",
+                }
+            ]
+        }
+    )
+    findings = parse_json(joined, "demo", document)
+    assert len(findings) == 1
+    assert (
+        findings[0].message == "Matched in prompt-injection scan | ignore all previous instructions"
+    )
+    assert findings[0].rule_id == "skill_threats"
+    assert findings[0].tool == "SKILL.md"
+
+
+def test_message_join_falls_back_to_field_map_when_join_fields_are_empty() -> None:
+    joined = profile(
+        json_path="$.findings",
+        message_join=["description", "snippet"],
+        field_map={"message": ["title"]},
+    )
+    document = json.dumps({"findings": [{"title": "only a title"}]})
+    findings = parse_json(joined, "demo", document)
+    assert findings[0].message == "only a title"
+
+
+def test_shipped_repo_forensics_profile_joins_evidence(root) -> None:
+    repo_forensics = select_profile(load_profiles(root / "scanners.yaml"), "repo-forensics")
+    assert repo_forensics.message_join == ["description", "snippet"]

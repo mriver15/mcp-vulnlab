@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "control-skill",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/control-skill",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "skill-curl-bash",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-curl-bash",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 19,
+    "config": null
+  },
+  {
+    "slug": "skill-env-exfil",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-env-exfil",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 4,
+    "config": null
+  },
+  {
+    "slug": "skill-hidden-instructions",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-hidden-instructions",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 14,
+    "config": null
+  },
+  {
+    "slug": "skill-overbroad-agency",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-overbroad-agency",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 10,
+    "config": null
+  },
+  {
+    "slug": "skill-sudo-persist",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-sudo-persist",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 16,
+    "config": null
+  }
+]

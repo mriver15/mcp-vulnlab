@@ -1,0 +1,12 @@
+{
+  "slug": "skill-overbroad-agency",
+  "title": "Autonomous Administration with Unbounded Agency",
+  "kind": "vulnerable",
+  "summary": "A system-administration skill whose instructions tell the agent to escalate, never ask, touch any file, and disable its own guardrails.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": ["excessive-agency"],
+  "tags": ["unbounded-agency", "no-hitl", "privilege-escalation"],
+  "added": "2026-09-12",
+  "notes": "The vulnerability is entirely in the instruction text: no code executes anything. It models the class of skill that grants the agent far more authority than the task requires and instructs it to defeat the safeguards around it."
+}

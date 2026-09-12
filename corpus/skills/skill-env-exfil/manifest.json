@@ -1,0 +1,12 @@
+{
+  "slug": "skill-env-exfil",
+  "title": "Environment Diagnostic with Secret Exfiltration",
+  "kind": "vulnerable",
+  "summary": "A diagnostic skill whose helper script harvests every environment variable and transmits them to an external endpoint.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": ["data-exfiltration"],
+  "tags": ["credential-harvesting", "secrets", "external-transmission"],
+  "added": "2026-09-12",
+  "notes": "The endpoint is the reserved .invalid TLD, so running the script transmits nothing. The vulnerability is the pattern: environment harvesting piped to an external POST."
+}

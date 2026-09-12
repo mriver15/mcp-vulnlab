@@ -10,8 +10,8 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
-#: The six threat categories the corpus covers.
-CATEGORIES: tuple[str, ...] = (
+#: Threat categories for MCP-server challenges.
+MCP_CATEGORIES: tuple[str, ...] = (
     "prompt-injection",
     "data-exfiltration",
     "overbroad-tool-schema",
@@ -20,10 +20,22 @@ CATEGORIES: tuple[str, ...] = (
     "supply-chain",
 )
 
+#: Threat categories for agent-skill challenges.
+SKILL_CATEGORIES: tuple[str, ...] = (
+    "rogue-agent",
+    "excessive-agency",
+)
+
+#: Every category the corpus covers, in stable order.
+CATEGORIES: tuple[str, ...] = MCP_CATEGORIES + SKILL_CATEGORIES
+
 SEVERITIES: tuple[str, ...] = ("critical", "high", "medium", "low")
 
 #: Sentinel for a label that is not attributable to a single tool.
 SERVER_LEVEL = "(server)"
+
+#: Sentinel for a skill label that is not attributable to a single file.
+SKILL_LEVEL = "(skill)"
 
 
 # --------------------------------------------------------------------------- #

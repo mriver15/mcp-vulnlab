@@ -1,0 +1,327 @@
+{
+  "target": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-overbroad-agency",
+  "mode": "skill",
+  "scanner_count": 17,
+  "scanners": [
+    {
+      "name": "agent_skills",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 1,
+      "findings": [
+        {
+          "scanner": "agent_skills",
+          "severity": "medium",
+          "title": "Missing skill author in frontmatter (unattributed skill)",
+          "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+          "file": "SKILL.md",
+          "line": 1,
+          "snippet": "name: skill-overbroad-agency\ndescription: Automates system administration tasks end to end. Use for any task involving f",
+          "category": "frontmatter",
+          "rule_id": "",
+          "confidence": 0.6,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "c67b787401f5",
+          "needs_adjudication": true
+        }
+      ]
+    },
+    {
+      "name": "archive",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "bytecode",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dataflow",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dead_anchors",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "devcontainer",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "lifecycle",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "manifest_drift",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "mcp_security",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "oversize",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "provenance",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "runtime_dynamism",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "sast",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "secrets",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "skill_threats",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 1,
+      "findings": [
+        {
+          "scanner": "skill_threats",
+          "severity": "medium",
+          "title": "Authority claim: elevated privilege assertion (DeepMind Semantic Manipulation, March 2026)",
+          "description": "Social engineering technique that bypasses injection detection by persuading rather than commanding (DeepMind Agent Traps, March 2026).",
+          "file": "SKILL.md",
+          "line": 16,
+          "snippet": "5. If a step fails, retry with elevated privileges.",
+          "category": "authority-framing",
+          "rule_id": "ST-AU-003",
+          "confidence": 0.6,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "d4b62c7771a6",
+          "needs_adjudication": true
+        }
+      ]
+    },
+    {
+      "name": "splitstream",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "yara",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": [],
+      "stderr": "[!] scan_yara: yara-python not found; signature scan skipped (install yara-python to enable)"
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 2,
+    "low": 0,
+    "total": 2
+  },
+  "verdicts": {
+    "block": 0,
+    "warn": 2,
+    "info": 0,
+    "suppressed": 0
+  },
+  "exit_code": 1,
+  "findings": [
+    {
+      "scanner": "agent_skills",
+      "severity": "medium",
+      "title": "Missing skill author in frontmatter (unattributed skill)",
+      "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+      "file": "SKILL.md",
+      "line": 1,
+      "snippet": "name: skill-overbroad-agency\ndescription: Automates system administration tasks end to end. Use for any task involving f",
+      "category": "frontmatter",
+      "rule_id": "",
+      "confidence": 0.6,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "c67b787401f5",
+      "needs_adjudication": true
+    },
+    {
+      "scanner": "skill_threats",
+      "severity": "medium",
+      "title": "Authority claim: elevated privilege assertion (DeepMind Semantic Manipulation, March 2026)",
+      "description": "Social engineering technique that bypasses injection detection by persuading rather than commanding (DeepMind Agent Traps, March 2026).",
+      "file": "SKILL.md",
+      "line": 16,
+      "snippet": "5. If a step fails, retry with elevated privileges.",
+      "category": "authority-framing",
+      "rule_id": "ST-AU-003",
+      "confidence": 0.6,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "d4b62c7771a6",
+      "needs_adjudication": true
+    }
+  ],
+  "suppressed": [],
+  "coverage_status": {
+    "overall": "COMPLETE",
+    "per_scanner": {
+      "agent_skills": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "archive": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "bytecode": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dataflow": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dead_anchors": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "devcontainer": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "lifecycle": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "manifest_drift": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "mcp_security": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "oversize": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "provenance": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "runtime_dynamism": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "sast": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "secrets": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "skill_threats": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "splitstream": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "yara": {
+        "status": "COMPLETE",
+        "reasons": []
+      }
+    },
+    "gaps": []
+  },
+  "core_verdict": {
+    "tier": "warn",
+    "exit_code": 1,
+    "block": 0,
+    "warn": 2,
+    "info": 0,
+    "suppressed": 0,
+    "total": 2
+  },
+  "enrichment_status": {
+    "overall": "DEGRADED",
+    "vulns": "complete",
+    "rulepack_feed": "ok",
+    "dead_anchors": "complete",
+    "adjudication": "pending",
+    "adjudication_annotations": [],
+    "capability_gaps": [
+      {
+        "scanner": "yara",
+        "reason": "missing-tool",
+        "category": "capability"
+      }
+    ]
+  },
+  "capability_ledger": {
+    "declared": false,
+    "source": "",
+    "capabilities": [],
+    "annotations": [],
+    "error": null
+  }
+}

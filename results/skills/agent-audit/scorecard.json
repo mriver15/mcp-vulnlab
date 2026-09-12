@@ -1,0 +1,236 @@
+{
+  "scanner": "agent-audit",
+  "generated_at": "2026-09-12T15:45:46+00:00",
+  "corpus_root": "/Users/river/Projects/mcp-vulnlab",
+  "available": true,
+  "unavailable_reason": null,
+  "summary": {
+    "labels_total": 6,
+    "labels_detected": 1,
+    "recall": 0.16666666666666666,
+    "findings_total": 1,
+    "true_positives": 1,
+    "false_positives": 0,
+    "fp_rate": 0.0
+  },
+  "by_category": {
+    "data-exfiltration": {
+      "total": 1,
+      "detected": 0,
+      "ids": [
+        "SKLV-002"
+      ]
+    },
+    "excessive-agency": {
+      "total": 1,
+      "detected": 0,
+      "ids": [
+        "SKLV-006"
+      ]
+    },
+    "prompt-injection": {
+      "total": 1,
+      "detected": 0,
+      "ids": [
+        "SKLV-001"
+      ]
+    },
+    "rogue-agent": {
+      "total": 1,
+      "detected": 1,
+      "ids": [
+        "SKLV-005"
+      ]
+    },
+    "supply-chain": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "SKLV-003",
+        "SKLV-004"
+      ]
+    }
+  },
+  "labels": {
+    "SKLV-003": {
+      "server": "skill-curl-bash",
+      "title": "Installer pipes a remote URL straight into bash",
+      "category": "supply-chain",
+      "severity": "critical",
+      "tool": "scripts/install.sh"
+    },
+    "SKLV-004": {
+      "server": "skill-curl-bash",
+      "title": "Skill ships a fully unpinned dependency manifest",
+      "category": "supply-chain",
+      "severity": "high",
+      "tool": "(skill)"
+    },
+    "SKLV-002": {
+      "server": "skill-env-exfil",
+      "title": "Skill helper harvests environment variables and transmits them externally",
+      "category": "data-exfiltration",
+      "severity": "critical",
+      "tool": "scripts/collect.sh"
+    },
+    "SKLV-001": {
+      "server": "skill-hidden-instructions",
+      "title": "Skill embeds an exfiltration instruction in an HTML comment",
+      "category": "prompt-injection",
+      "severity": "high",
+      "tool": "(skill)"
+    },
+    "SKLV-006": {
+      "server": "skill-overbroad-agency",
+      "title": "Skill grants unbounded agency and instructs the agent to disable its own guardrails",
+      "category": "excessive-agency",
+      "severity": "high",
+      "tool": "(skill)"
+    },
+    "SKLV-005": {
+      "server": "skill-sudo-persist",
+      "title": "Skill installer requests root and establishes session persistence",
+      "category": "rogue-agent",
+      "severity": "critical",
+      "tool": "scripts/setup.sh"
+    }
+  },
+  "servers": [
+    {
+      "slug": "control-skill",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "skill-curl-bash",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "SKLV-003",
+        "SKLV-004"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "skill-env-exfil",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "SKLV-002"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "skill-hidden-instructions",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "SKLV-001"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "skill-overbroad-agency",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "SKLV-006"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "skill-sudo-persist",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 1,
+      "detected_ids": [
+        "SKLV-005"
+      ],
+      "missed_ids": [],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "SKLV-005",
+          "server": "skill-sudo-persist",
+          "reason": "strength 1: signal match: privilege escalation",
+          "finding": {
+            "scanner": "agent-audit",
+            "server": "skill-sudo-persist",
+            "message": "Daemon Privilege Escalation",
+            "rule_id": "AGENT-043",
+            "severity": "high",
+            "category": "identity_privilege_abuse",
+            "tool": null,
+            "raw": {
+              "rule_id": "AGENT-043",
+              "title": "Daemon Privilege Escalation",
+              "description": "Agent registers as system daemon/service, gaining persistent elevated privileges. Daemon processes often run with elevated permissions and can survive user logout.",
+              "severity": "high",
+              "category": "identity_privilege_abuse",
+              "location": {
+                "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-sudo-persist/scripts/setup.sh",
+                "start_line": 30,
+                "end_line": 30,
+                "start_column": null,
+                "end_column": null,
+                "snippet": "launchctl load \"$PLIST\" 2>/dev/null"
+              },
+              "confidence": 0.8,
+              "tier": "WARN",
+              "suppressed": false,
+              "suppressed_reason": null,
+              "suppressed_by": null,
+              "needs_review": false,
+              "cwe_id": "CWE-250",
+              "owasp_id": "ASI-03",
+              "asi_categories": [
+                "ASI-03"
+              ],
+              "remediation": {
+                "description": "Run agents with minimal required privileges using dedicated service accounts. Implement proper privilege separation.",
+                "code_example": null,
+                "reference_url": null
+              },
+              "metadata": {},
+              "detected_at": "2026-09-12T15:45:46.208458",
+              "reason": "Agent registers as system daemon/service, gaining persistent elevated privileges. Daemon processes often run with elevated permissions and can survive user logout."
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    }
+  ],
+  "notes": [
+    "skill-sudo-persist: scanner exited with status 1",
+    "matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive."
+  ]
+}

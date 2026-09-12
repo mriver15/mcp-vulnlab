@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -22,7 +23,7 @@ from typing import Any
 import jsonschema
 from referencing import Registry, Resource
 
-from harness.model import CATEGORIES, Label, ServerSpec
+from harness.model import CATEGORIES, MCP_CATEGORIES, Label, ServerSpec
 
 #: schema $id -> filename inside corpus/labels/
 SCHEMA_FILES: dict[str, str] = {
@@ -60,6 +61,10 @@ def servers_dir(root: Path | None = None) -> Path:
     return (root or repo_root()) / "corpus" / "servers"
 
 
+def skills_dir(root: Path | None = None) -> Path:
+    return (root or repo_root()) / "corpus" / "skills"
+
+
 def labels_dir(root: Path | None = None) -> Path:
     return (root or repo_root()) / "corpus" / "labels"
 
@@ -86,6 +91,8 @@ class ValidationReport:
     labels: int = 0
     controls: int = 0
     issues: list[ValidationIssue] = field(default_factory=list)
+    #: What to call one challenge in the human-readable summary ("servers"/"skills").
+    noun: str = "servers"
 
     @property
     def ok(self) -> bool:
@@ -93,7 +100,7 @@ class ValidationReport:
 
     def render(self) -> str:
         lines = [
-            f"corpus: {self.servers} servers "
+            f"corpus: {self.servers} {self.noun} "
             f"({self.servers - self.controls} vulnerable, {self.controls} control), "
             f"{self.labels} labels"
         ]
@@ -185,8 +192,8 @@ def _inspect_directory(
     labels = [Label.from_json(slug, raw) for raw in exploits_raw["exploits"]]
 
     for label in labels:
-        if label.id not in {f"MCPV-{n:03d}" for n in range(0, 1000)}:  # cheap shape guard
-            problems.append(f"{label.id}: id must look like MCPV-NNN")
+        if not re.fullmatch(r"(MCPV|SKLV)-[0-9]{3}", label.id):  # cheap shape guard
+            problems.append(f"{label.id}: id must look like MCPV-NNN or SKLV-NNN")
         if label.category not in CATEGORIES:
             problems.append(f"{label.id}: unknown category {label.category!r}")
 
@@ -220,13 +227,13 @@ def _inspect_directory(
     return spec, problems
 
 
-def validate_corpus(root: Path | None = None) -> ValidationReport:
-    """Validate every challenge. Never raises for corpus problems."""
-    directory = servers_dir(root)
-    report = ValidationReport()
+def validate_corpus(root: Path | None = None, *, directory: Path | None = None) -> ValidationReport:
+    """Validate every challenge in a challenge directory. Never raises for corpus problems."""
+    directory = directory or servers_dir(root)
+    report = ValidationReport(noun=directory.name)
 
     if not directory.is_dir():
-        report.issues.append(ValidationIssue("(corpus)", f"no servers directory at {directory}"))
+        report.issues.append(ValidationIssue("(corpus)", f"no challenge directory at {directory}"))
         return report
 
     try:
@@ -261,9 +268,15 @@ def validate_corpus(root: Path | None = None) -> ValidationReport:
     return report
 
 
-def discover_servers(root: Path | None = None, *, strict: bool = False) -> list[ServerSpec]:
-    """Load every challenge. With `strict=True`, raise on the first validation failure."""
-    directory = servers_dir(root)
+def discover_servers(
+    root: Path | None = None, *, strict: bool = False, directory: Path | None = None
+) -> list[ServerSpec]:
+    """Load every challenge in a challenge directory.
+
+    With `strict=True`, raise on the first validation failure. `directory`
+    defaults to the MCP-server corpus; pass `skills_dir(root)` to load skills.
+    """
+    directory = directory or servers_dir(root)
     schemas = load_schemas(labels_dir(root))
 
     specs: list[ServerSpec] = []
@@ -278,6 +291,16 @@ def discover_servers(root: Path | None = None, *, strict: bool = False) -> list[
     return specs
 
 
+def validate_skills(root: Path | None = None) -> ValidationReport:
+    """Validate the agent-skill corpus."""
+    return validate_corpus(root, directory=skills_dir(root))
+
+
+def discover_skills(root: Path | None = None, *, strict: bool = False) -> list[ServerSpec]:
+    """Load every agent-skill challenge."""
+    return discover_servers(root, strict=strict, directory=skills_dir(root))
+
+
 # --------------------------------------------------------------------------- #
 # Index
 # --------------------------------------------------------------------------- #
@@ -289,7 +312,7 @@ def build_index(root: Path | None = None) -> dict[str, Any]:
     labels = [label for spec in specs for label in spec.labels]
 
     categories: dict[str, dict[str, Any]] = {
-        category: {"labels": 0, "servers": []} for category in CATEGORIES
+        category: {"labels": 0, "servers": []} for category in MCP_CATEGORIES
     }
     for spec in specs:
         for category in {label.category for label in spec.labels}:

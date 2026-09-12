@@ -6,8 +6,14 @@ from pathlib import Path
 
 import pytest
 
-from harness.corpus import build_index, validate_corpus, write_index
-from harness.model import CATEGORIES, SERVER_LEVEL, ServerSpec
+from harness.corpus import (
+    build_index,
+    discover_skills,
+    validate_corpus,
+    validate_skills,
+    write_index,
+)
+from harness.model import MCP_CATEGORIES, SERVER_LEVEL, SKILL_CATEGORIES, ServerSpec
 
 
 def test_corpus_validates(root: Path) -> None:
@@ -20,13 +26,13 @@ def test_corpus_meets_the_documented_targets(root: Path) -> None:
     index = build_index(root)
     counts = index["corpus"]
     assert counts["labels"] >= 12
-    assert counts["categories"] == len(CATEGORIES)
+    assert counts["categories"] == len(MCP_CATEGORIES)
     assert counts["controls"] >= 2, "false-positive controls are required for FP-rate measurement"
 
 
 def test_every_category_is_exercised_by_a_vulnerable_server(root: Path) -> None:
     index = build_index(root)
-    for category in CATEGORIES:
+    for category in MCP_CATEGORIES:
         bucket = index["categories"][category]
         assert bucket["labels"] > 0, f"no labels in category {category!r}"
         assert bucket["servers"], f"no servers in category {category!r}"
@@ -137,3 +143,41 @@ def test_validation_catches_broken_challenges(
 
     report = validate_corpus(corpus)
     assert not report.ok, "validate_corpus accepted a deliberately broken corpus"
+
+
+# --------------------------------------------------------------------------- #
+# Agent-skill corpus
+# --------------------------------------------------------------------------- #
+
+
+def test_skills_corpus_validates(root: Path) -> None:
+    report = validate_skills(root)
+    assert report.ok, report.render()
+
+
+def test_skills_corpus_has_vulnerable_and_control_skills(root: Path) -> None:
+    skills = discover_skills(root, strict=True)
+    assert skills, "expected at least one skill"
+    assert any(not spec.is_control for spec in skills), "expected a vulnerable skill"
+    assert any(spec.is_control for spec in skills), "expected a benign control skill"
+
+
+def test_every_skill_category_is_exercised(root: Path) -> None:
+    skills = discover_skills(root, strict=True)
+    covered = {label.category for spec in skills for label in spec.labels}
+    for category in SKILL_CATEGORIES:
+        assert category in covered, f"no skill label in category {category!r}"
+
+
+def test_skill_label_ids_use_the_sklv_prefix(root: Path) -> None:
+    for spec in discover_skills(root, strict=True):
+        for label in spec.labels:
+            assert label.id.startswith("SKLV-"), f"{label.id} should use the SKLV- prefix"
+
+
+def test_every_skill_has_a_skill_md(root: Path) -> None:
+    for spec in discover_skills(root, strict=True):
+        skill_md = spec.directory / "SKILL.md"
+        assert skill_md.is_file(), f"{spec.slug}: missing SKILL.md"
+        body = skill_md.read_text(encoding="utf-8")
+        assert body.lstrip().startswith("---"), f"{spec.slug}: SKILL.md lacks YAML frontmatter"

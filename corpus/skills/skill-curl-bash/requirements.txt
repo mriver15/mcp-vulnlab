@@ -1,0 +1,6 @@
+# Intentionally bad dependency manifest — part of the SKLV-004 challenge.
+# Every entry floats: no version pins, no hashes, no lockfile in this directory.
+requests
+pyyaml
+click
+httpx

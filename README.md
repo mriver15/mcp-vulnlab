@@ -11,7 +11,9 @@
 Nine deliberately vulnerable MCP servers, 12 labeled exploitable weaknesses
 across 6 threat categories, 3 benign controls for false-positive measurement, and
 a harness that points any MCP scanner at the corpus and produces a
-detection-rate scorecard.
+detection-rate scorecard. A parallel **skills corpus** does the same for agent
+skills — 6 vulnerable skills, 6 labels across 5 categories, and a harness that
+scores skill scanners.
 
 ---
 
@@ -100,6 +102,39 @@ The controls are the sharpest part of the corpus. `control-gated-admin` returns 
 masked `ssn_masked` field from a tool annotated `destructiveHint=True` — a
 scanner that matches on capability names rather than control flow will flag
 correctly-built code, and the scorecard will say so.
+
+## The skills corpus
+
+The same idea, applied to **agent skills** — the `SKILL.md` folders agents load
+and follow with implicit trust. Six deliberately vulnerable skills across five
+categories, plus one benign control:
+
+| Skill | Category | The weakness |
+|---|---|---|
+| `skill-hidden-instructions` | prompt-injection | Exfiltration instruction hidden in an HTML comment |
+| `skill-env-exfil` | data-exfiltration | Helper harvests the environment and POSTs it out |
+| `skill-curl-bash` | supply-chain | `curl\|bash` remote exec + unpinned dependency manifest |
+| `skill-sudo-persist` | rogue-agent | sudo + launchd persistence + shell-profile hook |
+| `skill-overbroad-agency` | excessive-agency | Instructions grant unbounded, unconfirmed agency |
+| `control-skill` | — | Benign false-positive control |
+
+Research, taxonomy, and sources: **[docs/skills-vulnerabilities.md](docs/skills-vulnerabilities.md)**.
+Inventory and conventions: **[corpus/skills/README.md](corpus/skills/README.md)**.
+
+Score a skill scanner the same way, with `--skills`:
+
+```sh
+mcp-vulnlab validate --skills
+mcp-vulnlab run --scanner skillspector --skills --out results     # -> results/skills/skillspector/
+mcp-vulnlab run --scanner repo-forensics --skills --out results   # -> results/skills/repo-forensics/
+mcp-vulnlab run --scanner agent-audit --skills --out results      # -> results/skills/agent-audit/
+```
+
+First result: SkillSpector recalls **6/6 skill labels (100%)**; `repo-forensics`
+recalls **4/6** (misses only unpinned deps and unbounded agency); `agent-audit`
+— a generic agent-code analyzer, not a skill scanner — finds just **1/6** with
+zero false positives. See the skills scorecard in
+[docs/scorecard.md](docs/scorecard.md).
 
 ## Quickstart
 

@@ -1,0 +1,98 @@
+[
+  {
+    "slug": "control-skill",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/control-skill",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "skill-curl-bash",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-curl-bash",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 2,
+    "error": null,
+    "findings": 5,
+    "config": null
+  },
+  {
+    "slug": "skill-env-exfil",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-env-exfil",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 2,
+    "config": null
+  },
+  {
+    "slug": "skill-hidden-instructions",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-hidden-instructions",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 2,
+    "error": null,
+    "findings": 7,
+    "config": null
+  },
+  {
+    "slug": "skill-overbroad-agency",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-overbroad-agency",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 2,
+    "config": null
+  },
+  {
+    "slug": "skill-sudo-persist",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-sudo-persist",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 2,
+    "error": null,
+    "findings": 7,
+    "config": null
+  }
+]

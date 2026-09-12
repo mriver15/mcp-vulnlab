@@ -111,6 +111,51 @@ Caveats without which these figures would be misleading:
 `snyk-agent-scan` 0.6.3 emitted no stdout and exited 1 in every headless run, so
 it is recorded as *not run* rather than 0% — see `docs/findings.md` (F8).
 
+## Skills scorecard (first measurement)
+
+The corpus also ships a skills lab — six deliberately vulnerable agent skills
+across five categories plus one control. Research and taxonomy are in
+[docs/skills-vulnerabilities.md](skills-vulnerabilities.md).
+
+| scanner | version | recall | detected | findings | false positives | FP rate |
+|---|---|---:|---:|---:|---:|---:|
+| `skillspector` (skills corpus) | 2.11.2 | **100.0%** | 6/6 | 64 | 58 | 90.6% |
+| `repo-forensics` (skills corpus) | 2.14.8 | **66.7%** | 4/6 | 24 | 20 | 83.3% |
+| `agent-audit` (skills corpus) | 0.19.2 | **16.7%** | 1/6 | 1 | 0 | 0.0% |
+
+SkillSpector recalled every skill label — hidden instructions, env exfiltration,
+`curl|bash`, unpinned deps, persistence, and unbounded agency — which is exactly
+what it is built for. The 90.6% FP rate has the same two causes as its MCP run:
+it is a high-recall/low-precision static scanner, and it scans the corpus's own
+`README.md` and `exploits.json`, which contain the security vocabulary it
+matches.
+
+`repo-forensics` is the strongest independent second opinion: it caught the
+prompt-injection instruction (SKLV-001), `curl|bash` (SKLV-003), and the
+launchd/persistence setup (SKLV-005) on the *real* files, at critical/high
+severity, with zero network access. Its two misses are informative, not
+accidental — SKLV-004 (unpinned `requirements.txt`) because `--skill-scan` mode
+does not run the dependency/CVE scanners, and SKLV-006 (unbounded agency)
+because its "authority claim" finding does not overlap our label signals.
+
+`agent-audit` is a generic agent/MCP-code analyzer, not a skill scanner; its
+single hit (SKLV-005, `launchctl load` → `AGENT-043` daemon privilege
+escalation) with zero false positives shows that skill detection is a distinct
+capability from agent-code analysis.
+
+```sh
+git clone --depth 1 https://github.com/alexgreensh/repo-forensics.git ~/tools/repo-forensics
+export REPO_FORENSICS_HOME="$HOME/tools/repo-forensics"
+
+uv run mcp-vulnlab run --scanner skillspector --skills --out results
+uv run mcp-vulnlab run --scanner repo-forensics --skills --out results
+uv run mcp-vulnlab run --scanner agent-audit --skills --out results
+```
+
+Raw evidence: [`results/skills/skillspector/`](../results/skills/skillspector/),
+[`results/skills/repo-forensics/`](../results/skills/repo-forensics/),
+[`results/skills/agent-audit/`](../results/skills/agent-audit/).
+
 ## Reproduce
 
 ```sh
