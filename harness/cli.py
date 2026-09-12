@@ -6,6 +6,7 @@ mcp-vulnlab index                     # regenerate corpus/labels/index.json
 mcp-vulnlab smoke                     # do the challenges speak MCP?
 mcp-vulnlab run --scanner replay      # score one scanner (or --scanner all)
 mcp-vulnlab report --in results/*     # render the scorecard
+mcp-vulnlab findings                  # regenerate FINDINGS.md from results/
 """
 
 from __future__ import annotations
@@ -26,12 +27,14 @@ from harness.corpus import (
     validate_skills,
     write_index,
 )
+from harness.findings import render_findings
 from harness.model import MCP_CATEGORIES, Scorecard
 from harness.report import render_comparison, render_json, render_markdown, render_text
 from harness.runner import run_scanner, score_outcome, smoke, write_results
 
 DEFAULT_SCANNERS_FILE = "scanners.yaml"
 DEFAULT_RESULTS_DIR = "results"
+DEFAULT_FINDINGS = "FINDINGS.md"
 
 
 # --------------------------------------------------------------------------- #
@@ -235,6 +238,14 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_findings(args: argparse.Namespace) -> int:
+    rendered = render_findings(_root())
+    destination = Path(args.out) if args.out else _root() / "FINDINGS.md"
+    destination.write_text(rendered, encoding="utf-8")
+    print(f"wrote {destination}")
+    return 0
+
+
 # --------------------------------------------------------------------------- #
 # Parser
 # --------------------------------------------------------------------------- #
@@ -298,6 +309,12 @@ def build_parser() -> argparse.ArgumentParser:
     p_report.add_argument("--format", choices=["markdown", "text", "json"], default="markdown")
     p_report.add_argument("--out", help="write to a file instead of stdout")
     p_report.set_defaults(func=cmd_report)
+
+    p_findings = subparsers.add_parser(
+        "findings", help="regenerate the canonical FINDINGS.md from committed scorecards"
+    )
+    p_findings.add_argument("--out", help=f"destination (default: {DEFAULT_FINDINGS})")
+    p_findings.set_defaults(func=cmd_findings)
 
     return parser
 

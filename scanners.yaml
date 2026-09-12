@@ -218,7 +218,7 @@ scanners:
       the generated file.
       Install: uv tool install snyk-agent-scan
       KNOWN ISSUE: v0.6.3 emits no stdout in headless use and exits 1, so the
-      harness records it as `not run`. See docs/findings.md (F8).
+      harness records it as `not run`. See docs/engineering-notes.md (F8).
     command:
       - "snyk-agent-scan"
       - "--json"
