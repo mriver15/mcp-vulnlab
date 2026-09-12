@@ -1,0 +1,268 @@
+{
+  "generated_by": "mcp-vulnlab index",
+  "corpus": {
+    "servers": 9,
+    "vulnerable": 6,
+    "controls": 3,
+    "labels": 12,
+    "categories": 6
+  },
+  "categories": {
+    "prompt-injection": {
+      "labels": 2,
+      "servers": [
+        "injection-echo"
+      ]
+    },
+    "data-exfiltration": {
+      "labels": 2,
+      "servers": [
+        "exfil-write"
+      ]
+    },
+    "overbroad-tool-schema": {
+      "labels": 2,
+      "servers": [
+        "overbroad-glob"
+      ]
+    },
+    "missing-auth": {
+      "labels": 2,
+      "servers": [
+        "no-auth-file"
+      ]
+    },
+    "pii-disclosure": {
+      "labels": 2,
+      "servers": [
+        "pii-leak"
+      ]
+    },
+    "supply-chain": {
+      "labels": 2,
+      "servers": [
+        "supply-chain-yolo"
+      ]
+    }
+  },
+  "labels": [
+    {
+      "id": "MCPV-001",
+      "server": "injection-echo",
+      "title": "Tool output labelled trusted carries injected instructions",
+      "category": "prompt-injection",
+      "severity": "high",
+      "tool": "operator_note"
+    },
+    {
+      "id": "MCPV-002",
+      "server": "injection-echo",
+      "title": "Tool arguments reflected verbatim into model context",
+      "category": "prompt-injection",
+      "severity": "medium",
+      "tool": "echo"
+    },
+    {
+      "id": "MCPV-003",
+      "server": "exfil-write",
+      "title": "Arbitrary file write via unconfined path join",
+      "category": "data-exfiltration",
+      "severity": "critical",
+      "tool": "save_report"
+    },
+    {
+      "id": "MCPV-004",
+      "server": "exfil-write",
+      "title": "Path-traversal defence explicitly disabled on a read resource",
+      "category": "data-exfiltration",
+      "severity": "high",
+      "tool": "report://{path}"
+    },
+    {
+      "id": "MCPV-005",
+      "server": "overbroad-glob",
+      "title": "Glob search accepts any root and any pattern",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "find_files"
+    },
+    {
+      "id": "MCPV-006",
+      "server": "overbroad-glob",
+      "title": "Unconstrained absolute path parameter on a read tool",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "read_path"
+    },
+    {
+      "id": "MCPV-007",
+      "server": "pii-leak",
+      "title": "Single-record lookup returns unmasked sensitive fields",
+      "category": "pii-disclosure",
+      "severity": "high",
+      "tool": "lookup_user"
+    },
+    {
+      "id": "MCPV-008",
+      "server": "pii-leak",
+      "title": "Substring search dumps the entire customer table",
+      "category": "pii-disclosure",
+      "severity": "critical",
+      "tool": "search_users"
+    },
+    {
+      "id": "MCPV-009",
+      "server": "no-auth-file",
+      "title": "Document reads served without any authorization check",
+      "category": "missing-auth",
+      "severity": "high",
+      "tool": "read_file"
+    },
+    {
+      "id": "MCPV-010",
+      "server": "no-auth-file",
+      "title": "Irreversible delete with no authorization and no confirmation",
+      "category": "missing-auth",
+      "severity": "critical",
+      "tool": "delete_file"
+    },
+    {
+      "id": "MCPV-011",
+      "server": "supply-chain-yolo",
+      "title": "Remote plugin source loaded with no integrity verification",
+      "category": "supply-chain",
+      "severity": "critical",
+      "tool": "install_plugin"
+    },
+    {
+      "id": "MCPV-012",
+      "server": "supply-chain-yolo",
+      "title": "Floating dependency manifest with no pins or hashes",
+      "category": "supply-chain",
+      "severity": "high",
+      "tool": "(server)"
+    }
+  ],
+  "servers": [
+    {
+      "slug": "control-echo",
+      "title": "Benign Health & Greeting Server",
+      "kind": "control",
+      "summary": "A false-positive control: read-only utility tools with allowlisted inputs, escaped output, and no reflection of caller-supplied text.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [],
+      "labels": []
+    },
+    {
+      "slug": "control-files",
+      "title": "Sandboxed Document Store",
+      "kind": "control",
+      "summary": "A false-positive control: a filesystem server that does everything right \u2014 closed-set document ids, confined resolved paths, bounded output, atomic writes.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [],
+      "labels": []
+    },
+    {
+      "slug": "control-gated-admin",
+      "title": "Authorized & Gated Records Service",
+      "kind": "control",
+      "summary": "A false-positive control: the same customer-record and destructive capabilities as the vulnerable challenges, but with verified identity, field projection, masking, and a reversible human-gated delete.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [],
+      "labels": []
+    },
+    {
+      "slug": "exfil-write",
+      "title": "Unconfined Report Writer",
+      "kind": "vulnerable",
+      "summary": "A report storage helper that joins a caller-supplied name onto its sandbox path with no confinement check, and disables the SDK's traversal defence on a read resource.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [
+        "data-exfiltration"
+      ],
+      "labels": [
+        "MCPV-003",
+        "MCPV-004"
+      ]
+    },
+    {
+      "slug": "injection-echo",
+      "title": "Reflective Echo",
+      "kind": "vulnerable",
+      "summary": "A feedback helper whose tool output carries attacker-controlled instructions straight into the model context.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [
+        "prompt-injection"
+      ],
+      "labels": [
+        "MCPV-001",
+        "MCPV-002"
+      ]
+    },
+    {
+      "slug": "no-auth-file",
+      "title": "Unauthenticated Document Store",
+      "kind": "vulnerable",
+      "summary": "An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [
+        "missing-auth"
+      ],
+      "labels": [
+        "MCPV-009",
+        "MCPV-010"
+      ]
+    },
+    {
+      "slug": "overbroad-glob",
+      "title": "Wildcard Workspace Search",
+      "kind": "vulnerable",
+      "summary": "A file search server whose tool schemas advertise unrestricted scope: an unconstrained glob root and a free-form absolute path parameter.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [
+        "overbroad-tool-schema"
+      ],
+      "labels": [
+        "MCPV-005",
+        "MCPV-006"
+      ]
+    },
+    {
+      "slug": "pii-leak",
+      "title": "Over-Returning Support Lookup",
+      "kind": "vulnerable",
+      "summary": "A customer support lookup that returns whole records, including SSNs, dates of birth, card numbers, and internal notes, with no masking, field projection, or pagination.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [
+        "pii-disclosure"
+      ],
+      "labels": [
+        "MCPV-007",
+        "MCPV-008"
+      ]
+    },
+    {
+      "slug": "supply-chain-yolo",
+      "title": "YOLO Plugin Manager",
+      "kind": "vulnerable",
+      "summary": "A plugin manager that downloads remote source and loads it with no pinning, signature, or allowlist, on top of a floating dependency manifest.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [
+        "supply-chain"
+      ],
+      "labels": [
+        "MCPV-011",
+        "MCPV-012"
+      ]
+    }
+  ]
+}

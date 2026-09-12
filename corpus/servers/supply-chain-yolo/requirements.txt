@@ -1,0 +1,9 @@
+# Intentionally bad dependency manifest — part of the MCPV-012 challenge.
+# Every entry floats: no version pins, no hashes, no lockfile in this directory.
+# A scanner should flag the absence of pinning; a human should note that
+# `mcp` with no constraint means CI resolves an arbitrary future major.
+mcp
+requests
+pyyaml
+urllib3
+gitpython

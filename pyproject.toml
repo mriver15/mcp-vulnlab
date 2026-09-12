@@ -1,0 +1,82 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-vulnlab"
+version = "0.1.0"
+description = "A labeled corpus of deliberately vulnerable MCP servers and a harness that scores any MCP scanner against it."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+keywords = ["mcp", "security", "benchmark", "evaluation", "llm", "agents"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Security",
+]
+dependencies = [
+  # The corpus servers are written against the MCP Python SDK. Keep the major
+  # pinned: 2.x renamed FastMCP -> MCPServer and changed several signatures.
+  "mcp>=2.0,<3",
+  "jsonschema>=4.20",
+  "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.6",
+  "mypy>=1.11",
+  # Neither pyyaml nor jsonschema ships its own type information.
+  "types-PyYAML>=6.0",
+  "types-jsonschema>=4.20",
+]
+
+[project.scripts]
+mcp-vulnlab = "harness.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/mriver15/mcp-vulnlab"
+Issues = "https://github.com/mriver15/mcp-vulnlab/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["harness"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "S"]
+ignore = [
+  "E501",
+  # S101: assert is the point of a test suite.
+  "S101",
+  # S603/S607: the harness exists to run third-party scanner CLIs with their own argv.
+  "S603",
+  "S607",
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Corpus servers are deliberately bad code: they exist to be insecure, not to be
+# exemplary. Style rules are noise here. Correctness rules (F, B) are NOT ignored —
+# an unused import in a challenge is sloppiness, not intentional vulnerability.
+"corpus/servers/**" = ["E", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+  "slow: launches subprocesses (corpus servers)",
+]
+
+[tool.mypy]
+python_version = "3.11"
+files = ["harness"]
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
+check_untyped_defs = true

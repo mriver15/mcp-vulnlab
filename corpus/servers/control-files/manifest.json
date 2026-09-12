@@ -1,0 +1,12 @@
+{
+  "slug": "control-files",
+  "title": "Sandboxed Document Store",
+  "kind": "control",
+  "summary": "A false-positive control: a filesystem server that does everything right — closed-set document ids, confined resolved paths, bounded output, atomic writes.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": [],
+  "tags": ["false-positive-control", "benign", "least-privilege"],
+  "added": "2026-09-12",
+  "notes": "The direct counterpart of overbroad-glob and exfil-write. Same capability, opposite posture. A scanner that flags 'filesystem access' or 'file write' as a category rather than evaluating confinement will light this up."
+}

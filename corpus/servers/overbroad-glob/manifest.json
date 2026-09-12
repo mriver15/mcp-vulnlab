@@ -1,0 +1,12 @@
+{
+  "slug": "overbroad-glob",
+  "title": "Wildcard Workspace Search",
+  "kind": "vulnerable",
+  "summary": "A file search server whose tool schemas advertise unrestricted scope: an unconstrained glob root and a free-form absolute path parameter.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": ["overbroad-tool-schema"],
+  "tags": ["least-privilege", "schema-scope", "enumeration"],
+  "added": "2026-09-12",
+  "notes": "This challenge is about what the schema tells the model, not just what the code does. The examples embedded in the tool descriptions actively demonstrate whole-filesystem scope, which is how an over-broad schema turns into over-broad agent behaviour."
+}

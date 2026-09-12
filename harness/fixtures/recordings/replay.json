@@ -1,0 +1,70 @@
+{
+  "_comment": "SYNTHETIC RECORDING — NOT A REAL SCANNER RUN. Hand-authored so the harness self-test is deterministic. It deliberately detects 7 of 12 labels and emits one false positive, so the scorecard exercises the hit, miss, and FP paths. Replace with real scanner output before publishing any number derived from it.",
+  "scanner": "replay",
+  "findings": [
+    {
+      "server": "injection-echo",
+      "rule_id": "MCP-INJ-001",
+      "severity": "HIGH",
+      "category": "prompt-injection",
+      "tool": "operator_note",
+      "message": "Tool operator_note returns instruction-shaped text that the tool description labels as trusted, creating a prompt injection sink."
+    },
+    {
+      "server": "exfil-write",
+      "rule_id": "MCP-TRAV-001",
+      "severity": "CRITICAL",
+      "category": "data-exfiltration",
+      "tool": "save_report",
+      "message": "save_report joins a caller-supplied name onto a sandbox path with no confinement check, allowing an unconfined file write."
+    },
+    {
+      "server": "exfil-write",
+      "rule_id": "MCP-TRAV-002",
+      "severity": "HIGH",
+      "category": "data-exfiltration",
+      "tool": "report://{path}",
+      "message": "Resource template report://{path} exempts its path parameter from the SDK path traversal check, enabling arbitrary file read."
+    },
+    {
+      "server": "overbroad-glob",
+      "rule_id": "MCP-SCOPE-010",
+      "severity": "HIGH",
+      "category": "overbroad-tool-schema",
+      "tool": "find_files",
+      "message": "find_files exposes an unrestricted glob root with wildcard patterns and advertises whole-filesystem scope in its description."
+    },
+    {
+      "server": "pii-leak",
+      "rule_id": "MCP-PII-001",
+      "severity": "HIGH",
+      "category": "pii-disclosure",
+      "tool": "lookup_user",
+      "message": "lookup_user returns unmasked sensitive personal data including a national identifier and payment card number."
+    },
+    {
+      "server": "no-auth-file",
+      "rule_id": "MCP-AUTHZ-002",
+      "severity": "CRITICAL",
+      "category": "missing-auth",
+      "tool": "delete_file",
+      "message": "delete_file performs an irreversible deletion with no authorization check and no confirmation, and is reachable by an autonomous agent."
+    },
+    {
+      "server": "supply-chain-yolo",
+      "rule_id": "MCP-SC-001",
+      "severity": "CRITICAL",
+      "category": "supply-chain",
+      "tool": "install_plugin",
+      "message": "install_plugin fetches remote source and loads it with no integrity verification, allowlist, or signature check."
+    },
+    {
+      "server": "control-echo",
+      "rule_id": "MCP-INJ-009",
+      "severity": "MEDIUM",
+      "category": "prompt-injection",
+      "tool": "render_greeting",
+      "message": "Tool render_greeting reflects caller-supplied input into its response."
+    }
+  ]
+}

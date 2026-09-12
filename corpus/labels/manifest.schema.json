@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mcp-vulnlab:manifest",
+  "title": "MCP VulnLab server manifest",
+  "description": "The file at corpus/servers/<slug>/manifest.json. Tells the harness how to launch the server and what kind of challenge it is.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["slug", "title", "kind", "summary", "entrypoint"],
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Directory name. Unique across the corpus."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 80
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["vulnerable", "control"],
+      "description": "'control' servers are benign and exist to measure false positives. They must have zero exploits."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 15,
+      "description": "One sentence: what this server does and why it is in the corpus."
+    },
+    "entrypoint": {
+      "type": "string",
+      "default": "server.py",
+      "description": "Path relative to the challenge directory. Launched as `<python> <entrypoint>` with cwd set to the challenge directory."
+    },
+    "args": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "Extra argv passed after the entrypoint."
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "default": {},
+      "description": "Extra environment variables for the server process. Values here end up in the repo, so never put secrets in this file."
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "prompt-injection",
+          "data-exfiltration",
+          "overbroad-tool-schema",
+          "missing-auth",
+          "pii-disclosure",
+          "supply-chain"
+        ]
+      },
+      "description": "Convenience mirror of the categories present in exploits.json. Must agree with it — validation cross-checks this."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+$" }
+    },
+    "added": { "type": "string", "format": "date" },
+    "notes": { "type": "string" }
+  }
+}

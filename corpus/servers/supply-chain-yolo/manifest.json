@@ -1,0 +1,12 @@
+{
+  "slug": "supply-chain-yolo",
+  "title": "YOLO Plugin Manager",
+  "kind": "vulnerable",
+  "summary": "A plugin manager that downloads remote source and loads it with no pinning, signature, or allowlist, on top of a floating dependency manifest.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": ["supply-chain"],
+  "tags": ["unpinned", "remote-code", "no-integrity-check", "exec-sink"],
+  "added": "2026-09-12",
+  "notes": "Both runtime sinks are gated: _fetch returns a local stub unless MCPV_ALLOW_FETCH=1, and exec refuses unless MCPV_ALLOW_EXEC=1. Static analysis sees the full pattern; running it stays inert. See SECURITY.md section 3."
+}

@@ -1,0 +1,12 @@
+{
+  "slug": "pii-leak",
+  "title": "Over-Returning Support Lookup",
+  "kind": "vulnerable",
+  "summary": "A customer support lookup that returns whole records, including SSNs, dates of birth, card numbers, and internal notes, with no masking, field projection, or pagination.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": ["pii-disclosure"],
+  "tags": ["pii", "over-return", "no-masking", "bulk-read"],
+  "added": "2026-09-12",
+  "notes": "Fixtures are synthetic: reserved .invalid TLD and 000-xx-xxxx SSNs. The two labels are separated by blast radius (one record vs. the whole table), which is the distinction that most often separates a medium finding from a critical one."
+}

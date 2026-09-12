@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_FROZEN: "1"
+
+jobs:
+  lint:
+    name: Lint & types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --extra dev
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+
+  corpus:
+    name: Validate corpus
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --extra dev
+
+      - name: Every label and manifest matches its schema
+        run: uv run mcp-vulnlab validate
+
+      - name: Every challenge speaks MCP over stdio
+        run: uv run mcp-vulnlab smoke
+
+      - name: Committed index is current
+        run: |
+          uv run mcp-vulnlab index --out "$RUNNER_TEMP/index.json"
+          diff -u corpus/labels/index.json "$RUNNER_TEMP/index.json"
+          echo "::notice::corpus/labels/index.json is up to date"
+
+  test:
+    name: Test (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --extra dev --python ${{ matrix.python }}
+      - run: uv run pytest -q
+
+  reproducible:
+    name: Scorecard reproducibility
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --extra dev
+
+      # The README claims "same scanner + same corpus => identical scorecard".
+      # This job is what makes that a fact rather than an aspiration.
+      - name: Run the offline scanner twice
+        run: |
+          uv run mcp-vulnlab run --scanner replay --out "$RUNNER_TEMP/a"
+          uv run mcp-vulnlab run --scanner replay --out "$RUNNER_TEMP/b"
+
+      - name: Scorecards must be byte-identical apart from the timestamp
+        run: |
+          for run in a b; do
+            jq 'del(.generated_at)' "$RUNNER_TEMP/$run/replay/scorecard.json" \
+              > "$RUNNER_TEMP/$run.json"
+          done
+          diff -u "$RUNNER_TEMP/a.json" "$RUNNER_TEMP/b.json"
+          echo "::notice::reproducible: identical scorecards across two runs"
+
+      - name: Render the comparison report
+        run: uv run mcp-vulnlab report --in "$RUNNER_TEMP/a/replay" --out "$RUNNER_TEMP/scorecard.md"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scorecard-replay-selftest
+          path: ${{ runner.temp }}/a/replay/
+          if-no-files-found: error

@@ -1,0 +1,12 @@
+{
+  "slug": "control-echo",
+  "title": "Benign Health & Greeting Server",
+  "kind": "control",
+  "summary": "A false-positive control: read-only utility tools with allowlisted inputs, escaped output, and no reflection of caller-supplied text.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": [],
+  "tags": ["false-positive-control", "benign"],
+  "added": "2026-09-12",
+  "notes": "Deliberately includes a tool that renders caller input, because rendering input is not itself a vulnerability. A scanner that flags render_greeting for 'reflecting user input' without checking the allowlist and escaping is producing noise. Do not 'fix' this server to appease such a scanner."
+}

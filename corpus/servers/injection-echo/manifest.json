@@ -1,0 +1,12 @@
+{
+  "slug": "injection-echo",
+  "title": "Reflective Echo",
+  "kind": "vulnerable",
+  "summary": "A feedback helper whose tool output carries attacker-controlled instructions straight into the model context.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": ["prompt-injection"],
+  "tags": ["injection-sink", "tool-poisoning", "untrusted-output"],
+  "added": "2026-09-12",
+  "notes": "The injection payload lives in the server's own fixture data, so the challenge is deterministic and needs no external setup. Both labels are detectable by reading server.py alone."
+}

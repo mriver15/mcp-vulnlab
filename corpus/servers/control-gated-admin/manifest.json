@@ -1,0 +1,12 @@
+{
+  "slug": "control-gated-admin",
+  "title": "Authorized & Gated Records Service",
+  "kind": "control",
+  "summary": "A false-positive control: the same customer-record and destructive capabilities as the vulnerable challenges, but with verified identity, field projection, masking, and a reversible human-gated delete.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": [],
+  "tags": ["false-positive-control", "benign", "authz", "hitl"],
+  "added": "2026-09-12",
+  "notes": "Counterpart of no-auth-file and pii-leak, and the toughest FP control here: it exposes PII fields and a delete operation, so a scanner that flags by capability name or by the presence of a destructiveHint annotation will fire on correctly-built code. Dev tokens are fixtures, not secrets."
+}

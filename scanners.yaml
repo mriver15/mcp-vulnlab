@@ -1,0 +1,228 @@
+# Adapter profiles for the harness.
+#
+# The single most predictable finding of this project is that MCP scanners all
+# emit *different* JSON — and accept *different* input. Rather than write Python
+# per tool, every scanner is described declaratively here and parsed by one
+# config-driven adapter (`harness/adapters.py`).
+#
+# Every profile below was verified against a real install, not written from
+# documentation. Where a tool needed a shim, the shim is a documented capability
+# of the generic adapter rather than a bespoke Python class — see `flatten_from`
+# and `config_template`.
+#
+# Placeholders available inside `command` and `config_template`:
+#   {python}      -> interpreter running the harness (sys.executable)
+#   {server_dir}  -> absolute path to the challenge directory
+#   {entrypoint}  -> absolute path to the challenge entrypoint (e.g. server.py)
+#   {slug}        -> challenge slug
+#   {config}      -> path of the generated client config (only when a
+#                    `config_template` is present)
+#
+# `json_path` is a deliberately small subset of JSONPath: `$` (whole document)
+# or a dotted path such as `$.results.issues`. No filters, no wildcards.
+#
+# `field_map` maps a normalized field to a list of candidate key names, tried in
+# order, case-insensitively, at any depth inside a finding object.
+#
+# Nothing here is required to be installed. A scanner whose binary is missing, or
+# which produces no parseable output at all, is recorded as `not run` in the
+# scorecard rather than being scored as 0% recall.
+
+scanners:
+  # ------------------------------------------------------------------------- #
+  # Verified working against a real install
+  # ------------------------------------------------------------------------- #
+
+  - name: skillspector
+    description: >
+      NVIDIA SkillSpector — scans agent skills and MCP tool metadata for
+      vulnerabilities, malicious patterns and prompt injection.
+      Install: uv tool install git+https://github.com/NVIDIA/SkillSpector.git
+      Note: --no-llm keeps the run offline and key-free, but skips the three
+      semantic analyzers, which is where description/behaviour mismatch detection
+      lives. A static-only score is not the same as a full-capability score.
+    command: ["skillspector", "scan", "{server_dir}", "--format", "json", "--no-llm"]
+    output: json
+    json_path: "$.issues"
+    field_map:
+      rule_id: ["rule_id", "id"]
+      severity: ["severity"]
+      category: ["category"]
+      message: ["message", "explanation", "title"]
+      # SkillSpector reports a location, not a tool name, so its findings can only
+      # match on detection signal and never on tool name. That measurably lowers
+      # its recall, and it is a property of the tool's output — not of this adapter.
+      tool: ["tool", "tool_name"]
+
+  - name: cisco-mcp-scanner
+    description: >
+      Cisco AI Defense mcp-scanner, using the three analysers that need no API
+      key: yara, readiness, prompt_defense.
+      Install: uv tool install --python 3.13 cisco-ai-mcp-scanner
+    command:
+      - "mcp-scanner"
+      - "--analyzers"
+      - "yara,readiness,prompt_defense"
+      - "--format"
+      - "raw"
+      - "stdio"
+      - "--stdio-command"
+      - "{python}"
+      - "--stdio-arg={entrypoint}"
+    output: json
+    json_path: "$.scan_results"
+    # Findings are nested per tool per analyser: scan_results[].findings.<analyzer>.
+    # Flatten into one finding per analyser, keeping the parent's tool_name.
+    flatten_from: "findings"
+    # An analyser with nothing to report sets total_findings: 0 and must not become
+    # a finding, or every clean tool would look like a hit.
+    skip_if_zero: "total_findings"
+    field_map:
+      tool: ["tool_name"]
+      severity: ["severity"]
+      message: ["threat_summary", "message"]
+      category: ["scanner_category", "mcp_taxonomies.scanner_category"]
+      # rule_id is set by the flattener to the analyser name (e.g. yara_analyzer).
+
+  - name: agent-audit
+    description: >
+      Static security analyzer for AI agents and MCP configurations — 53 rules
+      mapped to OWASP Agentic Top 10. `scan` reads the source tree statically;
+      it does not connect to the server. Install: uv tool install agent-audit
+    command: ["agent-audit", "scan", "--format", "json", "{server_dir}"]
+    output: json
+    json_path: "$.findings"
+    field_map:
+      rule_id: ["rule_id"]
+      severity: ["severity"]
+      category: ["category"]
+      message: ["title", "description"]
+      # The static scan reports a location, not a tool name, so findings can only
+      # match on detection signal — a property of the tool's output.
+      tool: ["tool", "affected_tool"]
+
+  - name: mcp-armor
+    description: >
+      MCP configuration scanner with a local prompt-injection detection model.
+      Takes a client config file; writes its JSON report to a file rather than
+      stdout (the harness reads it back via `output_to_file`).
+      First run downloads a ~290MB model from Hugging Face.
+      Install: uv tool install --python 3.13 mcp-armor
+    command:
+      - "mcp-armor"
+      - "scan"
+      - "--config"
+      - "{config}"
+      - "--report-type"
+      - "json"
+      - "--output"
+      - "{out_file}"
+    output: json
+    output_to_file: true
+    json_path: "$.security_report.grouped_findings"
+    config_template:
+      mcpServers:
+        "{slug}":
+          command: "{python}"
+          args: ["{entrypoint}"]
+    field_map:
+      rule_id: ["finding_type"]
+      severity: ["severity"]
+      category: ["finding_type"]
+      message: ["description"]
+      tool: ["entities_affected.affected_tool", "entities_affected.entity_name"]
+
+  - name: mcp-shield
+    description: >
+      Checklist-style scanner (npm). Without --claude-api-key its output is a
+      per-tool "Verified" checklist with no findings vocabulary, so a keyless run
+      reports zero findings by construction — which is itself the measurement.
+      Install: npm install -g mcp-shield
+    command: ["mcp-shield", "--path", "{config}"]
+    output: text
+    regex:
+      pattern: '^(?P<severity>CRITICAL|HIGH|MEDIUM|LOW)'
+      flags: []
+    config_template:
+      mcpServers:
+        "{slug}":
+          command: "{python}"
+          args: ["{entrypoint}"]
+
+  - name: mcp-security-scanner
+    description: >
+      sidhpurwala-huzaifa/mcp-security-scanner — live spec-compliance pentest
+      scanner for MCP servers over stdio/http/sse. Emits one finding per check,
+      including passing ones, so `require` keeps only the failures.
+      Install: uv tool install "mcp-security-scanner @ git+https://github.com/sidhpurwala-huzaifa/mcp-security-scanner.git@0.1.5"
+      NOTE: its `mcp-scan` binary name collides with Invariant Labs' unrelated npm
+      `mcp-scan`. Keep the profile name explicit to avoid confusion.
+    command:
+      - "mcp-scan"
+      - "scan"
+      - "--transport"
+      - "stdio"
+      - "--command"
+      - "{python} {entrypoint}"
+      - "--format"
+      - "json"
+    output: json
+    json_path: "$.findings"
+    require: { field: "passed", equals: false }
+    field_map:
+      rule_id: ["id"]
+      severity: ["severity"]
+      category: ["category"]
+      message: ["title", "details"]
+      tool: ["tool", "tool_name"]
+
+  - name: snyk-agent-scan
+    description: >
+      Snyk agent-scan. Accepts MCP *client config files*, never a server command,
+      so the runner renders `config_template` per challenge and points the tool at
+      the generated file.
+      Install: uv tool install snyk-agent-scan
+      KNOWN ISSUE: v0.6.3 emits no stdout in headless use and exits 1, so the
+      harness records it as `not run`. See docs/findings.md (F8).
+    command:
+      - "snyk-agent-scan"
+      - "--json"
+      - "--dangerously-run-mcp-servers"
+      - "{config}"
+    output: json
+    json_path: "$"
+    # Consent gate: without --dangerously-run-mcp-servers the tool blocks on an
+    # interactive "Allow Agent Scan to start 'x'? [y/N]" prompt and cannot be
+    # automated at all. Passing it is appropriate here — every challenge is our own
+    # code, run deliberately, on the machine running the harness — but it is worth
+    # noting that the only automatable path is the one named "dangerous".
+    config_template:
+      mcpServers:
+        "{slug}":
+          command: "{python}"
+          args: ["{entrypoint}"]
+
+  # A text-only scanner. `regex` profiles are the escape hatch for tools that
+  # refuse to emit structured output. One finding is produced per matching line.
+  - name: text-only-example
+    description: Fallback profile for a scanner that only prints human-readable lines.
+    command: ["your-scanner", "--mcp", "{entrypoint}"]
+    output: text
+    regex:
+      pattern: '^(?P<severity>CRITICAL|HIGH|MEDIUM|LOW)\s+(?P<tool>[\w.-]+)\s*:\s*(?P<message>.+)$'
+      flags: ["IGNORECASE"]
+
+  # Deterministic, offline "scanner" used by CI and by `make selftest`.
+  # It replays a recorded findings file so the harness itself can be tested
+  # without any third-party tool installed. It is NOT a security scanner.
+  - name: replay
+    description: Replays a recorded findings JSON file. Used for harness self-tests only.
+    command: ["{python}", "-m", "harness.replay", "{slug}", "{entrypoint}"]
+    output: json
+    json_path: "$.findings"
+    field_map:
+      rule_id: ["rule_id", "id"]
+      severity: ["severity"]
+      category: ["category"]
+      tool: ["tool"]
+      message: ["message"]

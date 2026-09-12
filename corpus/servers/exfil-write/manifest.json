@@ -1,0 +1,12 @@
+{
+  "slug": "exfil-write",
+  "title": "Unconfined Report Writer",
+  "kind": "vulnerable",
+  "summary": "A report storage helper that joins a caller-supplied name onto its sandbox path with no confinement check, and disables the SDK's traversal defence on a read resource.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": ["data-exfiltration"],
+  "tags": ["path-traversal", "arbitrary-write", "sdk-optout"],
+  "added": "2026-09-12",
+  "notes": "Side effects are limited to the temp dir: the PoC writes into a scratch directory the server creates. The traverse-to-arbitrary-target behaviour is real, but the shipped PoC never targets a path the user cares about."
+}

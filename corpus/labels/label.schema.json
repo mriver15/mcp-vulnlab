@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mcp-vulnlab:label",
+  "title": "MCP VulnLab exploit label",
+  "description": "One labeled, exploitable weakness in a corpus server. This is the ground truth the scorecard measures scanners against, so it must be specific enough that a human can decide 'did the scanner find this?' by reading the label alone.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "slug",
+    "title",
+    "category",
+    "severity",
+    "tool",
+    "description",
+    "impact",
+    "exploit",
+    "remediation",
+    "references"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^MCPV-[0-9]{3}$",
+      "description": "Stable label id. Never reused, never renumbered, even if the challenge changes."
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Must match the corpus server directory name."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 120,
+      "description": "One line a reader can scan. States the weakness, not the fix."
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "prompt-injection",
+        "data-exfiltration",
+        "overbroad-tool-schema",
+        "missing-auth",
+        "pii-disclosure",
+        "supply-chain"
+      ]
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low"],
+      "description": "Severity of the weakness in THIS server if deployed as-is. Judged by impact x reachability, not by category."
+    },
+    "tool": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Exact MCP tool name that carries the weakness, or the sentinel '(server)' for weaknesses not attributable to a single tool (e.g. manifest-level dependency risk). Scanners are expected to name the tool they flag, which is what makes matching possible."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "description": "What the weakness is, in mechanism terms. Two to four sentences."
+    },
+    "impact": {
+      "type": "string",
+      "minLength": 10,
+      "description": "What an attacker gets. Concrete, not 'could lead to compromise'."
+    },
+    "exploit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vector", "steps", "poc"],
+      "properties": {
+        "vector": {
+          "type": "string",
+          "description": "How the attacker reaches the weakness, e.g. 'Tool argument supplied by the model after reading attacker-controlled content'."
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" },
+          "description": "Ordered, reproducible reproduction steps. This is the acceptance test for the challenge."
+        },
+        "poc": {
+          "type": "string",
+          "description": "Shortest possible proof of concept. PoC-level only — no weaponization."
+        }
+      }
+    },
+    "detection": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Hints used by the harness to decide whether a scanner finding corresponds to this label. Also documents what a GOOD scanner would key on, which is useful to scanner authors reading the repo.",
+      "properties": {
+        "signals": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Lowercase substrings; a finding matching any of these (for the same server) counts as detecting this label."
+        },
+        "static_hints": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "What a static analysis pass would need to see in server.py to flag this."
+        }
+      }
+    },
+    "remediation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary"],
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 10,
+          "description": "The fix, stated so a reader could apply it."
+        },
+        "config": {
+          "type": "string",
+          "description": "A drop-in corrected snippet or policy, where one exists."
+        },
+        "guardrail": {
+          "type": "string",
+          "description": "The runtime control that would have stopped this even if the code stayed bad (HITL gate, allowlist, redaction)."
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "format": "uri" },
+      "description": "Prior art: OWASP LLM Top 10, MCP spec section, CWE, vendor docs."
+    },
+    "cwe": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^CWE-[0-9]+$" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9-]+$" }
+    },
+    "added": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the challenge landed, ISO 8601."
+    }
+  }
+}

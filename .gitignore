@@ -3,6 +3,28 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Virtual environments
+.venv/
+venv/
+
+# Harness output. Scorecards are published deliberately (docs/scorecard.md), not
+# dumped from whatever the last local run produced.
+results/
+
+# Scanner default report filenames (some CLIs write to cwd when run by hand)
+scan_results.json
+baseline.json
+
+# Node (the harness is Python-only; this is here for scanner CLIs that need it)
+node_modules/
+
+# macOS
+.DS_Store
+
+# Editors
+.idea/
+*.swp
+
 # C extensions
 *.so
 
