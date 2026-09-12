@@ -1,6 +1,6 @@
 {
   "version": "0.19.2",
-  "scan_timestamp": "2026-09-12T14:28:48.007101",
+  "scan_timestamp": "2026-09-12T19:09:18.954569",
   "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write",
   "scanned_files": 1,
   "summary": {

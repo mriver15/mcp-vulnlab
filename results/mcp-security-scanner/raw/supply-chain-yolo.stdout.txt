@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "target": "stdio:/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
-  "started_at": "2026-09-12T14:42:05.980892Z",
-  "finished_at": "2026-09-12T14:42:05.980892Z",
+  "started_at": "2026-09-12T19:10:04.096687Z",
+  "finished_at": "2026-09-12T19:10:04.096687Z",
   "findings": [
     {
       "id": "BASE-01",

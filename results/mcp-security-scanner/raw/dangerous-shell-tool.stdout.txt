@@ -1,0 +1,188 @@
+{
+  "schema_version": 2,
+  "target": "stdio:/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/dangerous-shell-tool/server.py",
+  "started_at": "2026-09-12T19:10:01.329427Z",
+  "finished_at": "2026-09-12T19:10:01.329427Z",
+  "findings": [
+    {
+      "id": "BASE-01",
+      "title": "Fingerprint server capabilities",
+      "category": "baseline",
+      "severity": "info",
+      "status": "fail",
+      "passed": false,
+      "details": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"error\": {\"code\": -32602, \"message\": \"Invalid request parameters\", \"data\": \"\"}}",
+      "remediation": [
+        "Align capability advertisement with implemented features.",
+        "Return explicit errors for unsupported calls."
+      ],
+      "references": [
+        "MCP Spec: Initialize & Capabilities"
+      ]
+    },
+    {
+      "id": "X-01",
+      "title": "Dangerous capability detection in tools",
+      "category": "tools",
+      "severity": "high",
+      "status": "pass",
+      "passed": true,
+      "details": "[]",
+      "remediation": [
+        "Split destructive ops; add strict schemas and confirmations.",
+        "Route high-blast tools through HIL (human-in-loop)."
+      ],
+      "references": [
+        "MCP Tools guidance (least privilege)"
+      ]
+    },
+    {
+      "id": "P-02",
+      "title": "Prompt/description injection heuristics",
+      "category": "prompts",
+      "severity": "medium",
+      "status": "pass",
+      "passed": true,
+      "details": "[]",
+      "remediation": [
+        "Remove or quarantine manipulative instructions; add client-side guards."
+      ],
+      "references": [
+        "Prompt injection patterns"
+      ]
+    },
+    {
+      "id": "X-03",
+      "title": "Tool description stability (anti rug-pull)",
+      "category": "tools",
+      "severity": "medium",
+      "status": "pass",
+      "passed": true,
+      "details": "[]",
+      "remediation": [
+        "Version tool descriptions and notify clients; require re-approval."
+      ],
+      "references": [
+        "Change management for tools"
+      ]
+    },
+    {
+      "id": "R-01",
+      "title": "Resource URI validation & path traversal prevention",
+      "category": "resources",
+      "severity": "high",
+      "status": "pass",
+      "passed": true,
+      "details": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"error\": {\"code\": -32602, \"message\": \"Invalid request parameters\", \"data\": \"\"}}",
+      "remediation": [
+        "Add resource roots allowlists; disable proxying unless necessary; sanitize paths."
+      ],
+      "references": [
+        "MCP Resources security"
+      ]
+    },
+    {
+      "id": "R-02",
+      "title": "Per-resource access control",
+      "category": "resources",
+      "severity": "high",
+      "status": "pass",
+      "passed": true,
+      "details": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"error\": {\"code\": -32602, \"message\": \"Invalid request parameters\", \"data\": \"\"}}",
+      "remediation": [
+        "Bind resource access to explicit scopes/claims."
+      ],
+      "references": [
+        "Resource-level RBAC"
+      ]
+    },
+    {
+      "id": "R-03",
+      "title": "Sensitive resource exposure",
+      "category": "resources",
+      "severity": "high",
+      "status": "pass",
+      "passed": true,
+      "details": "[]",
+      "remediation": [
+        "Do not expose internal credentials as resources; gate behind RBAC and remove from listing.",
+        "Store secrets in a vault; never return them via MCP."
+      ],
+      "references": [
+        "Challenge 1: Basic Prompt Injection risk via sensitive resources"
+      ]
+    },
+    {
+      "id": "X-02",
+      "title": "Input validation & injection fuzzing",
+      "category": "tools",
+      "severity": "critical",
+      "status": "pass",
+      "passed": true,
+      "details": "[]",
+      "remediation": [
+        "Apply allowlists, strict parsers, sandboxing; disable raw shells and arbitrary fetch."
+      ],
+      "references": [
+        "API input validation best practices"
+      ]
+    },
+    {
+      "id": "A-03",
+      "title": "Token indirection (no upstream token pass-through)",
+      "category": "authz",
+      "severity": "critical",
+      "status": "pass",
+      "passed": true,
+      "details": "{\"jsonrpc\": \"2.0\", \"id\": 1, \"error\": {\"code\": -32602, \"message\": \"Invalid request parameters\", \"data\": \"\"}}",
+      "remediation": [
+        "Adopt token indirection: never pass through upstream tokens to clients."
+      ],
+      "references": [
+        "MCP Auth best practices: avoid confused deputy"
+      ]
+    },
+    {
+      "id": "P-03",
+      "title": "Indirect prompt injection via external resources",
+      "category": "prompts",
+      "severity": "high",
+      "status": "pass",
+      "passed": true,
+      "details": "[]",
+      "remediation": [
+        "Sanitize/strip untrusted content, apply allowlists and guardrails in LLM prompts",
+        "Require HIL or sandbox for external content processing"
+      ],
+      "references": [
+        "DVMCP Challenge 6"
+      ]
+    },
+    {
+      "id": "RC-01",
+      "title": "Remote access control exposure",
+      "category": "access-control",
+      "severity": "critical",
+      "status": "pass",
+      "passed": true,
+      "details": "No tools were discovered",
+      "remediation": [
+        "Remove remote admin tooling from client surface; enforce RBAC and human-in-the-loop approvals."
+      ],
+      "references": [
+        "Damn Vulnerable MCP Server: Challenge 9 solution"
+      ]
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "info": 1,
+    "passed": 10,
+    "failed": 1,
+    "errors": 0,
+    "skipped": 0
+  }
+}

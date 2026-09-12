@@ -2,7 +2,7 @@
   "skill": {
     "name": "unknown",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-files",
-    "scanned_at": "2026-09-12T14:12:05.117092+00:00"
+    "scanned_at": "2026-09-12T19:08:59.563910+00:00"
   },
   "risk_assessment": {
     "score": 15,
@@ -56,7 +56,7 @@
   "issues": [
     {
       "id": "PE3",
-      "finding_id": "finding-a6d572681c65457297430db9a69d94f4",
+      "finding_id": "finding-79bbcc06bfe44a2cadd9fecb739bd0ad",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",

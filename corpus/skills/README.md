@@ -30,13 +30,16 @@ corpus/skills/<slug>/
 | Skill | Category | Labels | The weakness |
 |---|---|---|---|
 | `skill-hidden-instructions` | prompt-injection | 1 | Exfiltration instruction hidden in an HTML comment |
-| `skill-env-exfil` | data-exfiltration | 1 | Helper harvests the environment and POSTs it out |
+| `skill-env-exfil` | data-exfiltration | 1 | Helper harvests the environment and POSTs it out (bash) |
+| `skill-py-env-exfil` | data-exfiltration | 1 | Helper harvests the environment and POSTs it out (Python) |
 | `skill-curl-bash` | supply-chain | 2 | `curl\|bash` remote exec + unpinned dependency manifest |
 | `skill-sudo-persist` | rogue-agent | 1 | sudo + launchd persistence + shell-profile hook |
 | `skill-overbroad-agency` | excessive-agency | 1 | Instructions grant unbounded, unconfirmed, elevated agency |
+| `skill-anti-refusal` | anti-refusal | 1 | Instructions suppress the model's refusal and safety behaviour |
+| `skill-memory-poisoning` | memory-poisoning | 1 | Instructions plant a persistent directive in agent memory |
 | `control-skill` | — | 0 | Benign false-positive control |
 
-**6 skills, 6 labels across 5 categories, 1 control.** Label ids use the `SKLV-`
+**9 skills, 9 labels across 8 categories, 1 control.** Label ids use the `SKLV-`
 prefix to stay distinct from the `MCPV-` server labels in the scorecard.
 
 ## Safety rules
@@ -44,7 +47,8 @@ prefix to stay distinct from the `MCPV-` server labels in the scorecard.
 Each skill is **proof-of-concept depth** and inert by default:
 
 - The prompt-injection payload targets the reserved `.invalid` TLD.
-- `skill-env-exfil` transmits to `.invalid` and therefore sends nothing.
+- `skill-env-exfil` and `skill-py-env-exfil` transmit to `.invalid` and therefore
+  send nothing; the latter also refuses unless `ALLOW_EXFIL=1`.
 - `skill-curl-bash` and `skill-sudo-persist` refuse to act unless an explicit
   `ALLOW_*` env var is set, which the harness never sets.
 - No skill in this corpus is executed by the harness — skill scanners read files.

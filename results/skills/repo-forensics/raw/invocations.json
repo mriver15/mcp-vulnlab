@@ -16,6 +16,22 @@
     "config": null
   },
   {
+    "slug": "skill-anti-refusal",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-anti-refusal",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
     "slug": "skill-curl-bash",
     "argv": [
       "bash",
@@ -64,6 +80,22 @@
     "config": null
   },
   {
+    "slug": "skill-memory-poisoning",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-memory-poisoning",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 3,
+    "config": null
+  },
+  {
     "slug": "skill-overbroad-agency",
     "argv": [
       "bash",
@@ -77,6 +109,22 @@
     "returncode": 1,
     "error": null,
     "findings": 2,
+    "config": null
+  },
+  {
+    "slug": "skill-py-env-exfil",
+    "argv": [
+      "bash",
+      "/Users/river/tools/repo-forensics/skills/repo-forensics/scripts/run_forensics.sh",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-py-env-exfil",
+      "--skill-scan",
+      "--format",
+      "json",
+      "--offline"
+    ],
+    "returncode": 2,
+    "error": null,
+    "findings": 5,
     "config": null
   },
   {

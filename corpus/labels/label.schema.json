@@ -45,7 +45,11 @@
         "pii-disclosure",
         "supply-chain",
         "rogue-agent",
-        "excessive-agency"
+        "excessive-agency",
+        "tool-poisoning",
+        "code-execution",
+        "anti-refusal",
+        "memory-poisoning"
       ]
     },
     "severity": {

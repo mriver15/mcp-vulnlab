@@ -2,7 +2,7 @@
   "skill": {
     "name": "skill-overbroad-agency",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-overbroad-agency",
-    "scanned_at": "2026-09-12T15:14:50.834542+00:00"
+    "scanned_at": "2026-09-12T19:08:09.482154+00:00"
   },
   "risk_assessment": {
     "score": 80,
@@ -56,7 +56,7 @@
   "issues": [
     {
       "id": "YR4",
-      "finding_id": "finding-1cc63f9fb76a42aba4e6823e04e86bbe",
+      "finding_id": "finding-3d9295fd828f4f61b3181074a4c60dbf",
       "category": "YARA Match",
       "pattern": "YARA rule 'agent_skill_prompt_injection_hidden_instructions': Prompt injection or hidden instructions embedded in AI agent skill text [agent_skills]",
       "severity": "HIGH",
@@ -86,7 +86,7 @@
     },
     {
       "id": "YR4",
-      "finding_id": "finding-fecd52519bab4fb8941da08b4159ea1a",
+      "finding_id": "finding-6f77f6fa8c5d4f10ac383b88d14e409c",
       "category": "YARA Match",
       "pattern": "YARA rule 'agent_skill_prompt_injection_hidden_instructions': Prompt injection or hidden instructions embedded in AI agent skill text [agent_skills]",
       "severity": "HIGH",
@@ -116,7 +116,7 @@
     },
     {
       "id": "RA1",
-      "finding_id": "finding-c382ca7e2add4eb6a37fbc9fecf2c235",
+      "finding_id": "finding-d26b614a14b94ce58ad2b3bfb15db9e7",
       "category": "Rogue Agent",
       "pattern": "Self-Modification",
       "severity": "HIGH",
@@ -146,7 +146,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-93e3557f38844505954909a924347f64",
+      "finding_id": "finding-2efd9d80aa194e57b9f1f32f520a8b8f",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -176,7 +176,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-eab656edc0c3414da4be740f40d6dc64",
+      "finding_id": "finding-f54c73a043ca483693a6c54b4e50cc22",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -206,7 +206,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-9992b416535e43adb7b68ce30f7ec33a",
+      "finding_id": "finding-b292bee0fcbf4813b79c991fb462b44a",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -236,7 +236,7 @@
     },
     {
       "id": "AS3",
-      "finding_id": "finding-ba3211c08add4fd985af69986c151013",
+      "finding_id": "finding-89b524deba87445bb75afaa942ec44df",
       "category": "Agent Snooping",
       "pattern": "Skill Enumeration",
       "severity": "MEDIUM",
@@ -266,7 +266,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-988cd8bd1b0847418d4231c3654dd606",
+      "finding_id": "finding-e64e16c0801844918a454125536c2374",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -296,7 +296,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-988cd8bd1b0847418d4231c3654dd606",
+      "finding_id": "finding-e64e16c0801844918a454125536c2374",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -326,7 +326,7 @@
     },
     {
       "id": "PE2",
-      "finding_id": "finding-2285c8ea1ff94886b5c0ce306ee2e3b9",
+      "finding_id": "finding-bf49d71a950e4474abed4c98acb35be0",
       "category": "Privilege Escalation",
       "pattern": "Sudo/Root Execution",
       "severity": "MEDIUM",

@@ -42,6 +42,20 @@
     "config": null
   },
   {
+    "slug": "dangerous-shell-tool",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/dangerous-shell-tool"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 4,
+    "config": null
+  },
+  {
     "slug": "exfil-write",
     "argv": [
       "agent-audit",
@@ -123,6 +137,20 @@
     "returncode": 0,
     "error": null,
     "findings": 4,
+    "config": null
+  },
+  {
+    "slug": "tool-poisoning",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/tool-poisoning"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
     "config": null
   }
 ]

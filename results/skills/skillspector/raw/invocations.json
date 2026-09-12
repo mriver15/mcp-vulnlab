@@ -15,6 +15,21 @@
     "config": null
   },
   {
+    "slug": "skill-anti-refusal",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-anti-refusal",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 16,
+    "config": null
+  },
+  {
     "slug": "skill-curl-bash",
     "argv": [
       "skillspector",
@@ -60,6 +75,21 @@
     "config": null
   },
   {
+    "slug": "skill-memory-poisoning",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-memory-poisoning",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": null
+  },
+  {
     "slug": "skill-overbroad-agency",
     "argv": [
       "skillspector",
@@ -72,6 +102,21 @@
     "returncode": 1,
     "error": null,
     "findings": 10,
+    "config": null
+  },
+  {
+    "slug": "skill-py-env-exfil",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-py-env-exfil",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 3,
     "config": null
   },
   {

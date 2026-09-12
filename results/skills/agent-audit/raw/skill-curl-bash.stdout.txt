@@ -1,6 +1,6 @@
 {
   "version": "0.19.2",
-  "scan_timestamp": "2026-09-12T15:45:45.732582",
+  "scan_timestamp": "2026-09-12T19:08:15.731249",
   "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-curl-bash",
   "scanned_files": 1,
   "summary": {

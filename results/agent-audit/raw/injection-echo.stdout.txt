@@ -1,6 +1,6 @@
 {
   "version": "0.19.2",
-  "scan_timestamp": "2026-09-12T14:28:48.129732",
+  "scan_timestamp": "2026-09-12T19:09:19.078478",
   "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo",
   "scanned_files": 1,
   "summary": {
@@ -56,7 +56,7 @@
         "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
       },
       "metadata": {},
-      "detected_at": "2026-09-12T14:28:48.123234",
+      "detected_at": "2026-09-12T19:09:19.069929",
       "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
     },
     {
@@ -90,7 +90,7 @@
         "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
       },
       "metadata": {},
-      "detected_at": "2026-09-12T14:28:48.123392",
+      "detected_at": "2026-09-12T19:09:19.070086",
       "reason": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n"
     }
   ]

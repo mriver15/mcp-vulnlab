@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "target": "stdio:/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/control-echo/server.py",
-  "started_at": "2026-09-12T14:42:02.243552Z",
-  "finished_at": "2026-09-12T14:42:02.243552Z",
+  "started_at": "2026-09-12T19:09:59.934916Z",
+  "finished_at": "2026-09-12T19:09:59.934916Z",
   "findings": [
     {
       "id": "BASE-01",

@@ -2,7 +2,7 @@
   "skill": {
     "name": "unknown",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write",
-    "scanned_at": "2026-09-12T14:12:08.012938+00:00"
+    "scanned_at": "2026-09-12T19:09:03.658663+00:00"
   },
   "risk_assessment": {
     "score": 15,
@@ -56,7 +56,7 @@
   "issues": [
     {
       "id": "PE3",
-      "finding_id": "finding-76436818769d4cdd988c8f9664d1dc46",
+      "finding_id": "finding-5d08df99e0064d62a96a485e1c2b52e5",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",

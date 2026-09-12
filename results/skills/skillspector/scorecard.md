@@ -1,22 +1,24 @@
 # Scorecard: `skillspector`
 
-Generated 2026-09-12T15:14:52+00:00 against `/Users/river/Projects/mcp-vulnlab`.
+Generated 2026-09-12T19:08:12+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 
 ## Summary
 
 | metric | value |
 |---|---|
-| recall | 100.0% (6/6 labels) |
-| findings | 64 |
-| true positives | 6 |
-| false positives | 58 (rate 90.6%) |
+| recall | 100.0% (9/9 labels) |
+| findings | 85 |
+| true positives | 9 |
+| false positives | 76 (rate 89.4%) |
 
 ## Recall by category
 
 | category | detected | total | recall | |
 |---|---:|---:|---:|---|
-| `data-exfiltration` | 1 | 1 | 100.0% | `##########` |
+| `anti-refusal` | 1 | 1 | 100.0% | `##########` |
+| `data-exfiltration` | 2 | 2 | 100.0% | `##########` |
 | `excessive-agency` | 1 | 1 | 100.0% | `##########` |
+| `memory-poisoning` | 1 | 1 | 100.0% | `##########` |
 | `prompt-injection` | 1 | 1 | 100.0% | `##########` |
 | `rogue-agent` | 1 | 1 | 100.0% | `##########` |
 | `supply-chain` | 2 | 2 | 100.0% | `##########` |
@@ -26,10 +28,13 @@ Generated 2026-09-12T15:14:52+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | server | kind | labels | detected | findings | false positives |
 |---|---|---:|---:|---:|---:|
 | `control-skill` | control | 0 | 0 | 1 | 1 |
+| `skill-anti-refusal` | vulnerable | 1 | 1 | 16 | 15 |
 | `skill-curl-bash` | vulnerable | 2 | 2 | 19 | 17 |
 | `skill-env-exfil` | vulnerable | 1 | 1 | 4 | 3 |
 | `skill-hidden-instructions` | vulnerable | 1 | 1 | 14 | 13 |
+| `skill-memory-poisoning` | vulnerable | 1 | 1 | 2 | 1 |
 | `skill-overbroad-agency` | vulnerable | 1 | 1 | 10 | 9 |
+| `skill-py-env-exfil` | vulnerable | 1 | 1 | 3 | 2 |
 | `skill-sudo-persist` | vulnerable | 1 | 1 | 16 | 15 |
 
 ## Missed labels (0)
@@ -38,11 +43,26 @@ None. This scanner detected every labeled weakness in the corpus.
 
 ## False positives
 
-58 finding(s) matched no label. For a `control` server that is a false positive by definition.
+76 finding(s) matched no label. For a `control` server that is a false positive by definition.
 
 | server | kind | rule | tool | message |
 |---|---|---|---|---|
 | `control-skill` | control | `EA2` | `—` | Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data d |
+| `skill-anti-refusal` | vulnerable | `AR1` | `—` | Skill instructs the agent to never refuse or to always comply. Suppressing the agent's ability to decline removes a core safety control and enables downstream h |
+| `skill-anti-refusal` | vulnerable | `AR1` | `—` | Skill instructs the agent to never refuse or to always comply. Suppressing the agent's ability to decline removes a core safety control and enables downstream h |
+| `skill-anti-refusal` | vulnerable | `AR1` | `—` | Skill instructs the agent to never refuse or to always comply. Suppressing the agent's ability to decline removes a core safety control and enables downstream h |
+| `skill-anti-refusal` | vulnerable | `AR2` | `—` | Skill instructs the agent to omit warnings, disclaimers, or ethical commentary. Stripping safety caveats hides risk from the user and is a common jailbreak prea |
+| `skill-anti-refusal` | vulnerable | `AR2` | `—` | Skill instructs the agent to omit warnings, disclaimers, or ethical commentary. Stripping safety caveats hides risk from the user and is a common jailbreak prea |
+| `skill-anti-refusal` | vulnerable | `AR1` | `—` | Skill instructs the agent to never refuse or to always comply. Suppressing the agent's ability to decline removes a core safety control and enables downstream h |
+| `skill-anti-refusal` | vulnerable | `AR1` | `—` | Skill instructs the agent to never refuse or to always comply. Suppressing the agent's ability to decline removes a core safety control and enables downstream h |
+| `skill-anti-refusal` | vulnerable | `AR1` | `—` | Skill instructs the agent to never refuse or to always comply. Suppressing the agent's ability to decline removes a core safety control and enables downstream h |
+| `skill-anti-refusal` | vulnerable | `AR3` | `—` | Skill attempts to nullify the agent's safety policies or restrictions ('you have no restrictions', 'ignore your guidelines', 'do anything now'). This is a direc |
+| `skill-anti-refusal` | vulnerable | `AR3` | `—` | Skill attempts to nullify the agent's safety policies or restrictions ('you have no restrictions', 'ignore your guidelines', 'do anything now'). This is a direc |
+| `skill-anti-refusal` | vulnerable | `P1` | `—` | This pattern attempts to override system instructions or ignore safety constraints. Without LLM analysis, manual review is recommended. |
+| `skill-anti-refusal` | vulnerable | `P1` | `—` | This pattern attempts to override system instructions or ignore safety constraints. Without LLM analysis, manual review is recommended. |
+| `skill-anti-refusal` | vulnerable | `AR1` | `—` | Skill instructs the agent to never refuse or to always comply. Suppressing the agent's ability to decline removes a core safety control and enables downstream h |
+| `skill-anti-refusal` | vulnerable | `AR2` | `—` | Skill instructs the agent to omit warnings, disclaimers, or ethical commentary. Stripping safety caveats hides risk from the user and is a common jailbreak prea |
+| `skill-anti-refusal` | vulnerable | `AS3` | `—` | Skill enumerates or reads other installed skills. Access to other skills' SKILL.md files or the skills directory reveals prompt instructions, capabilities, and  |
 | `skill-curl-bash` | vulnerable | `SC2` | `—` | Remote code is downloaded and executed. This bypasses code review and could introduce malicious code. |
 | `skill-curl-bash` | vulnerable | `SC2` | `—` | Remote code is downloaded and executed. This bypasses code review and could introduce malicious code. |
 | `skill-curl-bash` | vulnerable | `SC2` | `—` | Remote code is downloaded and executed. This bypasses code review and could introduce malicious code. |
@@ -76,6 +96,7 @@ None. This scanner detected every labeled weakness in the corpus.
 | `skill-hidden-instructions` | vulnerable | `YR4` | `—` | YARA rule matched a hack tool or exploit indicator (offensive tools, reconnaissance, privilege escalation, or exploit frameworks). |
 | `skill-hidden-instructions` | vulnerable | `P1` | `—` | This pattern attempts to override system instructions or ignore safety constraints. Without LLM analysis, manual review is recommended. |
 | `skill-hidden-instructions` | vulnerable | `AS3` | `—` | Skill enumerates or reads other installed skills. Access to other skills' SKILL.md files or the skills directory reveals prompt instructions, capabilities, and  |
+| `skill-memory-poisoning` | vulnerable | `AS3` | `—` | Skill enumerates or reads other installed skills. Access to other skills' SKILL.md files or the skills directory reveals prompt instructions, capabilities, and  |
 | `skill-overbroad-agency` | vulnerable | `YR4` | `—` | YARA rule matched a hack tool or exploit indicator (offensive tools, reconnaissance, privilege escalation, or exploit frameworks). |
 | `skill-overbroad-agency` | vulnerable | `YR4` | `—` | YARA rule matched a hack tool or exploit indicator (offensive tools, reconnaissance, privilege escalation, or exploit frameworks). |
 | `skill-overbroad-agency` | vulnerable | `RA1` | `—` | Skill modifies its own code, configuration, or behavior at runtime. Self-modification enables an agent to escalate privileges, disable safety constraints, or in |
@@ -85,6 +106,8 @@ None. This scanner detected every labeled weakness in the corpus.
 | `skill-overbroad-agency` | vulnerable | `EA2` | `—` | Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data d |
 | `skill-overbroad-agency` | vulnerable | `EA2` | `—` | Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data d |
 | `skill-overbroad-agency` | vulnerable | `PE2` | `—` | Commands invoke sudo or root privileges. Verify this elevated access is necessary and justified. |
+| `skill-py-env-exfil` | vulnerable | `LP3` | `—` | Without declared permissions the skill's intent is opaque and cannot be validated. |
+| `skill-py-env-exfil` | vulnerable | `SC4` | `—` | Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits. |
 | `skill-sudo-persist` | vulnerable | `SC2` | `—` | Remote code is downloaded and executed. This bypasses code review and could introduce malicious code. |
 | `skill-sudo-persist` | vulnerable | `LP3` | `—` | Without declared permissions the skill's intent is opaque and cannot be validated. |
 | `skill-sudo-persist` | vulnerable | `PE2` | `—` | Commands invoke sudo or root privileges. Verify this elevated access is necessary and justified. |
@@ -103,9 +126,11 @@ None. This scanner detected every labeled weakness in the corpus.
 
 ## Notes
 
+- skill-anti-refusal: scanner exited with status 1
 - skill-curl-bash: scanner exited with status 1
 - skill-hidden-instructions: scanner exited with status 1
 - skill-overbroad-agency: scanner exited with status 1
+- skill-py-env-exfil: scanner exited with status 1
 - skill-sudo-persist: scanner exited with status 1
 - matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive.
 

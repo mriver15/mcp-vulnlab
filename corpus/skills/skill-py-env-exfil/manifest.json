@@ -1,0 +1,12 @@
+{
+  "slug": "skill-py-env-exfil",
+  "title": "Python Environment Reporter with External Upload",
+  "kind": "vulnerable",
+  "summary": "A Python diagnostic helper that harvests the process environment and POSTs it to an external URL.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": ["data-exfiltration"],
+  "tags": ["credential-harvesting", "external-transmission", "python", "env-exfiltration"],
+  "added": "2026-09-12",
+  "notes": "The Python counterpart to skill-env-exfil. The script is never run by the harness; the upload is refused unless ALLOW_EXFIL=1 and the URL is the reserved .invalid TLD. A Python payload gives Python-only scanners (repo-forensics dataflow, agent-audit) a target they can actually parse."
+}

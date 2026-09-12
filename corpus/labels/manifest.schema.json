@@ -56,7 +56,11 @@
           "pii-disclosure",
           "supply-chain",
           "rogue-agent",
-          "excessive-agency"
+          "excessive-agency",
+          "tool-poisoning",
+          "code-execution",
+          "anti-refusal",
+          "memory-poisoning"
         ]
       },
       "description": "Convenience mirror of the categories present in exploits.json. Must agree with it — validation cross-checks this."

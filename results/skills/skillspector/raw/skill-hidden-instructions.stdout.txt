@@ -2,7 +2,7 @@
   "skill": {
     "name": "skill-hidden-instructions",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-hidden-instructions",
-    "scanned_at": "2026-09-12T15:14:49.612411+00:00"
+    "scanned_at": "2026-09-12T19:08:07.005893+00:00"
   },
   "risk_assessment": {
     "score": 100,
@@ -56,7 +56,7 @@
   "issues": [
     {
       "id": "YR4",
-      "finding_id": "finding-6c6cffd279d6426498772e3cabc66026",
+      "finding_id": "finding-d3a5b995694f41808e3f841e761d0dc3",
       "category": "YARA Match",
       "pattern": "YARA rule 'agent_skill_mcp_tool_poisoning_metadata': MCP/tool metadata poisoning indicators in tool schemas or skill manifests [agent_skills]",
       "severity": "HIGH",
@@ -86,7 +86,7 @@
     },
     {
       "id": "P2",
-      "finding_id": "finding-fe560e598b4a4642a69370a59efe1122",
+      "finding_id": "finding-0758fb6abf7444c4bbf5294943c20aab",
       "category": "Prompt Injection",
       "pattern": "Hidden Instructions",
       "severity": "HIGH",
@@ -116,7 +116,7 @@
     },
     {
       "id": "YR4",
-      "finding_id": "finding-a123cb903ccf4c79b623c5791cd3a0c1",
+      "finding_id": "finding-e1128a043cb344aaad8c84e1066e05bf",
       "category": "YARA Match",
       "pattern": "YARA rule 'agent_skill_prompt_injection_hidden_instructions': Prompt injection or hidden instructions embedded in AI agent skill text [agent_skills]",
       "severity": "HIGH",
@@ -146,7 +146,7 @@
     },
     {
       "id": "P1",
-      "finding_id": "finding-a4856d2c35a94a4d9085183fa24f8972",
+      "finding_id": "finding-f7ad6bec609c41ab89061f671d89464c",
       "category": "Prompt Injection",
       "pattern": "Instruction Override",
       "severity": "HIGH",
@@ -176,7 +176,7 @@
     },
     {
       "id": "P1",
-      "finding_id": "finding-a4856d2c35a94a4d9085183fa24f8972",
+      "finding_id": "finding-f7ad6bec609c41ab89061f671d89464c",
       "category": "Prompt Injection",
       "pattern": "Instruction Override",
       "severity": "HIGH",
@@ -206,7 +206,7 @@
     },
     {
       "id": "P1",
-      "finding_id": "finding-a4856d2c35a94a4d9085183fa24f8972",
+      "finding_id": "finding-f7ad6bec609c41ab89061f671d89464c",
       "category": "Prompt Injection",
       "pattern": "Instruction Override",
       "severity": "HIGH",
@@ -236,7 +236,7 @@
     },
     {
       "id": "E4",
-      "finding_id": "finding-6b363f82b00f4b29adfe2bb84b26890b",
+      "finding_id": "finding-7a45ccd3332c4bfc81a183f40d0c05e0",
       "category": "Data Exfiltration",
       "pattern": "Context Leakage",
       "severity": "HIGH",
@@ -266,7 +266,7 @@
     },
     {
       "id": "E4",
-      "finding_id": "finding-6b363f82b00f4b29adfe2bb84b26890b",
+      "finding_id": "finding-7a45ccd3332c4bfc81a183f40d0c05e0",
       "category": "Data Exfiltration",
       "pattern": "Context Leakage",
       "severity": "HIGH",
@@ -296,7 +296,7 @@
     },
     {
       "id": "E4",
-      "finding_id": "finding-f717fa83ea1c4e6ab258aaa3a46be0ac",
+      "finding_id": "finding-e8633e70e25f4a62aecec472a26150f6",
       "category": "Data Exfiltration",
       "pattern": "Context Leakage",
       "severity": "HIGH",
@@ -326,7 +326,7 @@
     },
     {
       "id": "P3",
-      "finding_id": "finding-61c69d0a6f1749c7bc878953af0290d3",
+      "finding_id": "finding-7aba82d40586481f950578ac9edd4782",
       "category": "Prompt Injection",
       "pattern": "Exfiltration Commands",
       "severity": "HIGH",
@@ -356,7 +356,7 @@
     },
     {
       "id": "YR4",
-      "finding_id": "finding-ca3f95846c874515adab4d5aa1f7bb22",
+      "finding_id": "finding-ba101b09964644e19e2b55a007e45f43",
       "category": "YARA Match",
       "pattern": "YARA rule 'agent_skill_prompt_injection_hidden_instructions': Prompt injection or hidden instructions embedded in AI agent skill text [agent_skills]",
       "severity": "HIGH",
@@ -386,7 +386,7 @@
     },
     {
       "id": "YR4",
-      "finding_id": "finding-c4af9adc5f6148cdbf223904fae33c19",
+      "finding_id": "finding-8b460e1525bd44499ef6f5de38cba3bd",
       "category": "YARA Match",
       "pattern": "YARA rule 'agent_skill_mcp_tool_poisoning_metadata': MCP/tool metadata poisoning indicators in tool schemas or skill manifests [agent_skills]",
       "severity": "HIGH",
@@ -416,7 +416,7 @@
     },
     {
       "id": "P1",
-      "finding_id": "finding-6d17349c8dcf45d5a2b9136d1b45e4f4",
+      "finding_id": "finding-6a861989f70d4a70bfbe1a9eda3df6bc",
       "category": "Prompt Injection",
       "pattern": "Instruction Override",
       "severity": "HIGH",
@@ -446,7 +446,7 @@
     },
     {
       "id": "AS3",
-      "finding_id": "finding-64eff5fbfb94420b97b9582b9e844161",
+      "finding_id": "finding-3062568a867845c2bbcf5018a8e544b4",
       "category": "Agent Snooping",
       "pattern": "Skill Enumeration",
       "severity": "MEDIUM",

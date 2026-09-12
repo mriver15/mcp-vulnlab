@@ -8,11 +8,11 @@
 
 > The MCP security ecosystem has plenty of scanners and no shared testbed. This is the testbed.
 
-Nine deliberately vulnerable MCP servers, 12 labeled exploitable weaknesses
-across 6 threat categories, 3 benign controls for false-positive measurement, and
+Eleven deliberately vulnerable MCP servers, 14 labeled exploitable weaknesses
+across 8 threat categories, 3 benign controls for false-positive measurement, and
 a harness that points any MCP scanner at the corpus and produces a
 detection-rate scorecard. A parallel **skills corpus** does the same for agent
-skills — 6 vulnerable skills, 6 labels across 5 categories, and a harness that
+skills — 9 vulnerable skills, 9 labels across 8 categories, and a harness that
 scores skill scanners.
 
 ---
@@ -20,20 +20,20 @@ scores skill scanners.
 ## Summary
 
 Seven scanners were measured against the corpus. The best recall is
-`cisco-mcp-scanner` at **83.3%** (10/12 labels); the best precision is
-`mcp-armor` at **50.0%** recall with a 57.1% false-positive rate, and it is the
+`cisco-mcp-scanner` at **85.7%** (12/14 labels); the best precision is
+`mcp-armor` at **50.0%** recall with a 58.8% false-positive rate, and it is the
 only one to catch both prompt-injection labels with a local, offline model.
 Snyk's scanner could not be automated headlessly, and the rest of the field is
 either static/adjacent or a different tier (proxy firewalls, hosted gateways).
 
 | scanner | recall | detected | false-positive rate |
 |---|---:|---:|---:|
-| `cisco-mcp-scanner` 4.8.4 | **83.3%** | 10/12 | 75.0% |
-| `mcp-armor` 1.0.2 | **50.0%** | 6/12 | 57.1% |
-| `skillspector` 2.11.2 (NVIDIA) | **25.0%** | 3/12 | 91.9% |
-| `agent-audit` 0.19.2 | **8.3%** | 1/12 | 90.0% |
-| `mcp-security-scanner` 0.1.5 | **0.0%** | 0/12 | 100.0% |
-| `mcp-shield` 1.0.4 | **0.0%** | 0/12 | n/a |
+| `cisco-mcp-scanner` 4.8.4 | **85.7%** | 12/14 | 72.7% |
+| `mcp-armor` 1.0.2 | **50.0%** | 7/14 | 58.8% |
+| `skillspector` 2.11.2 (NVIDIA) | **28.6%** | 4/14 | 91.3% |
+| `agent-audit` 0.19.2 | **7.1%** | 1/14 | 93.3% |
+| `mcp-security-scanner` 0.1.5 | **0.0%** | 0/14 | 100.0% |
+| `mcp-shield` 1.0.4 | **0.0%** | 0/14 | n/a |
 | `snyk-agent-scan` 0.6.3 | *not run* | — | — |
 
 The headline finding: **`MCPV-004` — a path-traversal defence explicitly
@@ -71,8 +71,8 @@ Honest accounting of what is and is not done:
 
 | | State |
 |---|---|
-| Corpus — 9 servers, 12 labels, 6 categories, 3 controls | ✅ complete, schema-validated in CI |
-| Harness — runner, adapters, scorer, reporter, CLI | ✅ complete, 106 tests |
+| Corpus — 11 servers, 14 labels, 8 categories, 3 controls · 9 skills, 9 labels, 8 categories | ✅ complete, schema-validated in CI |
+| Harness — runner, adapters, scorer, reporter, CLI | ✅ complete, 116 tests |
 | Corpus liveness — every server boots and exposes what its labels claim | ✅ enforced by CI |
 | Scorecard reproducibility — identical output across runs | ✅ enforced by CI |
 | **Real scanner runs (6 scanners)** | ✅ **done — see [docs/scorecard.md](docs/scorecard.md)** |
@@ -94,6 +94,8 @@ Full numbers and the caveats they require are in
 | `pii-leak` | pii-disclosure | 2 | Unmasked records; a substring search that dumps the table |
 | `no-auth-file` | missing-auth | 2 | Identity logged but never checked; an ungated irreversible delete |
 | `supply-chain-yolo` | supply-chain | 2 | Unverified remote code load; a fully floating dependency manifest |
+| `tool-poisoning` | tool-poisoning | 1 | Tool described as read-only, but the implementation writes to the user's shell profile |
+| `dangerous-shell-tool` | code-execution | 1 | General-purpose shell tool with no command allowlist, sandbox, or confirmation gate |
 | `control-*` (3 servers) | — | 0 | Benign false-positive controls |
 
 Full inventory, severity model, and design rationale: **[corpus/README.md](corpus/README.md)**.
@@ -106,16 +108,19 @@ correctly-built code, and the scorecard will say so.
 ## The skills corpus
 
 The same idea, applied to **agent skills** — the `SKILL.md` folders agents load
-and follow with implicit trust. Six deliberately vulnerable skills across five
+and follow with implicit trust. Nine deliberately vulnerable skills across eight
 categories, plus one benign control:
 
 | Skill | Category | The weakness |
 |---|---|---|
 | `skill-hidden-instructions` | prompt-injection | Exfiltration instruction hidden in an HTML comment |
-| `skill-env-exfil` | data-exfiltration | Helper harvests the environment and POSTs it out |
+| `skill-env-exfil` | data-exfiltration | Helper harvests the environment and POSTs it out (bash) |
+| `skill-py-env-exfil` | data-exfiltration | Helper harvests the environment and POSTs it out (Python) |
 | `skill-curl-bash` | supply-chain | `curl\|bash` remote exec + unpinned dependency manifest |
 | `skill-sudo-persist` | rogue-agent | sudo + launchd persistence + shell-profile hook |
 | `skill-overbroad-agency` | excessive-agency | Instructions grant unbounded, unconfirmed agency |
+| `skill-anti-refusal` | anti-refusal | Instructions suppress the model's refusal and safety behaviour |
+| `skill-memory-poisoning` | memory-poisoning | Instructions plant a persistent directive in agent memory |
 | `control-skill` | — | Benign false-positive control |
 
 Research, taxonomy, and sources: **[docs/skills-vulnerabilities.md](docs/skills-vulnerabilities.md)**.
@@ -130,11 +135,10 @@ mcp-vulnlab run --scanner repo-forensics --skills --out results   # -> results/s
 mcp-vulnlab run --scanner agent-audit --skills --out results      # -> results/skills/agent-audit/
 ```
 
-First result: SkillSpector recalls **6/6 skill labels (100%)**; `repo-forensics`
-recalls **4/6** (misses only unpinned deps and unbounded agency); `agent-audit`
-— a generic agent-code analyzer, not a skill scanner — finds just **1/6** with
-zero false positives. See the skills scorecard in
-[docs/scorecard.md](docs/scorecard.md).
+First result: SkillSpector recalls **9/9 skill labels (100%)**; `repo-forensics`
+recalls **7/9** (misses only unpinned deps and unbounded agency); `agent-audit`
+— a generic agent-code analyzer, not a skill scanner — finds just **1/9**. See
+the skills scorecard in [docs/scorecard.md](docs/scorecard.md).
 
 ## Quickstart
 
@@ -234,7 +238,7 @@ The offline self-test below exists so the harness can be verified without any
 third-party tooling:
 
 ```sh
-make selftest    # replay scanner: 58.3% recall (7/12), 1 false positive
+make selftest    # replay scanner: 50.0% recall (7/14), 1 false positive
 ```
 
 `replay` is **not a security scanner** — it replays a hand-authored transcript,
@@ -247,6 +251,7 @@ enforces by running it twice and diffing.
 ```
 corpus/
   servers/<slug>/           manifest.json, exploits.json, server.py, README.md
+  skills/<slug>/            SKILL.md, manifest.json, exploits.json, README.md, scripts/
   labels/                   JSON Schemas + generated index.json
 harness/
   corpus.py                 discovery, schema validation, index generation
@@ -257,7 +262,7 @@ harness/
   replay.py                 offline scanner used by CI (not a real scanner)
   cli.py                    mcp-vulnlab validate | corpus | index | smoke | run | report
 scanners.yaml               one declarative adapter profile per scanner
-tests/                      94 tests; corpus invariants are the important ones
+tests/                      116 tests; corpus invariants are the important ones
 ```
 
 ## Design decisions

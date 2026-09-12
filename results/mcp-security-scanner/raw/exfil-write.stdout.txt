@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "target": "stdio:/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write/server.py",
-  "started_at": "2026-09-12T14:42:03.643921Z",
-  "finished_at": "2026-09-12T14:42:03.643921Z",
+  "started_at": "2026-09-12T19:10:01.791202Z",
+  "finished_at": "2026-09-12T19:10:01.791202Z",
   "findings": [
     {
       "id": "BASE-01",

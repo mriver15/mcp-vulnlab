@@ -22,7 +22,7 @@ def test_corpus_validates(root: Path) -> None:
 
 
 def test_corpus_meets_the_documented_targets(root: Path) -> None:
-    """The one-pager promises >= 12 labeled challenges across 6 categories."""
+    """The one-pager promises >= 12 labeled challenges, one per category."""
     index = build_index(root)
     counts = index["corpus"]
     assert counts["labels"] >= 12

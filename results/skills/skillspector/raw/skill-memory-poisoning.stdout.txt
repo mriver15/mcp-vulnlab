@@ -1,0 +1,399 @@
+{
+  "skill": {
+    "name": "skill-memory-poisoning",
+    "source": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-memory-poisoning",
+    "scanned_at": "2026-09-12T19:08:08.236047+00:00"
+  },
+  "risk_assessment": {
+    "score": 16,
+    "severity": "LOW",
+    "recommendation": "SAFE",
+    "max_issue_severity": "MEDIUM"
+  },
+  "components": [
+    {
+      "path": "README.md",
+      "type": "markdown",
+      "lines": 41,
+      "executable": false,
+      "size_bytes": 1527,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "SKILL.md",
+      "type": "markdown",
+      "lines": 20,
+      "executable": false,
+      "size_bytes": 702,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "exploits.json",
+      "type": "json",
+      "lines": 55,
+      "executable": false,
+      "size_bytes": 3628,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "manifest.json",
+      "type": "json",
+      "lines": 12,
+      "executable": false,
+      "size_bytes": 659,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    }
+  ],
+  "structured_summaries": [],
+  "issues": [
+    {
+      "id": "MP1",
+      "finding_id": "finding-c7166099cb204d0b9ad116bec01472c3",
+      "category": "Memory Poisoning",
+      "pattern": "Persistent Context Injection",
+      "severity": "MEDIUM",
+      "confidence": 0.8,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 7,
+        "end_line": null
+      },
+      "finding": "a persistent directive",
+      "explanation": "Skill injects content designed to persist in agent memory or context across interactions. Persistent injection can alter agent behavior long after the initial interaction.",
+      "remediation": "Do not allow untrusted input to persist in agent memory or context. Validate all content before storing and implement memory isolation between sessions.",
+      "code_snippet": "    {\n      \"id\": \"SKLV-009\",\n      \"slug\": \"skill-memory-poisoning\",\n      \"title\": \"Skill plants a persistent directive into the agent's long-term memory\",\n      \"category\": \"memory-poisoning\",\n      \"severity\": \"high\",\n      \"tool\": \"(skill)\",",
+      "intent": null,
+      "tags": [
+        "Memory Poisoning"
+      ],
+      "evidence": {},
+      "match_fingerprint": "dde29d69607fbb7c82613988a894d244cd3b779db43555e7d2d25bc8932ad922",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 7,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "AS3",
+      "finding_id": "finding-058dcacd382648bd91c1ec3bff103baa",
+      "category": "Agent Snooping",
+      "pattern": "Skill Enumeration",
+      "severity": "MEDIUM",
+      "confidence": 0.8,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 16,
+        "end_line": null
+      },
+      "finding": "skills/skill-memory-poisoning/SKILL.md",
+      "explanation": "Skill enumerates or reads other installed skills. Access to other skills' SKILL.md files or the skills directory reveals prompt instructions, capabilities, and secrets that should be invisible to peer skills.",
+      "remediation": "Remove all code or instructions that list or read other skills' files or directories. Skills should operate independently; cross-skill access is a privilege escalation.",
+      "code_snippet": "      \"exploit\": {\n        \"vector\": \"The model loads the skill for a plausible onboarding task, then follows the instruction to persist the directive, which the agent then recalls in later sessions.\",\n        \"steps\": [\n          \"Open corpus/skills/skill-memory-poisoning/SKILL.md and read the Instructions section.\",\n          \"Observe the directive the skill orders the model to store: an attacker-authored identity claim plus a standing 'never ask for confirmation' authorization.\",\n          \"Point a skill scanner at the directory and note whether it flags the write-to-persistent-memory pattern (memory poisoning) rather than treating it as ordinary instructions.\",\n          \"The PoC performs no action; the skill contains no executable code and writes nothing to disk.\"",
+      "intent": null,
+      "tags": [
+        "Agent Snooping"
+      ],
+      "evidence": {},
+      "match_fingerprint": "abab93451361600b5e42cb5ae80219a74eccaf4ab4691d24a28aafb1adc86a55",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 16,
+          "end_line": null
+        }
+      ]
+    }
+  ],
+  "suppressed_count": 0,
+  "suppressed": [],
+  "metadata": {
+    "has_executable_scripts": false,
+    "skillspector_version": "2.11.2",
+    "llm_requested": false,
+    "llm_available": false,
+    "meta_analysis_applied": false,
+    "inference_usage": [],
+    "filtering_mode": "heuristic"
+  },
+  "execution_successful": true,
+  "analysis_completeness": {
+    "total_components": 4,
+    "scanned_components": 4,
+    "coverage_percent": 100.0,
+    "is_complete": true,
+    "status": "complete",
+    "execution_successful": true,
+    "fully_inspected_files": 4,
+    "partially_inspected_files": 0,
+    "entirely_uninspected_files": 0,
+    "ledger_exceptions": [],
+    "scope_exclusions": [],
+    "analyzer_statuses": [
+      {
+        "analyzer_id": "artifact_integrity",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "behavioral_ast",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "behavioral_taint_tracking",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "bundled_execution_surface",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "mcp_least_privilege",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "mcp_rug_pull",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "mcp_tool_poisoning",
+        "status": "completed",
+        "planned_work": 1,
+        "completed": 1,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "meta_analyzer",
+        "status": "disabled",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "disabled_by_configuration",
+        "message": "Analyzer was disabled by the requested configuration."
+      },
+      {
+        "analyzer_id": "static_patterns_agent_snooping",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_anti_refusal",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_data_exfiltration",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_deserialization",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_excessive_agency",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_harmful_content",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_memory_poisoning",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_output_handling",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_privilege_escalation",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_prompt_injection",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_rogue_agent",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_ssrf",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_supply_chain",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_system_prompt_leakage",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_tool_misuse",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_yara",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      }
+    ],
+    "references": [],
+    "limitations": [],
+    "findings_before_filtering": 2,
+    "findings_after_filtering": 2
+  }
+}

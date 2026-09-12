@@ -1,6 +1,6 @@
 {
   "version": "0.19.2",
-  "scan_timestamp": "2026-09-12T14:28:47.883523",
+  "scan_timestamp": "2026-09-12T19:09:18.711044",
   "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin",
   "scanned_files": 1,
   "summary": {
@@ -54,7 +54,7 @@
         "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
       },
       "metadata": {},
-      "detected_at": "2026-09-12T14:28:47.863950",
+      "detected_at": "2026-09-12T19:09:18.695962",
       "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
     },
     {
@@ -88,7 +88,7 @@
         "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
       },
       "metadata": {},
-      "detected_at": "2026-09-12T14:28:47.864109",
+      "detected_at": "2026-09-12T19:09:18.696106",
       "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
     }
   ]

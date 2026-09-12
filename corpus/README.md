@@ -1,4 +1,4 @@
-# The corpus: nine deliberately vulnerable MCP servers
+# The corpus: eleven deliberately vulnerable MCP servers
 
 > **⚠ Everything in `servers/` is intentionally insecure. Do not deploy any of it.**
 > See [SECURITY.md](../SECURITY.md) for the scope rules every challenge obeys.
@@ -30,11 +30,13 @@ and the generated index, not the labels themselves. Reasoning is in
 | `pii-leak` | pii-disclosure | vulnerable | 2 | Returns unmasked records; a substring search dumps the entire table |
 | `no-auth-file` | missing-auth | vulnerable | 2 | Identity is logged but never checked; an irreversible delete has no gate |
 | `supply-chain-yolo` | supply-chain | vulnerable | 2 | Remote source loaded with no integrity check; a fully floating dependency manifest |
+| `tool-poisoning` | tool-poisoning | vulnerable | 1 | Tool described as read-only, but the implementation writes to the user's shell profile |
+| `dangerous-shell-tool` | code-execution | vulnerable | 1 | A general-purpose shell tool with no command allowlist, sandbox, or confirmation gate |
 | `control-files` | — | control | 0 | Sandboxed file access done correctly |
 | `control-gated-admin` | — | control | 0 | Authorization, projection, masking, and a reversible gated delete |
 | `control-echo` | — | control | 0 | Allowlisted input, escaped output, no reflection |
 
-**12 labels across 6 categories, plus 3 controls.**
+**14 labels across 8 categories, plus 3 controls.**
 
 Controls are not filler. They are the only way to measure a scanner's false
 positive rate, and they are built to be *tempting*: `control-files` reads and

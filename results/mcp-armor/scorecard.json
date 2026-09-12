@@ -1,19 +1,26 @@
 {
   "scanner": "mcp-armor",
-  "generated_at": "2026-09-12T14:29:24+00:00",
+  "generated_at": "2026-09-12T19:09:59+00:00",
   "corpus_root": "/Users/river/Projects/mcp-vulnlab",
   "available": true,
   "unavailable_reason": null,
   "summary": {
-    "labels_total": 12,
-    "labels_detected": 6,
+    "labels_total": 14,
+    "labels_detected": 7,
     "recall": 0.5,
-    "findings_total": 14,
-    "true_positives": 6,
-    "false_positives": 8,
-    "fp_rate": 0.5714285714285714
+    "findings_total": 17,
+    "true_positives": 7,
+    "false_positives": 10,
+    "fp_rate": 0.5882352941176471
   },
   "by_category": {
+    "code-execution": {
+      "total": 1,
+      "detected": 0,
+      "ids": [
+        "MCPV-014"
+      ]
+    },
     "data-exfiltration": {
       "total": 2,
       "detected": 0,
@@ -61,9 +68,23 @@
         "MCPV-011",
         "MCPV-012"
       ]
+    },
+    "tool-poisoning": {
+      "total": 1,
+      "detected": 1,
+      "ids": [
+        "MCPV-013"
+      ]
     }
   },
   "labels": {
+    "MCPV-014": {
+      "server": "dangerous-shell-tool",
+      "title": "General-purpose shell tool executes arbitrary commands with no allowlist",
+      "category": "code-execution",
+      "severity": "critical",
+      "tool": "run_shell"
+    },
     "MCPV-003": {
       "server": "exfil-write",
       "title": "Arbitrary file write via unconfined path join",
@@ -147,6 +168,13 @@
       "category": "supply-chain",
       "severity": "high",
       "tool": "(server)"
+    },
+    "MCPV-013": {
+      "server": "tool-poisoning",
+      "title": "Tool description promises read-only, implementation writes to the shell profile",
+      "category": "tool-poisoning",
+      "severity": "high",
+      "tool": "search_notes"
     }
   },
   "servers": [
@@ -367,6 +395,51 @@
                   "risky_tools": [
                     "get_customer",
                     "delete_record"
+                  ],
+                  "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "dangerous-shell-tool",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-014"
+      ],
+      "findings_total": 1,
+      "false_positives": 1,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "mcp-armor",
+          "server": "dangerous-shell-tool",
+          "message": "Excessive host permissions detected for MCP tools on the affected server.",
+          "rule_id": "Excessive Tool Permissions",
+          "severity": "critical",
+          "category": "Excessive Tool Permissions",
+          "tool": "dangerous-shell-tool",
+          "raw": {
+            "finding_type": "Excessive Tool Permissions",
+            "severity": "critical",
+            "description": "Excessive host permissions detected for MCP tools on the affected server.",
+            "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "configuration",
+                "entity_name": "dangerous-shell-tool",
+                "server_name": "dangerous-shell-tool",
+                "config_file": "results/mcp-armor/configs/dangerous-shell-tool.json",
+                "additional_info": {
+                  "risky_tools": [
+                    "run_shell"
                   ],
                   "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
                 }
@@ -763,6 +836,87 @@
         }
       ],
       "unmatched": []
+    },
+    {
+      "slug": "tool-poisoning",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-013"
+      ],
+      "missed_ids": [],
+      "findings_total": 2,
+      "false_positives": 1,
+      "matches": [
+        {
+          "label_id": "MCPV-013",
+          "server": "tool-poisoning",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "mcp-armor",
+            "server": "tool-poisoning",
+            "message": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+            "rule_id": "Prompt Injection",
+            "severity": "critical",
+            "category": "Prompt Injection",
+            "tool": "search_notes",
+            "raw": {
+              "finding_type": "Prompt Injection",
+              "severity": "critical",
+              "description": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+              "remediation": "Inspect affected MCP components and remove hidden instructions or block the component to prevent unauthorized actions and manipulation of the agent\u2019s context.",
+              "total_entities": 1,
+              "entities_affected": [
+                {
+                  "entity_type": "tool",
+                  "entity_name": "search_notes",
+                  "server_name": "tool-poisoning",
+                  "config_file": "results/mcp-armor/configs/tool-poisoning.json",
+                  "affected_tool": "search_notes",
+                  "additional_info": {
+                    "tool": "search_notes",
+                    "classification": "malicious",
+                    "score": 1.0
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "mcp-armor",
+          "server": "tool-poisoning",
+          "message": "Excessive host permissions detected for MCP tools on the affected server.",
+          "rule_id": "Excessive Tool Permissions",
+          "severity": "critical",
+          "category": "Excessive Tool Permissions",
+          "tool": "tool-poisoning",
+          "raw": {
+            "finding_type": "Excessive Tool Permissions",
+            "severity": "critical",
+            "description": "Excessive host permissions detected for MCP tools on the affected server.",
+            "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "configuration",
+                "entity_name": "tool-poisoning",
+                "server_name": "tool-poisoning",
+                "config_file": "results/mcp-armor/configs/tool-poisoning.json",
+                "additional_info": {
+                  "risky_tools": [
+                    "search_notes"
+                  ],
+                  "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                }
+              }
+            ]
+          }
+        }
+      ]
     }
   ],
   "notes": [

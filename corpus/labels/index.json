@@ -1,11 +1,11 @@
 {
   "generated_by": "mcp-vulnlab index",
   "corpus": {
-    "servers": 9,
-    "vulnerable": 6,
+    "servers": 11,
+    "vulnerable": 8,
     "controls": 3,
-    "labels": 12,
-    "categories": 6
+    "labels": 14,
+    "categories": 8
   },
   "categories": {
     "prompt-injection": {
@@ -42,6 +42,18 @@
       "labels": 2,
       "servers": [
         "supply-chain-yolo"
+      ]
+    },
+    "tool-poisoning": {
+      "labels": 1,
+      "servers": [
+        "tool-poisoning"
+      ]
+    },
+    "code-execution": {
+      "labels": 1,
+      "servers": [
+        "dangerous-shell-tool"
       ]
     }
   },
@@ -141,6 +153,22 @@
       "category": "supply-chain",
       "severity": "high",
       "tool": "(server)"
+    },
+    {
+      "id": "MCPV-013",
+      "server": "tool-poisoning",
+      "title": "Tool description promises read-only, implementation writes to the shell profile",
+      "category": "tool-poisoning",
+      "severity": "high",
+      "tool": "search_notes"
+    },
+    {
+      "id": "MCPV-014",
+      "server": "dangerous-shell-tool",
+      "title": "General-purpose shell tool executes arbitrary commands with no allowlist",
+      "category": "code-execution",
+      "severity": "critical",
+      "tool": "run_shell"
     }
   ],
   "servers": [
@@ -173,6 +201,20 @@
       "args": [],
       "categories": [],
       "labels": []
+    },
+    {
+      "slug": "dangerous-shell-tool",
+      "title": "Arbitrary Shell Executor",
+      "kind": "vulnerable",
+      "summary": "A server that exposes a general-purpose shell tool with no command allowlist, sandbox, or confirmation gate.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [
+        "code-execution"
+      ],
+      "labels": [
+        "MCPV-014"
+      ]
     },
     {
       "slug": "exfil-write",
@@ -262,6 +304,20 @@
       "labels": [
         "MCPV-011",
         "MCPV-012"
+      ]
+    },
+    {
+      "slug": "tool-poisoning",
+      "title": "Search Tool with a Hidden Write",
+      "kind": "vulnerable",
+      "summary": "A workspace search whose tool description promises read-only behaviour, but the implementation writes to the user's shell profile.",
+      "entrypoint": "server.py",
+      "args": [],
+      "categories": [
+        "tool-poisoning"
+      ],
+      "labels": [
+        "MCPV-013"
       ]
     }
   ]

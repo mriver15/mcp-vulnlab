@@ -1,12 +1,12 @@
 # Scorecard: `mcp-shield`
 
-Generated 2026-09-12T14:34:05+00:00 against `/Users/river/Projects/mcp-vulnlab`.
+Generated 2026-09-12T19:16:11+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 
 ## Summary
 
 | metric | value |
 |---|---|
-| recall | 0.0% (0/12 labels) |
+| recall | 0.0% (0/14 labels) |
 | findings | 0 |
 | true positives | 0 |
 | false positives | 0 (rate n/a) |
@@ -15,12 +15,14 @@ Generated 2026-09-12T14:34:05+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 
 | category | detected | total | recall | |
 |---|---:|---:|---:|---|
+| `code-execution` | 0 | 1 | 0.0% | `..........` |
 | `data-exfiltration` | 0 | 2 | 0.0% | `..........` |
 | `missing-auth` | 0 | 2 | 0.0% | `..........` |
 | `overbroad-tool-schema` | 0 | 2 | 0.0% | `..........` |
 | `pii-disclosure` | 0 | 2 | 0.0% | `..........` |
 | `prompt-injection` | 0 | 2 | 0.0% | `..........` |
 | `supply-chain` | 0 | 2 | 0.0% | `..........` |
+| `tool-poisoning` | 0 | 1 | 0.0% | `..........` |
 
 ## Per server
 
@@ -29,14 +31,16 @@ Generated 2026-09-12T14:34:05+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | `control-echo` | control | 0 | 0 | 0 | 0 |
 | `control-files` | control | 0 | 0 | 0 | 0 |
 | `control-gated-admin` | control | 0 | 0 | 0 | 0 |
+| `dangerous-shell-tool` | vulnerable | 1 | 0 | 0 | 0 |
 | `exfil-write` | vulnerable | 2 | 0 | 0 | 0 |
 | `injection-echo` | vulnerable | 2 | 0 | 0 | 0 |
 | `no-auth-file` | vulnerable | 2 | 0 | 0 | 0 |
 | `overbroad-glob` | vulnerable | 2 | 0 | 0 | 0 |
 | `pii-leak` | vulnerable | 2 | 0 | 0 | 0 |
 | `supply-chain-yolo` | vulnerable | 2 | 0 | 0 | 0 |
+| `tool-poisoning` | vulnerable | 1 | 0 | 0 | 0 |
 
-## Missed labels (12)
+## Missed labels (14)
 
 | id | category | severity | server | tool | title |
 |---|---|---|---|---|---|
@@ -52,6 +56,8 @@ Generated 2026-09-12T14:34:05+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | `MCPV-010` | `missing-auth` | critical | `no-auth-file` | `delete_file` | Irreversible delete with no authorization and no confirmation |
 | `MCPV-011` | `supply-chain` | critical | `supply-chain-yolo` | `install_plugin` | Remote plugin source loaded with no integrity verification |
 | `MCPV-012` | `supply-chain` | high | `supply-chain-yolo` | `(server)` | Floating dependency manifest with no pins or hashes |
+| `MCPV-013` | `tool-poisoning` | high | `tool-poisoning` | `search_notes` | Tool description promises read-only, implementation writes to the shell profile |
+| `MCPV-014` | `code-execution` | critical | `dangerous-shell-tool` | `run_shell` | General-purpose shell tool executes arbitrary commands with no allowlist |
 
 ## False positives
 

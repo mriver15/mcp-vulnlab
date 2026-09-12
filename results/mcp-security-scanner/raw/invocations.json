@@ -51,6 +51,23 @@
     "config": null
   },
   {
+    "slug": "dangerous-shell-tool",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/dangerous-shell-tool/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
     "slug": "exfil-write",
     "argv": [
       "mcp-scan",
@@ -144,6 +161,23 @@
       "stdio",
       "--command",
       "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "tool-poisoning",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/tool-poisoning/server.py",
       "--format",
       "json"
     ],

@@ -2,7 +2,7 @@
   "skill": {
     "name": "control-skill",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/skills/control-skill",
-    "scanned_at": "2026-09-12T15:14:43.029279+00:00"
+    "scanned_at": "2026-09-12T19:07:59.153554+00:00"
   },
   "risk_assessment": {
     "score": 7,
@@ -56,7 +56,7 @@
   "issues": [
     {
       "id": "EA2",
-      "finding_id": "finding-3c7b8890d69245b18aaccfb8b7a39eb6",
+      "finding_id": "finding-2436c2d4d1554b42a92e8b3dcbac52e1",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",

@@ -2,7 +2,7 @@
   "skill": {
     "name": "skill-sudo-persist",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-sudo-persist",
-    "scanned_at": "2026-09-12T15:14:52.092747+00:00"
+    "scanned_at": "2026-09-12T19:08:12.502185+00:00"
   },
   "risk_assessment": {
     "score": 57,
@@ -66,7 +66,7 @@
   "issues": [
     {
       "id": "SC2",
-      "finding_id": "finding-bdd6d3a6fd57494ebe39cdb156bd954d",
+      "finding_id": "finding-113cca1e851c4b80a10a8d9ebbc553df",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -96,7 +96,7 @@
     },
     {
       "id": "LP3",
-      "finding_id": "finding-98dd5678cee94126a3315ae75c673887",
+      "finding_id": "finding-ebcc8c2ce3d14951886fdb44851c4d3e",
       "category": "MCP Least Privilege",
       "pattern": null,
       "severity": "MEDIUM",
@@ -126,7 +126,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-847a8171c1124a3ca73e35dc00e6d96f",
+      "finding_id": "finding-d7958b12344046749a5c8f7839fc2f95",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -156,7 +156,7 @@
     },
     {
       "id": "PE2",
-      "finding_id": "finding-cec97a20da3441c39a85b3b59f536cb2",
+      "finding_id": "finding-d746dee63c0345399b94b50ec0378b09",
       "category": "Privilege Escalation",
       "pattern": "Sudo/Root Execution",
       "severity": "MEDIUM",
@@ -186,7 +186,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-f1ee95419cb649dfa39226d63c90b6a9",
+      "finding_id": "finding-09068003f7a5478ebe5d8136d9e31f90",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -216,7 +216,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-602d7cfc79e64c56b5060de712056b8e",
+      "finding_id": "finding-4681675243284cedae5369ce20c9d323",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -246,7 +246,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-602d7cfc79e64c56b5060de712056b8e",
+      "finding_id": "finding-4681675243284cedae5369ce20c9d323",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -276,7 +276,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-602d7cfc79e64c56b5060de712056b8e",
+      "finding_id": "finding-4681675243284cedae5369ce20c9d323",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -306,7 +306,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-602d7cfc79e64c56b5060de712056b8e",
+      "finding_id": "finding-4681675243284cedae5369ce20c9d323",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -336,7 +336,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-602d7cfc79e64c56b5060de712056b8e",
+      "finding_id": "finding-4681675243284cedae5369ce20c9d323",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -366,7 +366,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-602d7cfc79e64c56b5060de712056b8e",
+      "finding_id": "finding-4681675243284cedae5369ce20c9d323",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -396,7 +396,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-8c65b433c3bb4a7b9414f227d5dee93b",
+      "finding_id": "finding-8f1ebaf59de1405e9b2028ce33e71d98",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -426,7 +426,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-8c65b433c3bb4a7b9414f227d5dee93b",
+      "finding_id": "finding-8f1ebaf59de1405e9b2028ce33e71d98",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -456,7 +456,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-8c65b433c3bb4a7b9414f227d5dee93b",
+      "finding_id": "finding-8f1ebaf59de1405e9b2028ce33e71d98",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -486,7 +486,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-8c65b433c3bb4a7b9414f227d5dee93b",
+      "finding_id": "finding-8f1ebaf59de1405e9b2028ce33e71d98",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",
@@ -516,7 +516,7 @@
     },
     {
       "id": "RA2",
-      "finding_id": "finding-0b809f3a8d68455bb565bc180a004d17",
+      "finding_id": "finding-0db57dfa4f9a44989e8db62789a6b0e6",
       "category": "Rogue Agent",
       "pattern": "Session Persistence",
       "severity": "MEDIUM",

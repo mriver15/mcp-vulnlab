@@ -1,26 +1,28 @@
 # Scorecard: `cisco-mcp-scanner`
 
-Generated 2026-09-12T14:12:51+00:00 against `/Users/river/Projects/mcp-vulnlab`.
+Generated 2026-09-12T19:08:56+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 
 ## Summary
 
 | metric | value |
 |---|---|
-| recall | 83.3% (10/12 labels) |
-| findings | 40 |
-| true positives | 10 |
-| false positives | 30 (rate 75.0%) |
+| recall | 85.7% (12/14 labels) |
+| findings | 44 |
+| true positives | 12 |
+| false positives | 32 (rate 72.7%) |
 
 ## Recall by category
 
 | category | detected | total | recall | |
 |---|---:|---:|---:|---|
+| `code-execution` | 1 | 1 | 100.0% | `##########` |
 | `data-exfiltration` | 1 | 2 | 50.0% | `#####.....` |
 | `missing-auth` | 2 | 2 | 100.0% | `##########` |
 | `overbroad-tool-schema` | 2 | 2 | 100.0% | `##########` |
 | `pii-disclosure` | 2 | 2 | 100.0% | `##########` |
 | `prompt-injection` | 2 | 2 | 100.0% | `##########` |
 | `supply-chain` | 1 | 2 | 50.0% | `#####.....` |
+| `tool-poisoning` | 1 | 1 | 100.0% | `##########` |
 
 ## Per server
 
@@ -29,12 +31,14 @@ Generated 2026-09-12T14:12:51+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | `control-echo` | control | 0 | 0 | 6 | 6 |
 | `control-files` | control | 0 | 0 | 6 | 6 |
 | `control-gated-admin` | control | 0 | 0 | 4 | 4 |
+| `dangerous-shell-tool` | vulnerable | 1 | 1 | 2 | 1 |
 | `exfil-write` | vulnerable | 2 | 1 | 2 | 1 |
 | `injection-echo` | vulnerable | 2 | 2 | 4 | 2 |
 | `no-auth-file` | vulnerable | 2 | 2 | 4 | 2 |
 | `overbroad-glob` | vulnerable | 2 | 2 | 6 | 4 |
 | `pii-leak` | vulnerable | 2 | 2 | 4 | 2 |
 | `supply-chain-yolo` | vulnerable | 2 | 1 | 4 | 3 |
+| `tool-poisoning` | vulnerable | 1 | 1 | 2 | 1 |
 
 ## Missed labels (2)
 
@@ -45,7 +49,7 @@ Generated 2026-09-12T14:12:51+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 
 ## False positives
 
-30 finding(s) matched no label. For a `control` server that is a false positive by definition.
+32 finding(s) matched no label. For a `control` server that is a false positive by definition.
 
 | server | kind | rule | tool | message |
 |---|---|---|---|---|
@@ -65,6 +69,7 @@ Generated 2026-09-12T14:12:51+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | `control-gated-admin` | control | `promptdefense_analyzer` | `get_customer` | No instruction override defense found. Tool description lacks safeguards against users overriding system instructions. |
 | `control-gated-admin` | control | `readiness_analyzer` | `delete_record` | Tool 'delete_record' does not specify a timeout. Operations may hang indefinitely if external services become unresponsive. |
 | `control-gated-admin` | control | `promptdefense_analyzer` | `delete_record` | No instruction override defense found. Tool description lacks safeguards against users overriding system instructions. |
+| `dangerous-shell-tool` | vulnerable | `promptdefense_analyzer` | `run_shell` | No instruction override defense found. Tool description lacks safeguards against users overriding system instructions. |
 | `exfil-write` | vulnerable | `promptdefense_analyzer` | `save_report` | No instruction override defense found. Tool description lacks safeguards against users overriding system instructions. |
 | `injection-echo` | vulnerable | `promptdefense_analyzer` | `operator_note` | No instruction override defense found. Tool description lacks safeguards against users overriding system instructions. |
 | `injection-echo` | vulnerable | `promptdefense_analyzer` | `echo` | No instruction override defense found. Tool description lacks safeguards against users overriding system instructions. |
@@ -79,6 +84,7 @@ Generated 2026-09-12T14:12:51+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | `supply-chain-yolo` | vulnerable | `promptdefense_analyzer` | `install_plugin` | No instruction override defense found. Tool description lacks safeguards against users overriding system instructions. |
 | `supply-chain-yolo` | vulnerable | `readiness_analyzer` | `list_plugins` | Tool 'list_plugins' does not specify a timeout. Operations may hang indefinitely if external services become unresponsive. |
 | `supply-chain-yolo` | vulnerable | `promptdefense_analyzer` | `list_plugins` | No instruction override defense found. Tool description lacks safeguards against users overriding system instructions. |
+| `tool-poisoning` | vulnerable | `promptdefense_analyzer` | `search_notes` | No data leakage defense found. Tool description lacks instructions to protect sensitive or confidential information. |
 
 ## Notes
 

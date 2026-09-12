@@ -45,6 +45,21 @@
     "config": null
   },
   {
+    "slug": "dangerous-shell-tool",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/dangerous-shell-tool",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 8,
+    "config": null
+  },
+  {
     "slug": "exfil-write",
     "argv": [
       "skillspector",
@@ -132,6 +147,21 @@
     "returncode": 1,
     "error": null,
     "findings": 13,
+    "config": null
+  },
+  {
+    "slug": "tool-poisoning",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/tool-poisoning",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
     "config": null
   }
 ]

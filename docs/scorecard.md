@@ -5,16 +5,21 @@ driven headlessly. Every number below is reproducible from the committed corpus
 with the commands in this file, and the raw scanner output that produced it is
 preserved under `results/<scanner>/raw/`.
 
+On the same day the corpus expanded: 9 → 11 MCP servers (12 → 14 labels, 6 → 8
+categories, adding `tool-poisoning` and `code-execution`) and 6 → 9 skills (6 →
+9 labels, 5 → 8 categories, adding `anti-refusal` and `memory-poisoning`). The
+tables below are from the expanded corpus.
+
 ## Headline
 
 | scanner | version | recall | detected | findings | false positives | FP rate |
 |---|---|---:|---:|---:|---:|---:|
-| `cisco-mcp-scanner` | 4.8.4 | **83.3%** | 10/12 | 40 | 30 | 75.0% |
-| `mcp-armor` | 1.0.2 | **50.0%** | 6/12 | 14 | 8 | 57.1% |
-| `skillspector` | 2.11.2 (git `66e7983`) | **25.0%** | 3/12 | 37 | 34 | 91.9% |
-| `agent-audit` | 0.19.2 | **8.3%** | 1/12 | 10 | 9 | 90.0% |
-| `mcp-security-scanner` | 0.1.5 (sidhpurwala) | **0.0%** | 0/12 | 9 | 9 | 100.0% |
-| `mcp-shield` | 1.0.4 | **0.0%** | 0/12 | 0 | 0 | n/a |
+| `cisco-mcp-scanner` | 4.8.4 | **85.7%** | 12/14 | 44 | 32 | 72.7% |
+| `mcp-armor` | 1.0.2 | **50.0%** | 7/14 | 17 | 10 | 58.8% |
+| `skillspector` | 2.11.2 (git `66e7983`) | **28.6%** | 4/14 | 46 | 42 | 91.3% |
+| `agent-audit` | 0.19.2 | **7.1%** | 1/14 | 15 | 14 | 93.3% |
+| `mcp-security-scanner` | 0.1.5 (sidhpurwala) | **0.0%** | 0/14 | 11 | 11 | 100.0% |
+| `mcp-shield` | 1.0.4 | **0.0%** | 0/14 | 0 | 0 | n/a |
 | `snyk-agent-scan` | 0.6.3 | *not run* | — | — | — | — |
 
 ## Recall by category
@@ -27,12 +32,17 @@ preserved under `results/<scanner>/raw/`.
 | `missing-auth` | 2/2 | 1/2 | 1/2 | 0/2 | 0/2 |
 | `pii-disclosure` | 2/2 | 1/2 | 0/2 | 0/2 | 0/2 |
 | `supply-chain` | 1/2 | 1/2 | 2/2 | 1/2 | 0/2 |
+| `tool-poisoning` | 1/1 | 1/1 | 0/1 | 0/1 | 0/1 |
+| `code-execution` | 1/1 | 0/1 | 1/1 | 0/1 | 0/1 |
 
-Reading the columns as a whole: Cisco has the broadest recall; `mcp-armor` has
-the best precision among the useful scanners (57.1% FP rate) and is the only one
-to catch both prompt-injection labels without a hosted API key; SkillSpector and
-`agent-audit` are static and supply-chain oriented; `mcp-shield` (keyless) is a
-checklist that reports nothing.
+Reading the columns as a whole: Cisco has the broadest recall and is the only
+scanner to catch both new categories; `mcp-armor` has the best precision among
+the useful scanners (58.8% FP rate) and is the only one to catch both
+prompt-injection labels without a hosted API key; SkillSpector and `agent-audit`
+are static and supply-chain oriented; `mcp-shield` (keyless) is a checklist that
+reports nothing. The two new categories split the field cleanly: Cisco and
+`mcp-armor` flag the description/behaviour mismatch (`tool-poisoning`), while
+Cisco and SkillSpector flag the arbitrary shell (`code-execution`).
 
 ## The finding: `MCPV-004` is missed by every scanner that ran
 
@@ -42,10 +52,11 @@ checklist that reports nothing.
 
 `MCPV-004` is not an *absent* control; it is an **explicitly disabled** one —
 `ResourceSecurity(exempt_params={"path"})` turns off the SDK's path-traversal
-check for the one parameter that needs it. All seven scanners missed it. That is
-the headline result and the strongest single argument for this benchmark's
-existence: tools tuned to detect missing validation do not detect disabled
-validation.
+check for the one parameter that needs it. Every scored scanner missed it — and
+after the corpus expanded to 14 labels it remains the **only** label missed by
+every scanner. That is the headline result and the strongest single argument for
+this benchmark's existence: tools tuned to detect missing validation do not
+detect disabled validation.
 
 The mirror image is `mcp-security-scanner` (sidhpurwala-huzaifa, 0.1.5): a
 *spec-compliance pentest* tool that checks MCP protocol conformance (auth,
@@ -113,35 +124,31 @@ it is recorded as *not run* rather than 0% — see `docs/findings.md` (F8).
 
 ## Skills scorecard (first measurement)
 
-The corpus also ships a skills lab — six deliberately vulnerable agent skills
-across five categories plus one control. Research and taxonomy are in
+The corpus also ships a skills lab — nine deliberately vulnerable agent skills
+across eight categories plus one control. Research and taxonomy are in
 [docs/skills-vulnerabilities.md](skills-vulnerabilities.md).
 
 | scanner | version | recall | detected | findings | false positives | FP rate |
 |---|---|---:|---:|---:|---:|---:|
-| `skillspector` (skills corpus) | 2.11.2 | **100.0%** | 6/6 | 64 | 58 | 90.6% |
-| `repo-forensics` (skills corpus) | 2.14.8 | **66.7%** | 4/6 | 24 | 20 | 83.3% |
-| `agent-audit` (skills corpus) | 0.19.2 | **16.7%** | 1/6 | 1 | 0 | 0.0% |
+| `skillspector` (skills corpus) | 2.11.2 | **100.0%** | 9/9 | 85 | 76 | 89.4% |
+| `repo-forensics` (skills corpus) | 2.14.8 | **77.8%** | 7/9 | 33 | 26 | 78.8% |
+| `agent-audit` (skills corpus) | 0.19.2 | **11.1%** | 1/9 | 2 | 1 | 50.0% |
 
-SkillSpector recalled every skill label — hidden instructions, env exfiltration,
-`curl|bash`, unpinned deps, persistence, and unbounded agency — which is exactly
-what it is built for. The 90.6% FP rate has the same two causes as its MCP run:
-it is a high-recall/low-precision static scanner, and it scans the corpus's own
-`README.md` and `exploits.json`, which contain the security vocabulary it
-matches.
+SkillSpector still recalls every skill label — now including the three added
+skills: anti-refusal (SKLV-007), the Python env exfiltration (SKLV-008), and
+memory poisoning (SKLV-009). Its 89.4% FP rate has the same causes as before: it
+is a high-recall/low-precision static scanner that also reads the corpus's own
+`README.md` and `exploits.json`.
 
-`repo-forensics` is the strongest independent second opinion: it caught the
-prompt-injection instruction (SKLV-001), `curl|bash` (SKLV-003), and the
-launchd/persistence setup (SKLV-005) on the *real* files, at critical/high
-severity, with zero network access. Its two misses are informative, not
-accidental — SKLV-004 (unpinned `requirements.txt`) because `--skill-scan` mode
-does not run the dependency/CVE scanners, and SKLV-006 (unbounded agency)
-because its "authority claim" finding does not overlap our label signals.
+`repo-forensics` caught all three new skills too. The notable one is SKLV-008:
+it matched on the **real file** with a clean tool-name hit, because its Python
+dataflow scanner links `os.environ` to the network sink in `scripts/upload_env.py`
+— the thing the skill exists to test. Its two misses are still SKLV-004
+(unpinned `requirements.txt`) and SKLV-006 (unbounded agency).
 
-`agent-audit` is a generic agent/MCP-code analyzer, not a skill scanner; its
-single hit (SKLV-005, `launchctl load` → `AGENT-043` daemon privilege
-escalation) with zero false positives shows that skill detection is a distinct
-capability from agent-code analysis.
+`agent-audit` remains at one hit (SKLV-005) and does **not** flag the Python env
+exfiltration — a useful data point: its rules target agent/MCP code patterns
+(`@tool` decorators, MCP configs), not generic environment exfiltration.
 
 ```sh
 git clone --depth 1 https://github.com/alexgreensh/repo-forensics.git ~/tools/repo-forensics

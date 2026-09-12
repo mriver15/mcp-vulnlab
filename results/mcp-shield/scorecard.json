@@ -1,11 +1,11 @@
 {
   "scanner": "mcp-shield",
-  "generated_at": "2026-09-12T14:34:05+00:00",
+  "generated_at": "2026-09-12T19:16:11+00:00",
   "corpus_root": "/Users/river/Projects/mcp-vulnlab",
   "available": true,
   "unavailable_reason": null,
   "summary": {
-    "labels_total": 12,
+    "labels_total": 14,
     "labels_detected": 0,
     "recall": 0.0,
     "findings_total": 0,
@@ -14,6 +14,13 @@
     "fp_rate": null
   },
   "by_category": {
+    "code-execution": {
+      "total": 1,
+      "detected": 0,
+      "ids": [
+        "MCPV-014"
+      ]
+    },
     "data-exfiltration": {
       "total": 2,
       "detected": 0,
@@ -61,9 +68,23 @@
         "MCPV-011",
         "MCPV-012"
       ]
+    },
+    "tool-poisoning": {
+      "total": 1,
+      "detected": 0,
+      "ids": [
+        "MCPV-013"
+      ]
     }
   },
   "labels": {
+    "MCPV-014": {
+      "server": "dangerous-shell-tool",
+      "title": "General-purpose shell tool executes arbitrary commands with no allowlist",
+      "category": "code-execution",
+      "severity": "critical",
+      "tool": "run_shell"
+    },
     "MCPV-003": {
       "server": "exfil-write",
       "title": "Arbitrary file write via unconfined path join",
@@ -147,6 +168,13 @@
       "category": "supply-chain",
       "severity": "high",
       "tool": "(server)"
+    },
+    "MCPV-013": {
+      "server": "tool-poisoning",
+      "title": "Tool description promises read-only, implementation writes to the shell profile",
+      "category": "tool-poisoning",
+      "severity": "high",
+      "tool": "search_notes"
     }
   },
   "servers": [
@@ -181,6 +209,20 @@
       "labels_detected": 0,
       "detected_ids": [],
       "missed_ids": [],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "dangerous-shell-tool",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-014"
+      ],
       "findings_total": 0,
       "false_positives": 0,
       "matches": [],
@@ -270,6 +312,20 @@
       "missed_ids": [
         "MCPV-011",
         "MCPV-012"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "tool-poisoning",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-013"
       ],
       "findings_total": 0,
       "false_positives": 0,

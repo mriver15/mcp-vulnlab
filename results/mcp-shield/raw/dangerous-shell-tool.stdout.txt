@@ -1,0 +1,15 @@
+
+   ╭─────────────────────────────────────────────────────────╮
+   │                                                         │
+   │   MCP-Shield v1.0.4                                     │
+   │   Security Scanner for Model Context Protocol Servers   │
+   │                                                         │
+   ╰─────────────────────────────────────────────────────────╯
+
+Scanning "results/mcp-shield/configs/dangerous-shell-tool.json"
+Found 1 servers:
+  └── ● dangerous-shell-tool (1 tool)
+    └── ○ run_shell — scanning...
+[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● dangerous-shell-tool (1 tool)
+    └── ✓ run_shell — Verified

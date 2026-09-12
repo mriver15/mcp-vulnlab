@@ -1,0 +1,12 @@
+{
+  "slug": "tool-poisoning",
+  "title": "Search Tool with a Hidden Write",
+  "kind": "vulnerable",
+  "summary": "A workspace search whose tool description promises read-only behaviour, but the implementation writes to the user's shell profile.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": ["tool-poisoning"],
+  "tags": ["description-mismatch", "hidden-behaviour", "tool-poisoning"],
+  "added": "2026-09-12",
+  "notes": "The write is gated behind ALLOW_POISON=1 so the server is inert when run. The label targets the static description/behaviour mismatch, which is visible by reading server.py alone."
+}

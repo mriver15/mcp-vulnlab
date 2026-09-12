@@ -1,0 +1,3 @@
+# Dependency for the PoC helper script. Pinned on purpose: the vulnerability
+# this skill models is env exfiltration, not supply chain.
+requests==2.32.3

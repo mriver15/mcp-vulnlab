@@ -1,19 +1,26 @@
 {
   "scanner": "cisco-mcp-scanner",
-  "generated_at": "2026-09-12T14:12:51+00:00",
+  "generated_at": "2026-09-12T19:08:56+00:00",
   "corpus_root": "/Users/river/Projects/mcp-vulnlab",
   "available": true,
   "unavailable_reason": null,
   "summary": {
-    "labels_total": 12,
-    "labels_detected": 10,
-    "recall": 0.8333333333333334,
-    "findings_total": 40,
-    "true_positives": 10,
-    "false_positives": 30,
-    "fp_rate": 0.75
+    "labels_total": 14,
+    "labels_detected": 12,
+    "recall": 0.8571428571428571,
+    "findings_total": 44,
+    "true_positives": 12,
+    "false_positives": 32,
+    "fp_rate": 0.7272727272727273
   },
   "by_category": {
+    "code-execution": {
+      "total": 1,
+      "detected": 1,
+      "ids": [
+        "MCPV-014"
+      ]
+    },
     "data-exfiltration": {
       "total": 2,
       "detected": 1,
@@ -61,9 +68,23 @@
         "MCPV-011",
         "MCPV-012"
       ]
+    },
+    "tool-poisoning": {
+      "total": 1,
+      "detected": 1,
+      "ids": [
+        "MCPV-013"
+      ]
     }
   },
   "labels": {
+    "MCPV-014": {
+      "server": "dangerous-shell-tool",
+      "title": "General-purpose shell tool executes arbitrary commands with no allowlist",
+      "category": "code-execution",
+      "severity": "critical",
+      "tool": "run_shell"
+    },
     "MCPV-003": {
       "server": "exfil-write",
       "title": "Arbitrary file write via unconfined path join",
@@ -147,6 +168,13 @@
       "category": "supply-chain",
       "severity": "high",
       "tool": "(server)"
+    },
+    "MCPV-013": {
+      "server": "tool-poisoning",
+      "title": "Tool description promises read-only, implementation writes to the shell profile",
+      "category": "tool-poisoning",
+      "severity": "high",
+      "tool": "search_notes"
     }
   },
   "servers": [
@@ -966,6 +994,137 @@
             "is_safe": false,
             "tool_name": "delete_record",
             "tool_description": "Move a customer record to the recycle bin. Requires the records-admin role and an explicit confirm=True. Reversible.",
+            "item_type": "tool",
+            "severity": "HIGH",
+            "threat_names": [
+              "INSTRUCTION_OVERRIDE",
+              "DATA_LEAKAGE",
+              "ROLE_ESCAPE",
+              "INDIRECT_INJECTION",
+              "OUTPUT_WEAPONIZATION",
+              "OUTPUT_MANIPULATION",
+              "MULTILANG_BYPASS",
+              "UNICODE_ATTACK",
+              "CONTEXT_OVERFLOW",
+              "SOCIAL_ENGINEERING",
+              "INPUT_VALIDATION",
+              "ABUSE_PREVENTION"
+            ],
+            "threat_summary": "No instruction override defense found. Tool description lacks safeguards against users overriding system instructions.",
+            "total_findings": 12,
+            "mcp_taxonomies": [
+              {
+                "scanner_category": "PROMPT INJECTION",
+                "aitech": "AITech-1.1",
+                "aitech_name": "Direct Prompt Injection",
+                "aisubtech": "AISubtech-1.1.1",
+                "aisubtech_name": "Instruction Manipulation (Direct Prompt Injection)",
+                "description": "Missing defense against instruction override attacks where users attempt to replace or modify system instructions through direct prompt injection."
+              },
+              {
+                "scanner_category": "SECURITY VIOLATION",
+                "aitech": "AITech-8.2",
+                "aitech_name": "Data Exfiltration / Exposure",
+                "aisubtech": "AISubtech-8.2.1",
+                "aisubtech_name": "Sensitive Information Disclosure",
+                "description": "Missing defense against data leakage where sensitive, confidential, or private information may be exposed through tool outputs or model responses."
+              },
+              {
+                "scanner_category": "PROMPT INJECTION",
+                "aitech": "AITech-1.2",
+                "aitech_name": "Indirect Prompt Injection",
+                "aisubtech": "AISubtech-1.2.1",
+                "aisubtech_name": "Indirect Prompt Injection via External Content",
+                "description": "Missing defense against indirect prompt injection where malicious instructions are embedded in external content processed by the tool."
+              },
+              {
+                "scanner_category": "HARMFUL CONTENT",
+                "aitech": "AITech-3.1",
+                "aitech_name": "Harmful Content Generation",
+                "aisubtech": "AISubtech-3.1.1",
+                "aisubtech_name": "Generation of Harmful or Dangerous Content",
+                "description": "Missing defense against output weaponization where the model is manipulated into generating harmful, dangerous, or illegal content."
+              },
+              {
+                "scanner_category": "DENIAL OF SERVICE",
+                "aitech": "AITech-4.1",
+                "aitech_name": "Denial of Service",
+                "aisubtech": "AISubtech-4.1.1",
+                "aisubtech_name": "Context Window Overflow",
+                "description": "Missing defense against context overflow attacks where excessively long inputs are used to overflow context windows and degrade performance."
+              },
+              {
+                "scanner_category": "INJECTION ATTACK",
+                "aitech": "AITech-9.1",
+                "aitech_name": "Model or Agentic System Manipulation",
+                "aisubtech": "AISubtech-9.1.4",
+                "aisubtech_name": "Injection Attacks (SQL, Command Execution, XSS)",
+                "description": "Missing defense for input validation, sanitization, or filtering, leaving the tool vulnerable to injection attacks."
+              }
+            ],
+            "analyzer": "promptdefense_analyzer",
+            "rule_id": "promptdefense_analyzer"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "dangerous-shell-tool",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-014"
+      ],
+      "missed_ids": [],
+      "findings_total": 2,
+      "false_positives": 1,
+      "matches": [
+        {
+          "label_id": "MCPV-014",
+          "server": "dangerous-shell-tool",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "cisco-mcp-scanner",
+            "server": "dangerous-shell-tool",
+            "message": "Tool 'run_shell' does not specify a timeout. Operations may hang indefinitely if external services become unresponsive.",
+            "rule_id": "readiness_analyzer",
+            "severity": "high",
+            "category": null,
+            "tool": "run_shell",
+            "raw": {
+              "status": "completed",
+              "is_safe": false,
+              "tool_name": "run_shell",
+              "tool_description": "Run a shell command and return its output.",
+              "item_type": "tool",
+              "severity": "HIGH",
+              "threat_names": [
+                "unknown"
+              ],
+              "threat_summary": "Tool 'run_shell' does not specify a timeout. Operations may hang indefinitely if external services become unresponsive.",
+              "total_findings": 7,
+              "mcp_taxonomies": [],
+              "analyzer": "readiness_analyzer",
+              "rule_id": "readiness_analyzer"
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "cisco-mcp-scanner",
+          "server": "dangerous-shell-tool",
+          "message": "No instruction override defense found. Tool description lacks safeguards against users overriding system instructions.",
+          "rule_id": "promptdefense_analyzer",
+          "severity": "high",
+          "category": "PROMPT INJECTION",
+          "tool": "run_shell",
+          "raw": {
+            "status": "completed",
+            "is_safe": false,
+            "tool_name": "run_shell",
+            "tool_description": "Run a shell command and return its output.",
             "item_type": "tool",
             "severity": "HIGH",
             "threat_names": [
@@ -2432,6 +2591,136 @@
                 "aisubtech": "AISubtech-8.2.1",
                 "aisubtech_name": "Sensitive Information Disclosure",
                 "description": "Missing defense against data leakage where sensitive, confidential, or private information may be exposed through tool outputs or model responses."
+              },
+              {
+                "scanner_category": "PROMPT INJECTION",
+                "aitech": "AITech-1.2",
+                "aitech_name": "Indirect Prompt Injection",
+                "aisubtech": "AISubtech-1.2.1",
+                "aisubtech_name": "Indirect Prompt Injection via External Content",
+                "description": "Missing defense against indirect prompt injection where malicious instructions are embedded in external content processed by the tool."
+              },
+              {
+                "scanner_category": "HARMFUL CONTENT",
+                "aitech": "AITech-3.1",
+                "aitech_name": "Harmful Content Generation",
+                "aisubtech": "AISubtech-3.1.1",
+                "aisubtech_name": "Generation of Harmful or Dangerous Content",
+                "description": "Missing defense against output weaponization where the model is manipulated into generating harmful, dangerous, or illegal content."
+              },
+              {
+                "scanner_category": "DENIAL OF SERVICE",
+                "aitech": "AITech-4.1",
+                "aitech_name": "Denial of Service",
+                "aisubtech": "AISubtech-4.1.1",
+                "aisubtech_name": "Context Window Overflow",
+                "description": "Missing defense against context overflow attacks where excessively long inputs are used to overflow context windows and degrade performance."
+              },
+              {
+                "scanner_category": "INJECTION ATTACK",
+                "aitech": "AITech-9.1",
+                "aitech_name": "Model or Agentic System Manipulation",
+                "aisubtech": "AISubtech-9.1.4",
+                "aisubtech_name": "Injection Attacks (SQL, Command Execution, XSS)",
+                "description": "Missing defense for input validation, sanitization, or filtering, leaving the tool vulnerable to injection attacks."
+              }
+            ],
+            "analyzer": "promptdefense_analyzer",
+            "rule_id": "promptdefense_analyzer"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "tool-poisoning",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-013"
+      ],
+      "missed_ids": [],
+      "findings_total": 2,
+      "false_positives": 1,
+      "matches": [
+        {
+          "label_id": "MCPV-013",
+          "server": "tool-poisoning",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "cisco-mcp-scanner",
+            "server": "tool-poisoning",
+            "message": "Tool 'search_notes' does not specify a timeout. Operations may hang indefinitely if external services become unresponsive.",
+            "rule_id": "readiness_analyzer",
+            "severity": "high",
+            "category": null,
+            "tool": "search_notes",
+            "raw": {
+              "status": "completed",
+              "is_safe": false,
+              "tool_name": "search_notes",
+              "tool_description": "Read-only search across the workspace notes. Never writes or modifies anything.",
+              "item_type": "tool",
+              "severity": "HIGH",
+              "threat_names": [
+                "unknown"
+              ],
+              "threat_summary": "Tool 'search_notes' does not specify a timeout. Operations may hang indefinitely if external services become unresponsive.",
+              "total_findings": 7,
+              "mcp_taxonomies": [],
+              "analyzer": "readiness_analyzer",
+              "rule_id": "readiness_analyzer"
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "cisco-mcp-scanner",
+          "server": "tool-poisoning",
+          "message": "No data leakage defense found. Tool description lacks instructions to protect sensitive or confidential information.",
+          "rule_id": "promptdefense_analyzer",
+          "severity": "high",
+          "category": "SECURITY VIOLATION",
+          "tool": "search_notes",
+          "raw": {
+            "status": "completed",
+            "is_safe": false,
+            "tool_name": "search_notes",
+            "tool_description": "Read-only search across the workspace notes. Never writes or modifies anything.",
+            "item_type": "tool",
+            "severity": "HIGH",
+            "threat_names": [
+              "DATA_LEAKAGE",
+              "ROLE_ESCAPE",
+              "INDIRECT_INJECTION",
+              "OUTPUT_WEAPONIZATION",
+              "OUTPUT_MANIPULATION",
+              "MULTILANG_BYPASS",
+              "UNICODE_ATTACK",
+              "CONTEXT_OVERFLOW",
+              "SOCIAL_ENGINEERING",
+              "INPUT_VALIDATION",
+              "ABUSE_PREVENTION"
+            ],
+            "threat_summary": "No data leakage defense found. Tool description lacks instructions to protect sensitive or confidential information.",
+            "total_findings": 11,
+            "mcp_taxonomies": [
+              {
+                "scanner_category": "SECURITY VIOLATION",
+                "aitech": "AITech-8.2",
+                "aitech_name": "Data Exfiltration / Exposure",
+                "aisubtech": "AISubtech-8.2.1",
+                "aisubtech_name": "Sensitive Information Disclosure",
+                "description": "Missing defense against data leakage where sensitive, confidential, or private information may be exposed through tool outputs or model responses."
+              },
+              {
+                "scanner_category": "PROMPT INJECTION",
+                "aitech": "AITech-1.1",
+                "aitech_name": "Direct Prompt Injection",
+                "aisubtech": "AISubtech-1.1.1",
+                "aisubtech_name": "Instruction Manipulation (Direct Prompt Injection)",
+                "description": "Missing defense against role escape attacks where the model is tricked into breaking out of its assigned persona or role constraints."
               },
               {
                 "scanner_category": "PROMPT INJECTION",
