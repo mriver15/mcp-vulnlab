@@ -1,0 +1,12 @@
+{
+  "slug": "skill-memory-poisoning",
+  "title": "Preference Onboarding That Plants Persistent Memory",
+  "kind": "vulnerable",
+  "summary": "An onboarding skill that plants a persistent, attacker-authored directive into the agent's long-term memory.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": ["memory-poisoning"],
+  "tags": ["memory-poisoning", "persistent-context", "context-manipulation"],
+  "added": "2026-09-12",
+  "notes": "Instruction-text only. The weakness is the directive written into persistent memory: it survives the skill session and re-authorizes the attacker's future requests. No script, no tool, no filesystem surface."
+}

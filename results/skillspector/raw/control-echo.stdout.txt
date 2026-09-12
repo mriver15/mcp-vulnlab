@@ -2,7 +2,7 @@
   "skill": {
     "name": "unknown",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-echo",
-    "scanned_at": "2026-09-12T14:12:03.843555+00:00"
+    "scanned_at": "2026-09-12T19:08:58.310424+00:00"
   },
   "risk_assessment": {
     "score": 11,
@@ -56,7 +56,7 @@
   "issues": [
     {
       "id": "EA2",
-      "finding_id": "finding-544019b289964f8b9dee94ba2acd4d45",
+      "finding_id": "finding-451606f4944b4fe697fe169b0af70170",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -86,7 +86,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-544019b289964f8b9dee94ba2acd4d45",
+      "finding_id": "finding-451606f4944b4fe697fe169b0af70170",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",

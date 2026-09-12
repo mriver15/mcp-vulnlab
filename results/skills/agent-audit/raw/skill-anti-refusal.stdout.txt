@@ -1,0 +1,22 @@
+{
+  "version": "0.19.2",
+  "scan_timestamp": "2026-09-12T19:08:15.611737",
+  "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-anti-refusal",
+  "scanned_files": 1,
+  "summary": {
+    "total": 0,
+    "actionable": 0,
+    "suppressed": 0,
+    "by_severity": {},
+    "by_category": {},
+    "by_tier": {
+      "BLOCK": 0,
+      "WARN": 0,
+      "INFO": 0,
+      "SUPPRESSED": 0
+    },
+    "risk_score": 0.0,
+    "risk_label": "LOW"
+  },
+  "findings": []
+}

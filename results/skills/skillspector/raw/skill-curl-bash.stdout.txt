@@ -2,7 +2,7 @@
   "skill": {
     "name": "skill-curl-bash",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-curl-bash",
-    "scanned_at": "2026-09-12T15:14:47.022949+00:00"
+    "scanned_at": "2026-09-12T19:08:04.494672+00:00"
   },
   "risk_assessment": {
     "score": 77,
@@ -76,7 +76,7 @@
   "issues": [
     {
       "id": "SC2",
-      "finding_id": "finding-2418673d2b7249b9b5fdd9c39a6241c1",
+      "finding_id": "finding-a5d01d8e5bd945cf9326a4008f8fd113",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -106,7 +106,7 @@
     },
     {
       "id": "SC2",
-      "finding_id": "finding-2418673d2b7249b9b5fdd9c39a6241c1",
+      "finding_id": "finding-a5d01d8e5bd945cf9326a4008f8fd113",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -136,7 +136,7 @@
     },
     {
       "id": "SC2",
-      "finding_id": "finding-2418673d2b7249b9b5fdd9c39a6241c1",
+      "finding_id": "finding-a5d01d8e5bd945cf9326a4008f8fd113",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -166,7 +166,7 @@
     },
     {
       "id": "SC2",
-      "finding_id": "finding-d65d2f56b6984a6e8f4d57e1f0892a7a",
+      "finding_id": "finding-89a96443da1a4e0c9a558a6169b42aef",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -196,7 +196,7 @@
     },
     {
       "id": "SC2",
-      "finding_id": "finding-d4d76a8dde8d447abb035ba10acf3527",
+      "finding_id": "finding-0e129c7aef09460b811202fb43f8a898",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -226,7 +226,7 @@
     },
     {
       "id": "SC2",
-      "finding_id": "finding-8345a371fbe94615b75c7c60aff75937",
+      "finding_id": "finding-0b4ebf43ac1b4bb297e74e93717a5fbe",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -256,7 +256,7 @@
     },
     {
       "id": "SC2",
-      "finding_id": "finding-42601b746e28453ea837cb3d6cf6468b",
+      "finding_id": "finding-653ceec6a3ba479dbcc67b1fe6e6662b",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -286,7 +286,7 @@
     },
     {
       "id": "SC2",
-      "finding_id": "finding-8d2a7523fb014844a10e03db5a94cc91",
+      "finding_id": "finding-701d516ca47e48f28e57ae28e1d4cabe",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -316,7 +316,7 @@
     },
     {
       "id": "SC2",
-      "finding_id": "finding-8d2a7523fb014844a10e03db5a94cc91",
+      "finding_id": "finding-701d516ca47e48f28e57ae28e1d4cabe",
       "category": "Supply Chain",
       "pattern": "External Script Fetching",
       "severity": "HIGH",
@@ -346,7 +346,7 @@
     },
     {
       "id": "TM2",
-      "finding_id": "finding-c7884516c49047a081b65e00f74d1a95",
+      "finding_id": "finding-126c53747a514ae7af9cadbfeadda3bd",
       "category": "Tool Misuse",
       "pattern": "Chaining Abuse",
       "severity": "HIGH",
@@ -376,7 +376,7 @@
     },
     {
       "id": "LP3",
-      "finding_id": "finding-04ab1bc8f04e43c49e3f9820aed06ec0",
+      "finding_id": "finding-735d0d458c2b4d4788e5732bdbb5e2b4",
       "category": "MCP Least Privilege",
       "pattern": null,
       "severity": "MEDIUM",
@@ -406,7 +406,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-d314533b46584d3493d7c56a122bf517",
+      "finding_id": "finding-c9445cc184b942e191dcef52483336fd",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -436,7 +436,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-b20444aff95841029edfce767d7174f0",
+      "finding_id": "finding-3c678d4f57ff4c1e9cdaa1376e4646a5",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: requests has 16 known advisory(ies) (CVE-2014-1830 (Exposure of Sensitive Information to an Unauthorized Actor in Requests); CVE-2024-47081 (Requests vulnerable to .netrc credentials leak via malicious URLs); CVE-2024-35195 (Requests `Session` object does not verify requests after making first request wi) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",
@@ -466,7 +466,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-7a3885826dfa4ab686e50a751e24516f",
+      "finding_id": "finding-6b67f7d4a7e247cb94ba1c9827235e9b",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -496,7 +496,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-21f2999f55ee4039b2959e8c79cdd80b",
+      "finding_id": "finding-07d98b2ddf6743d7a9742ffd86d46e92",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: pyyaml has 8 known advisory(ies) (CVE-2019-20477 (Deserialization of Untrusted Data in PyYAML); CVE-2020-1747 (Improper Input Validation in PyYAML); CVE-2020-14343 (Improper Input Validation in PyYAML) +5 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",
@@ -526,7 +526,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-c783b0d38d914cdcbbd358806062114a",
+      "finding_id": "finding-4e43d1a4912d4955abbac60c60eeb651",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -556,7 +556,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-b6cc4460035d4cdbace8f765ee2e209f",
+      "finding_id": "finding-1e316d38b1a7472f9b0038bbbde75270",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: click has 1 known advisory(ies) (CVE-2026-7246 (Pallets Click, versions 8.3.2 and below, contain a command injection vulnerabili)), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",
@@ -586,7 +586,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-b44fa83575a94f5f9401a3fc868a92a0",
+      "finding_id": "finding-4794659bd17649b3b1b293120fd41e25",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -616,7 +616,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-1c101a3f54674588affd3657d7a317c1",
+      "finding_id": "finding-9e9e5b40e14449849f15e0ba84e79401",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: httpx has 2 known advisory(ies) (CVE-2021-41945 (Improper Input Validation in httpx); CVE-2021-41945 (Encode OSS httpx <=1.0.0.beta0 is affected by improper input validation in `http)), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",

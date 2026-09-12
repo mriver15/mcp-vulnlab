@@ -51,6 +51,23 @@
     "config": "results/mcp-armor/configs/control-gated-admin.json"
   },
   {
+    "slug": "dangerous-shell-tool",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/dangerous-shell-tool.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/dangerous-shell-tool.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": "results/mcp-armor/configs/dangerous-shell-tool.json"
+  },
+  {
     "slug": "exfil-write",
     "argv": [
       "mcp-armor",
@@ -151,5 +168,22 @@
     "error": null,
     "findings": 1,
     "config": "results/mcp-armor/configs/supply-chain-yolo.json"
+  },
+  {
+    "slug": "tool-poisoning",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/tool-poisoning.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/tool-poisoning.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": "results/mcp-armor/configs/tool-poisoning.json"
   }
 ]

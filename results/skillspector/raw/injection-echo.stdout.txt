@@ -2,7 +2,7 @@
   "skill": {
     "name": "unknown",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo",
-    "scanned_at": "2026-09-12T14:12:09.494284+00:00"
+    "scanned_at": "2026-09-12T19:09:05.098503+00:00"
   },
   "risk_assessment": {
     "score": 0,

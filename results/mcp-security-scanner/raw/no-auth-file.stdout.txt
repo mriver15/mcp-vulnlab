@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "target": "stdio:/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file/server.py",
-  "started_at": "2026-09-12T14:42:04.573590Z",
-  "finished_at": "2026-09-12T14:42:04.573590Z",
+  "started_at": "2026-09-12T19:10:02.712803Z",
+  "finished_at": "2026-09-12T19:10:02.712803Z",
   "findings": [
     {
       "id": "BASE-01",

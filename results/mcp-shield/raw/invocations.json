@@ -36,6 +36,18 @@
     "config": "results/mcp-shield/configs/control-gated-admin.json"
   },
   {
+    "slug": "dangerous-shell-tool",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/dangerous-shell-tool.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/dangerous-shell-tool.json"
+  },
+  {
     "slug": "exfil-write",
     "argv": [
       "mcp-shield",
@@ -106,5 +118,17 @@
     "error": null,
     "findings": 0,
     "config": "results/mcp-shield/configs/supply-chain-yolo.json"
+  },
+  {
+    "slug": "tool-poisoning",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/tool-poisoning.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/tool-poisoning.json"
   }
 ]

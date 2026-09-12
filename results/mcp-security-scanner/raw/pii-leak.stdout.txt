@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "target": "stdio:/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/pii-leak/server.py",
-  "started_at": "2026-09-12T14:42:05.504078Z",
-  "finished_at": "2026-09-12T14:42:05.504078Z",
+  "started_at": "2026-09-12T19:10:03.637800Z",
+  "finished_at": "2026-09-12T19:10:03.637800Z",
   "findings": [
     {
       "id": "BASE-01",

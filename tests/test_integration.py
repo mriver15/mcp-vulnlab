@@ -46,7 +46,7 @@ def test_replay_scanner_scores_the_whole_corpus(
     assert outcome.findings, "the recording produced no findings at all"
 
     card = score_outcome(outcome, specs, corpus_root=root)
-    assert card.labels_total == 12
+    assert card.labels_total == sum(len(spec.labels) for spec in specs)
     # The recording is authored to exercise all three paths: hit, miss, and FP.
     assert 0 < card.labels_detected < card.labels_total
     assert card.false_positives >= 1

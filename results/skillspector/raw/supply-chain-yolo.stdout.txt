@@ -2,7 +2,7 @@
   "skill": {
     "name": "unknown",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo",
-    "scanned_at": "2026-09-12T14:12:21.490676+00:00"
+    "scanned_at": "2026-09-12T19:09:16.593050+00:00"
   },
   "risk_assessment": {
     "score": 100,
@@ -66,7 +66,7 @@
   "issues": [
     {
       "id": "AST8",
-      "finding_id": "finding-be39debe0f83498a9e2959543c5f7048",
+      "finding_id": "finding-49cad9d9e4004955b25b14c148cbd8e2",
       "category": "Dangerous Code Execution",
       "pattern": "Dangerous chain: exec() wrapping compile",
       "severity": "CRITICAL",
@@ -96,7 +96,7 @@
     },
     {
       "id": "AST1",
-      "finding_id": "finding-9115fff08f5b49b68ee96caf7e8419ab",
+      "finding_id": "finding-5cc025fc11d445e9a5aa905f260c1224",
       "category": "Dangerous Code Execution",
       "pattern": "exec() call detected",
       "severity": "HIGH",
@@ -126,7 +126,7 @@
     },
     {
       "id": "AST6",
-      "finding_id": "finding-2ffa1e8b123449218fe7abf644c3eac3",
+      "finding_id": "finding-61ab21c7b46e4ad2bce6947d14d9e491",
       "category": "Dangerous Code Execution",
       "pattern": "compile() call detected",
       "severity": "MEDIUM",
@@ -156,7 +156,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-178d55b7cc1646679bc44c9bca3516ae",
+      "finding_id": "finding-af83a3ac29f8413e9a5d8cdab9b7f597",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -186,7 +186,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-bc357ece040a4127ab80a005f4d86360",
+      "finding_id": "finding-39bc50cf319e4b3ca9602e531b307b6d",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: mcp has 12 known advisory(ies) (CVE-2025-53366 (MCP Python SDK vulnerability in the FastMCP Server causes validation error, lead); CVE-2025-66416 (Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection); CVE-2026-52870 (MCP Python SDK: Experimental task handlers allow any client to access and cancel) +9 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",
@@ -216,7 +216,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-335325ad5fd4490ea61ae01941ff3fc7",
+      "finding_id": "finding-31c9221c63054f3eae083add78112ab5",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -246,7 +246,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-82dc28f339a4475a8c9f2e3b52bda82c",
+      "finding_id": "finding-acf55a0fb8984a8aabf481b1ff469a39",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: requests has 16 known advisory(ies) (CVE-2014-1830 (Exposure of Sensitive Information to an Unauthorized Actor in Requests); CVE-2024-47081 (Requests vulnerable to .netrc credentials leak via malicious URLs); CVE-2024-35195 (Requests `Session` object does not verify requests after making first request wi) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",
@@ -276,7 +276,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-985675c7bba24d9c9e45212631ebaa4a",
+      "finding_id": "finding-9de14724a4264d539df98c15f563718f",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -306,7 +306,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-7299a99a960a491893ec3a6cbf2b7d50",
+      "finding_id": "finding-8d54baf127a94a13b6c02ca0261737b3",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: pyyaml has 8 known advisory(ies) (CVE-2019-20477 (Deserialization of Untrusted Data in PyYAML); CVE-2020-1747 (Improper Input Validation in PyYAML); CVE-2020-14343 (Improper Input Validation in PyYAML) +5 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",
@@ -336,7 +336,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-dba6931c2c67434092960dce3b304593",
+      "finding_id": "finding-7ebce6cf6db94040926bf31ac5ca922e",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -366,7 +366,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-dc20fc6f296f45c6b03740faae3ccde0",
+      "finding_id": "finding-5df644758c574506ba9496b988d73505",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: urllib3 has 16 known advisory(ies) (CVE-2025-66471 (urllib3 streaming API improperly handles highly compressed data); CVE-2024-37891 (urllib3's Proxy-Authorization request header isn't stripped during cross-origin ); CVE-2026-21441 (Decompression-bomb safeguards bypassed when following HTTP redirects (streaming ) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",
@@ -396,7 +396,7 @@
     },
     {
       "id": "SC1",
-      "finding_id": "finding-6360c32ed8324e0283e5a08f08b8541b",
+      "finding_id": "finding-04da173fd52b40b281e5ea27698fd210",
       "category": "Supply Chain",
       "pattern": "Unpinned Dependencies",
       "severity": "LOW",
@@ -426,7 +426,7 @@
     },
     {
       "id": "SC4",
-      "finding_id": "finding-8539878dba184181ac71674704e24c25",
+      "finding_id": "finding-84b6cef318024d1a8ce2f4c6c810c82b",
       "category": "Supply Chain",
       "pattern": "Unverifiable Dependency: gitpython has 16 known advisory(ies) (CVE-2026-78676 (GitPython: Dormant multi-line git-config values are corrupted into live injected); CVE-2026-67325 (GitPython: Command Injection via git long-option prefix abbreviation bypass of C); CVE-2024-22190 (Untrusted search path under some conditions on Windows allows arbitrary code exe) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
       "severity": "LOW",

@@ -2,7 +2,7 @@
   "skill": {
     "name": "unknown",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin",
-    "scanned_at": "2026-09-12T14:12:06.447713+00:00"
+    "scanned_at": "2026-09-12T19:09:00.855487+00:00"
   },
   "risk_assessment": {
     "score": 0,

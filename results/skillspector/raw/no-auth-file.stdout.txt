@@ -2,7 +2,7 @@
   "skill": {
     "name": "unknown",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file",
-    "scanned_at": "2026-09-12T14:12:11.137122+00:00"
+    "scanned_at": "2026-09-12T19:09:06.709198+00:00"
   },
   "risk_assessment": {
     "score": 13,
@@ -56,7 +56,7 @@
   "issues": [
     {
       "id": "EA2",
-      "finding_id": "finding-22213e4d2f2743c1b67d77b23f118332",
+      "finding_id": "finding-b75a6d29e522449baef9f45b76ed7fa9",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -86,7 +86,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-8a4c540ba58d4a79934227eabb46f54b",
+      "finding_id": "finding-7ebea7c7c1f54c678d3f4928a6f3a63e",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -116,7 +116,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "finding_id": "finding-bb945d1f2bfb42a5af4c85dd5f780b6c",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -146,7 +146,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "finding_id": "finding-bb945d1f2bfb42a5af4c85dd5f780b6c",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -176,7 +176,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "finding_id": "finding-bb945d1f2bfb42a5af4c85dd5f780b6c",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -206,7 +206,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "finding_id": "finding-bb945d1f2bfb42a5af4c85dd5f780b6c",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -236,7 +236,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "finding_id": "finding-bb945d1f2bfb42a5af4c85dd5f780b6c",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -266,7 +266,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "finding_id": "finding-bb945d1f2bfb42a5af4c85dd5f780b6c",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -296,7 +296,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "finding_id": "finding-bb945d1f2bfb42a5af4c85dd5f780b6c",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",
@@ -326,7 +326,7 @@
     },
     {
       "id": "EA2",
-      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "finding_id": "finding-bb945d1f2bfb42a5af4c85dd5f780b6c",
       "category": "Excessive Agency",
       "pattern": "Autonomous Decision Making",
       "severity": "MEDIUM",

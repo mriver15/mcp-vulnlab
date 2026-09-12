@@ -1,6 +1,6 @@
 {
   "version": "0.19.2",
-  "scan_timestamp": "2026-09-12T14:28:48.376850",
+  "scan_timestamp": "2026-09-12T19:09:19.328631",
   "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob",
   "scanned_files": 1,
   "summary": {
@@ -54,7 +54,7 @@
         "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
       },
       "metadata": {},
-      "detected_at": "2026-09-12T14:28:48.369367",
+      "detected_at": "2026-09-12T19:09:19.321571",
       "reason": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n"
     },
     {
@@ -88,7 +88,7 @@
         "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
       },
       "metadata": {},
-      "detected_at": "2026-09-12T14:28:48.369517",
+      "detected_at": "2026-09-12T19:09:19.321722",
       "reason": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n"
     }
   ]

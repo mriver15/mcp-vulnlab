@@ -18,12 +18,16 @@ MCP_CATEGORIES: tuple[str, ...] = (
     "missing-auth",
     "pii-disclosure",
     "supply-chain",
+    "tool-poisoning",
+    "code-execution",
 )
 
 #: Threat categories for agent-skill challenges.
 SKILL_CATEGORIES: tuple[str, ...] = (
     "rogue-agent",
     "excessive-agency",
+    "anti-refusal",
+    "memory-poisoning",
 )
 
 #: Every category the corpus covers, in stable order.

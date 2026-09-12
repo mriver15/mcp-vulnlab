@@ -1,6 +1,6 @@
 {
   "version": "0.19.2",
-  "scan_timestamp": "2026-09-12T14:28:48.252695",
+  "scan_timestamp": "2026-09-12T19:09:19.203335",
   "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file",
   "scanned_files": 1,
   "summary": {

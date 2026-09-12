@@ -1,0 +1,12 @@
+{
+  "slug": "skill-anti-refusal",
+  "title": "Unrefusable Response Drafter",
+  "kind": "vulnerable",
+  "summary": "A drafting skill whose instructions suppress the model's refusal and safety behaviour — the anti-refusal pattern.",
+  "entrypoint": "SKILL.md",
+  "args": [],
+  "categories": ["anti-refusal"],
+  "tags": ["anti-refusal", "safety-suppression", "instruction-override"],
+  "added": "2026-09-12",
+  "notes": "Instruction-text only — there is no script. The payload is the prose itself: a scanner must flag that the instructions disable refusal and safety behaviour. Detection is semantic, so a static-only run of SkillSpector is expected to miss it; that gap is itself the measurement."
+}

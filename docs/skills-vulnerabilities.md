@@ -62,19 +62,19 @@ taxonomy and the one the corpus is aligned to (IDs below are SkillSpector's):
 | Category | Example patterns | Corpus skill |
 |---|---|---|
 | Prompt injection | P1 instruction override, **P2 hidden instructions**, P3 exfiltration commands, P9 whitespace padding | `skill-hidden-instructions` |
-| Anti-refusal | AR1 refusal suppression, AR2 disclaimer suppression, AR3 safety nullification | — |
-| Data exfiltration | **E1 external transmission**, **E2 env-var harvesting**, E3 file enumeration, E4 context leakage | `skill-env-exfil` |
+| Anti-refusal | AR1 refusal suppression, AR2 disclaimer suppression, AR3 safety nullification | `skill-anti-refusal` |
+| Data exfiltration | **E1 external transmission**, **E2 env-var harvesting**, E3 file enumeration, E4 context leakage | `skill-env-exfil`, `skill-py-env-exfil` |
 | Privilege escalation | PE1 excessive permissions, **PE2 sudo/root**, PE3 credential access | `skill-sudo-persist` |
 | Supply chain | **SC1 unpinned deps**, **SC2 curl\|bash**, SC3 obfuscation, SC4 known CVEs, SC6 typosquatting, SC8 shipped bytecode | `skill-curl-bash` |
 | Excessive agency | EA1 unrestricted tool access, **EA2 autonomous decisions**, EA3 scope creep | `skill-overbroad-agency` |
 | Output handling | OH1 unvalidated output injection, OH2 cross-context output, OH3 unbounded output | — |
 | System prompt leakage | P6–P8 | — |
-| Memory poisoning | MP1 persistent context, MP2 context stuffing, MP3 memory manipulation | — |
+| Memory poisoning | MP1 persistent context, MP2 context stuffing, MP3 memory manipulation | `skill-memory-poisoning` |
 | Tool misuse | TM1 parameter abuse, TM2 chaining, TM3 unsafe defaults | — |
 | Rogue agent | RA1 self-modification, **RA2 session persistence** | `skill-sudo-persist` |
 | Trigger abuse | TR1 broad triggers, TR2 shadow commands, TR3 keyword baiting | — |
 | Behavioral AST | AST1 `exec()`, AST2 `eval()`, AST3 dynamic import, AST4 subprocess, AST5 `os.system`, AST6 `compile()`, AST8 dangerous chains | (implied by curl\|bash) |
-| Taint tracking | TT1–TT5 (source→sink flows) | `skill-env-exfil` (TT3 credentials→network) |
+| Taint tracking | TT1–TT5 (source→sink flows) | `skill-env-exfil`, `skill-py-env-exfil` (TT3 credentials→network, bash + Python) |
 | YARA | YR1–YR4 malware/webshell/cryptominer signatures | — |
 | MCP least privilege | LP1–LP4 | (MCP corpus) |
 | MCP tool poisoning | TP1 hidden metadata, TP2 unicode deception, TP3 param injection, TP4 description/behaviour mismatch | (MCP corpus) |
@@ -87,15 +87,17 @@ with OWASP LLM Top 10 and CWE where applicable.
 
 ## The patterns that matter most
 
-Across the three studies, five patterns recur and are the ones the MVP corpus
+Across the three studies, seven patterns recur and are the ones the MVP corpus
 deliberately contains:
 
 1. **Hidden instructions** (`skill-hidden-instructions`): instruction-shaped text
    concealed in comments or invisible characters, so the human reviewer sees a
    benign skill and the agent sees a directive.
-2. **Secret harvesting + external transmission** (`skill-env-exfil`): reading the
-   process environment and sending it out. The single highest-blast-radius
-   pattern because the environment is where the keys live.
+2. **Secret harvesting + external transmission** (`skill-env-exfil`,
+   `skill-py-env-exfil`): reading the process environment and sending it out. The
+   single highest-blast-radius pattern because the environment is where the keys
+   live. Modelled in both bash and Python so shell-only and Python-only scanners
+   each have a target.
 3. **Remote fetch-and-execute** (`skill-curl-bash`): `curl | bash` with no
    checksum, signature, or allowlist — the one-line install that trades away all
    integrity.
@@ -105,6 +107,12 @@ deliberately contains:
 5. **Unbounded agency in the instructions themselves** (`skill-overbroad-agency`):
    the skill *declares* the authority to escalate, skip confirmation, and disable
    guardrails. No code required — the instruction text is the payload.
+6. **Anti-refusal** (`skill-anti-refusal`): instructions that tell the model to
+   never refuse, ignore safety guidelines, and suppress disclaimers — targeting
+   the model's own guardrails rather than any tool or file.
+7. **Memory poisoning** (`skill-memory-poisoning`): instructions that plant a
+   persistent, attacker-authored directive into the agent's long-term memory, so
+   a single activation becomes a standing authorization.
 
 ## Scanner landscape for skills
 
@@ -134,15 +142,16 @@ Unlike the MCP side, the skill-scanner field is thin but real:
 
 | scanner | recall | findings | FP rate | note |
 |---|---|---:|---:|---|
-| SkillSpector | **6/6 (100%)** | 64 | 90.6% | static-only; scans ground-truth files |
-| repo-forensics | **4/6 (66.7%)** | 24 | 83.3% | catches 001/003/005 on the real files; misses unpinned deps (004) and agency (006) |
-| agent-audit | **1/6 (16.7%)** | 1 | 0.0% | only the launchd daemon (SKLV-005) |
+| SkillSpector | **9/9 (100%)** | 85 | 89.4% | static-only; scans ground-truth files |
+| repo-forensics | **7/9 (77.8%)** | 33 | 78.8% | catches the Python env exfil (SKLV-008) on the real file; misses unpinned deps (004) and agency (006) |
+| agent-audit | **1/9 (11.1%)** | 2 | 50.0% | only the launchd daemon (SKLV-005); blind to the Python env exfil |
 
-SkillSpector recalled **6/6 skill labels (100%)** with 64 findings (58
+SkillSpector recalled **9/9 skill labels (100%)** with 85 findings (76
 unmatched) — the same high-recall/low-precision profile it showed against the MCP
 corpus, and for the same reason: it also scans the corpus's own `README.md` and
-`exploits.json` ground-truth files. Full scorecards in
-[`results/skills/`](../results/skills/).
+`exploits.json` ground-truth files. `repo-forensics` caught all three added
+skills, including a clean tool-name hit on the Python env exfil via its dataflow
+scanner. Full scorecards in [`results/skills/`](../results/skills/).
 
 ## Sources
 

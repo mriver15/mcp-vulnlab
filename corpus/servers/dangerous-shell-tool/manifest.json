@@ -1,0 +1,12 @@
+{
+  "slug": "dangerous-shell-tool",
+  "title": "Arbitrary Shell Executor",
+  "kind": "vulnerable",
+  "summary": "A server that exposes a general-purpose shell tool with no command allowlist, sandbox, or confirmation gate.",
+  "entrypoint": "server.py",
+  "args": [],
+  "categories": ["code-execution"],
+  "tags": ["arbitrary-execution", "shell", "no-allowlist", "code-execution"],
+  "added": "2026-09-12",
+  "notes": "Execution is gated behind ALLOW_SHELL=1 so the server is inert when run. The label targets the capability — subprocess(shell=True) on a caller-supplied command with no allowlist."
+}

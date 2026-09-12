@@ -2,7 +2,7 @@
   "skill": {
     "name": "unknown",
     "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob",
-    "scanned_at": "2026-09-12T14:12:12.461503+00:00"
+    "scanned_at": "2026-09-12T19:09:08.020077+00:00"
   },
   "risk_assessment": {
     "score": 26,
@@ -56,7 +56,7 @@
   "issues": [
     {
       "id": "PE3",
-      "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+      "finding_id": "finding-0526a3abdc3a42688bc91f66ed06b506",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -86,7 +86,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+      "finding_id": "finding-0526a3abdc3a42688bc91f66ed06b506",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -116,7 +116,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+      "finding_id": "finding-0526a3abdc3a42688bc91f66ed06b506",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -146,7 +146,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+      "finding_id": "finding-0526a3abdc3a42688bc91f66ed06b506",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -176,7 +176,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+      "finding_id": "finding-0526a3abdc3a42688bc91f66ed06b506",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -206,7 +206,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-fda963b035ea42e7914c15b862f2d265",
+      "finding_id": "finding-8102a0ac1f42442081a35f3980b3e672",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -236,7 +236,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-082703eea1d145f5a0b8365a285ccaf1",
+      "finding_id": "finding-4aca0bd5498a4641b00d46b7e7310aa3",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -266,7 +266,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-082703eea1d145f5a0b8365a285ccaf1",
+      "finding_id": "finding-4aca0bd5498a4641b00d46b7e7310aa3",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -296,7 +296,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-082703eea1d145f5a0b8365a285ccaf1",
+      "finding_id": "finding-4aca0bd5498a4641b00d46b7e7310aa3",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",
@@ -326,7 +326,7 @@
     },
     {
       "id": "PE3",
-      "finding_id": "finding-e416505f0dd64cef92045fd30f0b5fa3",
+      "finding_id": "finding-6f406bb696784543818e66415261b6a8",
       "category": "Privilege Escalation",
       "pattern": "Credential Access",
       "severity": "HIGH",

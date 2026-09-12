@@ -1,6 +1,6 @@
 {
   "version": "0.19.2",
-  "scan_timestamp": "2026-09-12T15:45:46.212217",
+  "scan_timestamp": "2026-09-12T19:08:16.452409",
   "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-sudo-persist",
   "scanned_files": 1,
   "summary": {
@@ -54,7 +54,7 @@
         "reference_url": null
       },
       "metadata": {},
-      "detected_at": "2026-09-12T15:45:46.208458",
+      "detected_at": "2026-09-12T19:08:16.448333",
       "reason": "Agent registers as system daemon/service, gaining persistent elevated privileges. Daemon processes often run with elevated permissions and can survive user logout."
     }
   ]

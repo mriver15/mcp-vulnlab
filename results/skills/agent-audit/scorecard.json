@@ -1,24 +1,32 @@
 {
   "scanner": "agent-audit",
-  "generated_at": "2026-09-12T15:45:46+00:00",
+  "generated_at": "2026-09-12T19:08:16+00:00",
   "corpus_root": "/Users/river/Projects/mcp-vulnlab",
   "available": true,
   "unavailable_reason": null,
   "summary": {
-    "labels_total": 6,
+    "labels_total": 9,
     "labels_detected": 1,
-    "recall": 0.16666666666666666,
-    "findings_total": 1,
+    "recall": 0.1111111111111111,
+    "findings_total": 2,
     "true_positives": 1,
-    "false_positives": 0,
-    "fp_rate": 0.0
+    "false_positives": 1,
+    "fp_rate": 0.5
   },
   "by_category": {
-    "data-exfiltration": {
+    "anti-refusal": {
       "total": 1,
       "detected": 0,
       "ids": [
-        "SKLV-002"
+        "SKLV-007"
+      ]
+    },
+    "data-exfiltration": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "SKLV-002",
+        "SKLV-008"
       ]
     },
     "excessive-agency": {
@@ -26,6 +34,13 @@
       "detected": 0,
       "ids": [
         "SKLV-006"
+      ]
+    },
+    "memory-poisoning": {
+      "total": 1,
+      "detected": 0,
+      "ids": [
+        "SKLV-009"
       ]
     },
     "prompt-injection": {
@@ -52,6 +67,13 @@
     }
   },
   "labels": {
+    "SKLV-007": {
+      "server": "skill-anti-refusal",
+      "title": "Skill instructions suppress the model's refusal and safety behaviour",
+      "category": "anti-refusal",
+      "severity": "high",
+      "tool": "(skill)"
+    },
     "SKLV-003": {
       "server": "skill-curl-bash",
       "title": "Installer pipes a remote URL straight into bash",
@@ -80,12 +102,26 @@
       "severity": "high",
       "tool": "(skill)"
     },
+    "SKLV-009": {
+      "server": "skill-memory-poisoning",
+      "title": "Skill plants a persistent directive into the agent's long-term memory",
+      "category": "memory-poisoning",
+      "severity": "high",
+      "tool": "(skill)"
+    },
     "SKLV-006": {
       "server": "skill-overbroad-agency",
       "title": "Skill grants unbounded agency and instructs the agent to disable its own guardrails",
       "category": "excessive-agency",
       "severity": "high",
       "tool": "(skill)"
+    },
+    "SKLV-008": {
+      "server": "skill-py-env-exfil",
+      "title": "Python helper harvests environment variables and transmits them externally",
+      "category": "data-exfiltration",
+      "severity": "critical",
+      "tool": "scripts/upload_env.py"
     },
     "SKLV-005": {
       "server": "skill-sudo-persist",
@@ -103,6 +139,20 @@
       "labels_detected": 0,
       "detected_ids": [],
       "missed_ids": [],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "skill-anti-refusal",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "SKLV-007"
+      ],
       "findings_total": 0,
       "false_positives": 0,
       "matches": [],
@@ -152,6 +202,20 @@
       "unmatched": []
     },
     {
+      "slug": "skill-memory-poisoning",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "SKLV-009"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
       "slug": "skill-overbroad-agency",
       "kind": "vulnerable",
       "labels_total": 1,
@@ -164,6 +228,64 @@
       "false_positives": 0,
       "matches": [],
       "unmatched": []
+    },
+    {
+      "slug": "skill-py-env-exfil",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "SKLV-008"
+      ],
+      "findings_total": 1,
+      "false_positives": 1,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "agent-audit",
+          "server": "skill-py-env-exfil",
+          "message": "LangChain Tool Input Not Sanitized",
+          "rule_id": "AGENT-026",
+          "severity": "critical",
+          "category": "tool_misuse",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-026",
+            "title": "LangChain Tool Input Not Sanitized",
+            "description": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n",
+            "severity": "critical",
+            "category": "tool_misuse",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/skills/skill-py-env-exfil/scripts/upload_env.py",
+              "start_line": 23,
+              "end_line": 23,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "requests.post(URL, data={\"payload\": payload}, timeout=5)"
+            },
+            "confidence": 0.06,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-918",
+            "owasp_id": "ASI-02",
+            "asi_categories": [
+              "ASI-02"
+            ],
+            "remediation": {
+              "description": "Validate all string inputs in tool functions before passing to dangerous operations. Use allowlists, regex validation, or type checking to ensure inputs are safe.\n",
+              "code_example": "# BAD: Direct execution\n@tool\ndef run_query(query: str) -> str:\n    return cursor.execute(query)\n\n# GOOD: With validation\n@tool\ndef run_query(query: str) -> str:\n    if not re.match(r\"^SELECT \", query, re.IGNORECASE):\n        raise ValueError(\"Only SELECT queries allowed\")\n    return cursor.execute(query)\n",
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T19:08:16.325501",
+            "reason": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n"
+          }
+        }
+      ]
     },
     {
       "slug": "skill-sudo-persist",
@@ -220,7 +342,7 @@
                 "reference_url": null
               },
               "metadata": {},
-              "detected_at": "2026-09-12T15:45:46.208458",
+              "detected_at": "2026-09-12T19:08:16.448333",
               "reason": "Agent registers as system daemon/service, gaining persistent elevated privileges. Daemon processes often run with elevated permissions and can survive user logout."
             }
           }

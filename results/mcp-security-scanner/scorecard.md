@@ -1,26 +1,28 @@
 # Scorecard: `mcp-security-scanner`
 
-Generated 2026-09-12T14:42:06+00:00 against `/Users/river/Projects/mcp-vulnlab`.
+Generated 2026-09-12T19:10:04+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 
 ## Summary
 
 | metric | value |
 |---|---|
-| recall | 0.0% (0/12 labels) |
-| findings | 9 |
+| recall | 0.0% (0/14 labels) |
+| findings | 11 |
 | true positives | 0 |
-| false positives | 9 (rate 100.0%) |
+| false positives | 11 (rate 100.0%) |
 
 ## Recall by category
 
 | category | detected | total | recall | |
 |---|---:|---:|---:|---|
+| `code-execution` | 0 | 1 | 0.0% | `..........` |
 | `data-exfiltration` | 0 | 2 | 0.0% | `..........` |
 | `missing-auth` | 0 | 2 | 0.0% | `..........` |
 | `overbroad-tool-schema` | 0 | 2 | 0.0% | `..........` |
 | `pii-disclosure` | 0 | 2 | 0.0% | `..........` |
 | `prompt-injection` | 0 | 2 | 0.0% | `..........` |
 | `supply-chain` | 0 | 2 | 0.0% | `..........` |
+| `tool-poisoning` | 0 | 1 | 0.0% | `..........` |
 
 ## Per server
 
@@ -29,14 +31,16 @@ Generated 2026-09-12T14:42:06+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | `control-echo` | control | 0 | 0 | 1 | 1 |
 | `control-files` | control | 0 | 0 | 1 | 1 |
 | `control-gated-admin` | control | 0 | 0 | 1 | 1 |
+| `dangerous-shell-tool` | vulnerable | 1 | 0 | 1 | 1 |
 | `exfil-write` | vulnerable | 2 | 0 | 1 | 1 |
 | `injection-echo` | vulnerable | 2 | 0 | 1 | 1 |
 | `no-auth-file` | vulnerable | 2 | 0 | 1 | 1 |
 | `overbroad-glob` | vulnerable | 2 | 0 | 1 | 1 |
 | `pii-leak` | vulnerable | 2 | 0 | 1 | 1 |
 | `supply-chain-yolo` | vulnerable | 2 | 0 | 1 | 1 |
+| `tool-poisoning` | vulnerable | 1 | 0 | 1 | 1 |
 
-## Missed labels (12)
+## Missed labels (14)
 
 | id | category | severity | server | tool | title |
 |---|---|---|---|---|---|
@@ -52,33 +56,39 @@ Generated 2026-09-12T14:42:06+00:00 against `/Users/river/Projects/mcp-vulnlab`.
 | `MCPV-010` | `missing-auth` | critical | `no-auth-file` | `delete_file` | Irreversible delete with no authorization and no confirmation |
 | `MCPV-011` | `supply-chain` | critical | `supply-chain-yolo` | `install_plugin` | Remote plugin source loaded with no integrity verification |
 | `MCPV-012` | `supply-chain` | high | `supply-chain-yolo` | `(server)` | Floating dependency manifest with no pins or hashes |
+| `MCPV-013` | `tool-poisoning` | high | `tool-poisoning` | `search_notes` | Tool description promises read-only, implementation writes to the shell profile |
+| `MCPV-014` | `code-execution` | critical | `dangerous-shell-tool` | `run_shell` | General-purpose shell tool executes arbitrary commands with no allowlist |
 
 ## False positives
 
-9 finding(s) matched no label. For a `control` server that is a false positive by definition.
+11 finding(s) matched no label. For a `control` server that is a false positive by definition.
 
 | server | kind | rule | tool | message |
 |---|---|---|---|---|
 | `control-echo` | control | `BASE-01` | `—` | Fingerprint server capabilities |
 | `control-files` | control | `BASE-01` | `—` | Fingerprint server capabilities |
 | `control-gated-admin` | control | `BASE-01` | `—` | Fingerprint server capabilities |
+| `dangerous-shell-tool` | vulnerable | `BASE-01` | `—` | Fingerprint server capabilities |
 | `exfil-write` | vulnerable | `BASE-01` | `—` | Fingerprint server capabilities |
 | `injection-echo` | vulnerable | `BASE-01` | `—` | Fingerprint server capabilities |
 | `no-auth-file` | vulnerable | `BASE-01` | `—` | Fingerprint server capabilities |
 | `overbroad-glob` | vulnerable | `BASE-01` | `—` | Fingerprint server capabilities |
 | `pii-leak` | vulnerable | `BASE-01` | `—` | Fingerprint server capabilities |
 | `supply-chain-yolo` | vulnerable | `BASE-01` | `—` | Fingerprint server capabilities |
+| `tool-poisoning` | vulnerable | `BASE-01` | `—` | Fingerprint server capabilities |
 
 ## Notes
 
 - control-echo: scanner exited with status 1
 - control-files: scanner exited with status 1
 - control-gated-admin: scanner exited with status 1
+- dangerous-shell-tool: scanner exited with status 1
 - exfil-write: scanner exited with status 1
 - injection-echo: scanner exited with status 1
 - no-auth-file: scanner exited with status 1
 - overbroad-glob: scanner exited with status 1
 - pii-leak: scanner exited with status 1
 - supply-chain-yolo: scanner exited with status 1
+- tool-poisoning: scanner exited with status 1
 - matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive.
 
