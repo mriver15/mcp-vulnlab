@@ -1,0 +1,186 @@
+{
+  "servers": [
+    {
+      "name": "control-files",
+      "type": "stdio",
+      "endpoint": null,
+      "command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "args": [
+        "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-files/server.py"
+      ],
+      "headers": {},
+      "env": {},
+      "disabled": false,
+      "additional_permissions": null,
+      "tools": [
+        "list_documents",
+        "read_document",
+        "save_note"
+      ],
+      "resources": [],
+      "prompts": [],
+      "resource_templates": [],
+      "source_file": "results/mcp-armor/configs/control-files.json"
+    }
+  ],
+  "tools": [
+    {
+      "name": "list_documents",
+      "description": "List the available documents by name.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "list_documentsArguments"
+      },
+      "server_name": "control-files",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    },
+    {
+      "name": "read_document",
+      "description": "Read a document. `doc_id` must be one of the ids returned by list_documents; free-form paths are rejected.",
+      "input_schema": {
+        "properties": {
+          "doc_id": {
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "limit": {
+            "default": 4000,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "doc_id"
+        ],
+        "type": "object",
+        "title": "read_documentArguments"
+      },
+      "server_name": "control-files",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    },
+    {
+      "name": "save_note",
+      "description": "Save a note inside the sandbox. The name is validated and confined; the write is atomic.",
+      "input_schema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "content": {
+            "title": "Content",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "content"
+        ],
+        "type": "object",
+        "title": "save_noteArguments"
+      },
+      "server_name": "control-files",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    }
+  ],
+  "resources": [],
+  "prompts": [],
+  "resource_templates": [],
+  "config_files": [
+    "results/mcp-armor/configs/control-files.json"
+  ],
+  "errors": [],
+  "status": [
+    "All servers connected. Scan completed without baseline checks."
+  ],
+  "baseline_status": {
+    "baseline_file": null,
+    "baseline_loaded": false,
+    "warning": "Baseline checks skipped. No baseline file found."
+  },
+  "security_report": {
+    "risk_level": "CRITICAL",
+    "total_findings": 3,
+    "findings_by_severity": {
+      "low": 0,
+      "medium": 0,
+      "high": 0,
+      "critical": 3
+    },
+    "findings_by_type": {
+      "Command Injection": 1,
+      "Excessive Tool Permissions": 1,
+      "Prompt Injection": 1
+    },
+    "grouped_findings": [
+      {
+        "finding_type": "Command Injection",
+        "severity": "critical",
+        "description": "Hidden command execution patterns found in MCP component metadata, indicating potential command injection vectors.",
+        "remediation": "Integrate only trusted MCP servers; block components that embed hidden or unsafe commands in metadata. Regularly scan for poisoning and rug-pull activity to prevent unauthorized execution or data exfiltration.",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "tool",
+            "entity_name": "read_document",
+            "server_name": "control-files",
+            "config_file": "results/mcp-armor/configs/control-files.json",
+            "affected_tool": "read_document",
+            "additional_info": {
+              "pattern_count": 2,
+              "matched_content": [
+                "Read a document. `doc_id` must be one of the ids returned by list_documents",
+                "must be one of the ids returned by list_documents; free-form paths are rejected. read_document {"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "finding_type": "Excessive Tool Permissions",
+        "severity": "critical",
+        "description": "Excessive host permissions detected for MCP tools on the affected server.",
+        "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "configuration",
+            "entity_name": "control-files",
+            "server_name": "control-files",
+            "config_file": "results/mcp-armor/configs/control-files.json",
+            "additional_info": {
+              "risky_tools": [
+                "list_documents",
+                "read_document",
+                "save_note"
+              ],
+              "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+            }
+          }
+        ]
+      },
+      {
+        "finding_type": "Prompt Injection",
+        "severity": "critical",
+        "description": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+        "remediation": "Inspect affected MCP components and remove hidden instructions or block the component to prevent unauthorized actions and manipulation of the agent\u2019s context.",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "tool",
+            "entity_name": "read_document",
+            "server_name": "control-files",
+            "config_file": "results/mcp-armor/configs/control-files.json",
+            "affected_tool": "read_document",
+            "additional_info": {
+              "tool": "read_document",
+              "classification": "malicious",
+              "score": 0.92
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

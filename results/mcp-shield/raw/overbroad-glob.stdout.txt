@@ -1,0 +1,36 @@
+
+   ╭─────────────────────────────────────────────────────────╮
+   │                                                         │
+   │   MCP-Shield v1.0.4                                     │
+   │   Security Scanner for Model Context Protocol Servers   │
+   │                                                         │
+   ╰─────────────────────────────────────────────────────────╯
+
+Scanning "results/mcp-shield/configs/overbroad-glob.json"
+Found 1 servers:
+  └── ● overbroad-glob (2 tools)
+    ├── ○ find_files — scanning...
+    └── ○ read_path — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● overbroad-glob (2 tools)
+    ├── ✗ find_files — Prompt Injection detected [HIGH Risk]
+    └── ○ read_path — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● overbroad-glob (2 tools)
+    ├── ✗ find_files — Prompt Injection detected [HIGH Risk]
+    └── ✗ read_path — Prompt Injection detected [HIGH Risk]
+
+⚠️  Vulnerabilities Detected in results/mcp-shield/configs/overbroad-glob.json
+
+1. Server: overbroad-glob
+   Tool: find_files
+   Risk Level: HIGH
+   Issues:
+     – Sensitive file access: .env (Environment file access)
+
+2. Server: overbroad-glob
+   Tool: read_path
+   Risk Level: HIGH
+   Issues:
+     – Sensitive file access: /etc/passwd (System password file access)
+

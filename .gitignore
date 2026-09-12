@@ -7,9 +7,9 @@ __pycache__/
 .venv/
 venv/
 
-# Harness output. Scorecards are published deliberately (docs/scorecard.md), not
-# dumped from whatever the last local run produced.
-results/
+# Harness output is committed deliberately (see results/.gitignore for the
+# exceptions): the scorecards and their raw evidence are the showcase artifact.
+# Generated client configs and per-run scratch stay ignored.
 
 # Scanner default report filenames (some CLIs write to cwd when run by hand)
 scan_results.json

@@ -1,0 +1,13 @@
+# Results are committed because the scorecards and their raw evidence are the
+# showcase. Two kinds of output stay ignored:
+#
+#   configs/  — generated client config files and per-run output scratch.
+#               They contain absolute paths to this machine and are regenerated
+#               on every run, so they carry no value and would create noise.
+#
+# Everything else under results/ (scorecard.json, scorecard.md, raw/, and the
+# top-level comparison.md) is evidence of a real run and is committed.
+
+configs/
+*/configs/
+selftest/

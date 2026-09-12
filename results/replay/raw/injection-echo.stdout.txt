@@ -1,0 +1,12 @@
+{
+  "findings": [
+    {
+      "server": "injection-echo",
+      "rule_id": "MCP-INJ-001",
+      "severity": "HIGH",
+      "category": "prompt-injection",
+      "tool": "operator_note",
+      "message": "Tool operator_note returns instruction-shaped text that the tool description labels as trusted, creating a prompt injection sink."
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+
+   ╭─────────────────────────────────────────────────────────╮
+   │                                                         │
+   │   MCP-Shield v1.0.4                                     │
+   │   Security Scanner for Model Context Protocol Servers   │
+   │                                                         │
+   ╰─────────────────────────────────────────────────────────╯
+
+Scanning "results/mcp-shield/configs/control-gated-admin.json"
+Found 1 servers:
+  └── ● control-gated-admin (2 tools)
+    ├── ○ get_customer — scanning...
+    └── ○ delete_record — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● control-gated-admin (2 tools)
+    ├── ✗ get_customer — Prompt Injection detected [HIGH Risk]
+    └── ○ delete_record — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● control-gated-admin (2 tools)
+    ├── ✗ get_customer — Prompt Injection detected [HIGH Risk]
+    └── ✓ delete_record — Verified
+
+⚠️  Vulnerabilities Detected in results/mcp-shield/configs/control-gated-admin.json
+
+1. Server: control-gated-admin
+   Tool: get_customer
+   Risk Level: HIGH
+   Issues:
+     – Sensitive file access: token (Token access)
+

@@ -1,0 +1,95 @@
+{
+  "version": "0.19.2",
+  "scan_timestamp": "2026-09-12T14:28:47.883523",
+  "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin",
+  "scanned_files": 1,
+  "summary": {
+    "total": 2,
+    "actionable": 0,
+    "suppressed": 0,
+    "by_severity": {
+      "medium": 2
+    },
+    "by_category": {
+      "cascading_failures": 2
+    },
+    "by_tier": {
+      "BLOCK": 0,
+      "WARN": 0,
+      "INFO": 0,
+      "SUPPRESSED": 2
+    },
+    "risk_score": 0.0,
+    "risk_label": "LOW"
+  },
+  "findings": [
+    {
+      "rule_id": "AGENT-022",
+      "title": "No Error Handling in Tool Execution",
+      "description": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n",
+      "severity": "medium",
+      "category": "cascading_failures",
+      "location": {
+        "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin/server.py",
+        "start_line": 90,
+        "end_line": 90,
+        "start_column": null,
+        "end_column": null,
+        "snippet": "def get_customer(email: str, token: str) -> dict[str, Any]:"
+      },
+      "confidence": 0.15,
+      "tier": "SUPPRESSED",
+      "suppressed": false,
+      "suppressed_reason": null,
+      "suppressed_by": null,
+      "needs_review": false,
+      "cwe_id": "CWE-754",
+      "owasp_id": "ASI-08",
+      "asi_categories": [
+        "ASI-08"
+      ],
+      "remediation": {
+        "description": "Wrap all tool function bodies in try/except with graceful error messages. Never let raw exceptions propagate to the agent planner.\n",
+        "code_example": null,
+        "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      "metadata": {},
+      "detected_at": "2026-09-12T14:28:47.863950",
+      "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
+    },
+    {
+      "rule_id": "AGENT-022",
+      "title": "No Error Handling in Tool Execution",
+      "description": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n",
+      "severity": "medium",
+      "category": "cascading_failures",
+      "location": {
+        "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin/server.py",
+        "start_line": 108,
+        "end_line": 108,
+        "start_column": null,
+        "end_column": null,
+        "snippet": "def delete_record(email: str, token: str, confirm: bool = False) -> str:"
+      },
+      "confidence": 0.15,
+      "tier": "SUPPRESSED",
+      "suppressed": false,
+      "suppressed_reason": null,
+      "suppressed_by": null,
+      "needs_review": false,
+      "cwe_id": "CWE-754",
+      "owasp_id": "ASI-08",
+      "asi_categories": [
+        "ASI-08"
+      ],
+      "remediation": {
+        "description": "Wrap all tool function bodies in try/except with graceful error messages. Never let raw exceptions propagate to the agent planner.\n",
+        "code_example": null,
+        "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      "metadata": {},
+      "detected_at": "2026-09-12T14:28:47.864109",
+      "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
+    }
+  ]
+}

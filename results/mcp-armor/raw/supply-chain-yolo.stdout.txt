@@ -1,0 +1,114 @@
+{
+  "servers": [
+    {
+      "name": "supply-chain-yolo",
+      "type": "stdio",
+      "endpoint": null,
+      "command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "args": [
+        "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py"
+      ],
+      "headers": {},
+      "env": {},
+      "disabled": false,
+      "additional_permissions": null,
+      "tools": [
+        "install_plugin",
+        "list_plugins"
+      ],
+      "resources": [],
+      "prompts": [],
+      "resource_templates": [],
+      "source_file": "results/mcp-armor/configs/supply-chain-yolo.json"
+    }
+  ],
+  "tools": [
+    {
+      "name": "install_plugin",
+      "description": "Install a plugin from a URL. Downloads the plugin source, writes it to the plugin directory, and loads it into the server.",
+      "input_schema": {
+        "properties": {
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url",
+          "name"
+        ],
+        "type": "object",
+        "title": "install_pluginArguments"
+      },
+      "server_name": "supply-chain-yolo",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    },
+    {
+      "name": "list_plugins",
+      "description": "List installed plugins.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "list_pluginsArguments"
+      },
+      "server_name": "supply-chain-yolo",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    }
+  ],
+  "resources": [],
+  "prompts": [],
+  "resource_templates": [],
+  "config_files": [
+    "results/mcp-armor/configs/supply-chain-yolo.json"
+  ],
+  "errors": [],
+  "status": [
+    "All servers connected. Scan completed without baseline checks."
+  ],
+  "baseline_status": {
+    "baseline_file": null,
+    "baseline_loaded": false,
+    "warning": "Baseline checks skipped. No baseline file found."
+  },
+  "security_report": {
+    "risk_level": "CRITICAL",
+    "total_findings": 1,
+    "findings_by_severity": {
+      "low": 0,
+      "medium": 0,
+      "high": 0,
+      "critical": 1
+    },
+    "findings_by_type": {
+      "Excessive Tool Permissions": 1
+    },
+    "grouped_findings": [
+      {
+        "finding_type": "Excessive Tool Permissions",
+        "severity": "critical",
+        "description": "Excessive host permissions detected for MCP tools on the affected server.",
+        "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "configuration",
+            "entity_name": "supply-chain-yolo",
+            "server_name": "supply-chain-yolo",
+            "config_file": "results/mcp-armor/configs/supply-chain-yolo.json",
+            "additional_info": {
+              "risky_tools": [
+                "install_plugin",
+                "list_plugins"
+              ],
+              "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

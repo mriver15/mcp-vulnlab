@@ -1,0 +1,164 @@
+[
+  {
+    "slug": "control-echo",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/control-echo/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 6,
+    "config": null
+  },
+  {
+    "slug": "control-files",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/control-files/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 6,
+    "config": null
+  },
+  {
+    "slug": "control-gated-admin",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 4,
+    "config": null
+  },
+  {
+    "slug": "exfil-write",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": null
+  },
+  {
+    "slug": "injection-echo",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 4,
+    "config": null
+  },
+  {
+    "slug": "no-auth-file",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 4,
+    "config": null
+  },
+  {
+    "slug": "overbroad-glob",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 6,
+    "config": null
+  },
+  {
+    "slug": "pii-leak",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/pii-leak/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 4,
+    "config": null
+  },
+  {
+    "slug": "supply-chain-yolo",
+    "argv": [
+      "mcp-scanner",
+      "--analyzers",
+      "yara,readiness,prompt_defense",
+      "--format",
+      "raw",
+      "stdio",
+      "--stdio-command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "--stdio-arg=/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 4,
+    "config": null
+  }
+]

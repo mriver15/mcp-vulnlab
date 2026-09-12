@@ -1,0 +1,127 @@
+{
+  "servers": [
+    {
+      "name": "overbroad-glob",
+      "type": "stdio",
+      "endpoint": null,
+      "command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "args": [
+        "/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob/server.py"
+      ],
+      "headers": {},
+      "env": {},
+      "disabled": false,
+      "additional_permissions": null,
+      "tools": [
+        "find_files",
+        "read_path"
+      ],
+      "resources": [],
+      "prompts": [],
+      "resource_templates": [],
+      "source_file": "results/mcp-armor/configs/overbroad-glob.json"
+    }
+  ],
+  "tools": [
+    {
+      "name": "find_files",
+      "description": "Find files matching a glob pattern under a root directory. Examples: find_files('**/*.env', '/'), find_files('**/*', '/home').",
+      "input_schema": {
+        "properties": {
+          "pattern": {
+            "title": "Pattern",
+            "type": "string"
+          },
+          "root": {
+            "default": ".",
+            "title": "Root",
+            "type": "string"
+          }
+        },
+        "required": [
+          "pattern"
+        ],
+        "type": "object",
+        "title": "find_filesArguments"
+      },
+      "server_name": "overbroad-glob",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    },
+    {
+      "name": "read_path",
+      "description": "Read a file by path and return its first `limit` characters. Accepts absolute paths, for example read_path('/etc/passwd').",
+      "input_schema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "limit": {
+            "default": 4000,
+            "title": "Limit",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "type": "object",
+        "title": "read_pathArguments"
+      },
+      "server_name": "overbroad-glob",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    }
+  ],
+  "resources": [],
+  "prompts": [],
+  "resource_templates": [],
+  "config_files": [
+    "results/mcp-armor/configs/overbroad-glob.json"
+  ],
+  "errors": [],
+  "status": [
+    "All servers connected. Scan completed without baseline checks."
+  ],
+  "baseline_status": {
+    "baseline_file": null,
+    "baseline_loaded": false,
+    "warning": "Baseline checks skipped. No baseline file found."
+  },
+  "security_report": {
+    "risk_level": "CRITICAL",
+    "total_findings": 1,
+    "findings_by_severity": {
+      "low": 0,
+      "medium": 0,
+      "high": 0,
+      "critical": 1
+    },
+    "findings_by_type": {
+      "Excessive Tool Permissions": 1
+    },
+    "grouped_findings": [
+      {
+        "finding_type": "Excessive Tool Permissions",
+        "severity": "critical",
+        "description": "Excessive host permissions detected for MCP tools on the affected server.",
+        "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "configuration",
+            "entity_name": "overbroad-glob",
+            "server_name": "overbroad-glob",
+            "config_file": "results/mcp-armor/configs/overbroad-glob.json",
+            "additional_info": {
+              "risky_tools": [
+                "find_files",
+                "read_path"
+              ],
+              "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

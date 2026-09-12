@@ -1,0 +1,763 @@
+{
+  "scanner": "agent-audit",
+  "generated_at": "2026-09-12T14:28:48+00:00",
+  "corpus_root": "/Users/river/Projects/mcp-vulnlab",
+  "available": true,
+  "unavailable_reason": null,
+  "summary": {
+    "labels_total": 12,
+    "labels_detected": 1,
+    "recall": 0.08333333333333333,
+    "findings_total": 10,
+    "true_positives": 1,
+    "false_positives": 9,
+    "fp_rate": 0.9
+  },
+  "by_category": {
+    "data-exfiltration": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-003",
+        "MCPV-004"
+      ]
+    },
+    "missing-auth": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-009",
+        "MCPV-010"
+      ]
+    },
+    "overbroad-tool-schema": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-005",
+        "MCPV-006"
+      ]
+    },
+    "pii-disclosure": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-007",
+        "MCPV-008"
+      ]
+    },
+    "prompt-injection": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-001",
+        "MCPV-002"
+      ]
+    },
+    "supply-chain": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-011",
+        "MCPV-012"
+      ]
+    }
+  },
+  "labels": {
+    "MCPV-003": {
+      "server": "exfil-write",
+      "title": "Arbitrary file write via unconfined path join",
+      "category": "data-exfiltration",
+      "severity": "critical",
+      "tool": "save_report"
+    },
+    "MCPV-004": {
+      "server": "exfil-write",
+      "title": "Path-traversal defence explicitly disabled on a read resource",
+      "category": "data-exfiltration",
+      "severity": "high",
+      "tool": "report://{path}"
+    },
+    "MCPV-001": {
+      "server": "injection-echo",
+      "title": "Tool output labelled trusted carries injected instructions",
+      "category": "prompt-injection",
+      "severity": "high",
+      "tool": "operator_note"
+    },
+    "MCPV-002": {
+      "server": "injection-echo",
+      "title": "Tool arguments reflected verbatim into model context",
+      "category": "prompt-injection",
+      "severity": "medium",
+      "tool": "echo"
+    },
+    "MCPV-009": {
+      "server": "no-auth-file",
+      "title": "Document reads served without any authorization check",
+      "category": "missing-auth",
+      "severity": "high",
+      "tool": "read_file"
+    },
+    "MCPV-010": {
+      "server": "no-auth-file",
+      "title": "Irreversible delete with no authorization and no confirmation",
+      "category": "missing-auth",
+      "severity": "critical",
+      "tool": "delete_file"
+    },
+    "MCPV-005": {
+      "server": "overbroad-glob",
+      "title": "Glob search accepts any root and any pattern",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "find_files"
+    },
+    "MCPV-006": {
+      "server": "overbroad-glob",
+      "title": "Unconstrained absolute path parameter on a read tool",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "read_path"
+    },
+    "MCPV-007": {
+      "server": "pii-leak",
+      "title": "Single-record lookup returns unmasked sensitive fields",
+      "category": "pii-disclosure",
+      "severity": "high",
+      "tool": "lookup_user"
+    },
+    "MCPV-008": {
+      "server": "pii-leak",
+      "title": "Substring search dumps the entire customer table",
+      "category": "pii-disclosure",
+      "severity": "critical",
+      "tool": "search_users"
+    },
+    "MCPV-011": {
+      "server": "supply-chain-yolo",
+      "title": "Remote plugin source loaded with no integrity verification",
+      "category": "supply-chain",
+      "severity": "critical",
+      "tool": "install_plugin"
+    },
+    "MCPV-012": {
+      "server": "supply-chain-yolo",
+      "title": "Floating dependency manifest with no pins or hashes",
+      "category": "supply-chain",
+      "severity": "high",
+      "tool": "(server)"
+    }
+  },
+  "servers": [
+    {
+      "slug": "control-echo",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "control-files",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "control-gated-admin",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 2,
+      "false_positives": 2,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "agent-audit",
+          "server": "control-gated-admin",
+          "message": "No Error Handling in Tool Execution",
+          "rule_id": "AGENT-022",
+          "severity": "medium",
+          "category": "cascading_failures",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-022",
+            "title": "No Error Handling in Tool Execution",
+            "description": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n",
+            "severity": "medium",
+            "category": "cascading_failures",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin/server.py",
+              "start_line": 90,
+              "end_line": 90,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "def get_customer(email: str, token: str) -> dict[str, Any]:"
+            },
+            "confidence": 0.15,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-754",
+            "owasp_id": "ASI-08",
+            "asi_categories": [
+              "ASI-08"
+            ],
+            "remediation": {
+              "description": "Wrap all tool function bodies in try/except with graceful error messages. Never let raw exceptions propagate to the agent planner.\n",
+              "code_example": null,
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T14:28:47.863950",
+            "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
+          }
+        },
+        {
+          "scanner": "agent-audit",
+          "server": "control-gated-admin",
+          "message": "No Error Handling in Tool Execution",
+          "rule_id": "AGENT-022",
+          "severity": "medium",
+          "category": "cascading_failures",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-022",
+            "title": "No Error Handling in Tool Execution",
+            "description": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n",
+            "severity": "medium",
+            "category": "cascading_failures",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin/server.py",
+              "start_line": 108,
+              "end_line": 108,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "def delete_record(email: str, token: str, confirm: bool = False) -> str:"
+            },
+            "confidence": 0.15,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-754",
+            "owasp_id": "ASI-08",
+            "asi_categories": [
+              "ASI-08"
+            ],
+            "remediation": {
+              "description": "Wrap all tool function bodies in try/except with graceful error messages. Never let raw exceptions propagate to the agent planner.\n",
+              "code_example": null,
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T14:28:47.864109",
+            "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "exfil-write",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-003",
+        "MCPV-004"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "injection-echo",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-001",
+        "MCPV-002"
+      ],
+      "findings_total": 2,
+      "false_positives": 2,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "agent-audit",
+          "server": "injection-echo",
+          "message": "No Error Handling in Tool Execution",
+          "rule_id": "AGENT-022",
+          "severity": "medium",
+          "category": "cascading_failures",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-022",
+            "title": "No Error Handling in Tool Execution",
+            "description": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n",
+            "severity": "medium",
+            "category": "cascading_failures",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo/server.py",
+              "start_line": 38,
+              "end_line": 38,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "def operator_note(key: str = \"welcome\") -> str:"
+            },
+            "confidence": 0.15,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-754",
+            "owasp_id": "ASI-08",
+            "asi_categories": [
+              "ASI-08"
+            ],
+            "remediation": {
+              "description": "Wrap all tool function bodies in try/except with graceful error messages. Never let raw exceptions propagate to the agent planner.\n",
+              "code_example": null,
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T14:28:48.123234",
+            "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
+          }
+        },
+        {
+          "scanner": "agent-audit",
+          "server": "injection-echo",
+          "message": "LangChain Tool Input Not Sanitized",
+          "rule_id": "AGENT-026",
+          "severity": "critical",
+          "category": "tool_misuse",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-026",
+            "title": "LangChain Tool Input Not Sanitized",
+            "description": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n",
+            "severity": "critical",
+            "category": "tool_misuse",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo/server.py",
+              "start_line": 38,
+              "end_line": 38,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "def operator_note(key: str = \"welcome\") -> str:"
+            },
+            "confidence": 0.15,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-918",
+            "owasp_id": "ASI-02",
+            "asi_categories": [
+              "ASI-02"
+            ],
+            "remediation": {
+              "description": "Validate all string inputs in tool functions before passing to dangerous operations. Use allowlists, regex validation, or type checking to ensure inputs are safe.\n",
+              "code_example": "# BAD: Direct execution\n@tool\ndef run_query(query: str) -> str:\n    return cursor.execute(query)\n\n# GOOD: With validation\n@tool\ndef run_query(query: str) -> str:\n    if not re.match(r\"^SELECT \", query, re.IGNORECASE):\n        raise ValueError(\"Only SELECT queries allowed\")\n    return cursor.execute(query)\n",
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T14:28:48.123392",
+            "reason": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "no-auth-file",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-009",
+        "MCPV-010"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "overbroad-glob",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-005",
+        "MCPV-006"
+      ],
+      "findings_total": 2,
+      "false_positives": 2,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "agent-audit",
+          "server": "overbroad-glob",
+          "message": "LangChain Tool Input Not Sanitized",
+          "rule_id": "AGENT-026",
+          "severity": "critical",
+          "category": "tool_misuse",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-026",
+            "title": "LangChain Tool Input Not Sanitized",
+            "description": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n",
+            "severity": "critical",
+            "category": "tool_misuse",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob/server.py",
+              "start_line": 31,
+              "end_line": 31,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "def find_files(pattern: str, root: str = \".\") -> list[str]:"
+            },
+            "confidence": 0.15,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-918",
+            "owasp_id": "ASI-02",
+            "asi_categories": [
+              "ASI-02"
+            ],
+            "remediation": {
+              "description": "Validate all string inputs in tool functions before passing to dangerous operations. Use allowlists, regex validation, or type checking to ensure inputs are safe.\n",
+              "code_example": "# BAD: Direct execution\n@tool\ndef run_query(query: str) -> str:\n    return cursor.execute(query)\n\n# GOOD: With validation\n@tool\ndef run_query(query: str) -> str:\n    if not re.match(r\"^SELECT \", query, re.IGNORECASE):\n        raise ValueError(\"Only SELECT queries allowed\")\n    return cursor.execute(query)\n",
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T14:28:48.369367",
+            "reason": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n"
+          }
+        },
+        {
+          "scanner": "agent-audit",
+          "server": "overbroad-glob",
+          "message": "LangChain Tool Input Not Sanitized",
+          "rule_id": "AGENT-026",
+          "severity": "critical",
+          "category": "tool_misuse",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-026",
+            "title": "LangChain Tool Input Not Sanitized",
+            "description": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n",
+            "severity": "critical",
+            "category": "tool_misuse",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob/server.py",
+              "start_line": 46,
+              "end_line": 46,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "def read_path(path: str, limit: int = 4000) -> str:"
+            },
+            "confidence": 0.15,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-918",
+            "owasp_id": "ASI-02",
+            "asi_categories": [
+              "ASI-02"
+            ],
+            "remediation": {
+              "description": "Validate all string inputs in tool functions before passing to dangerous operations. Use allowlists, regex validation, or type checking to ensure inputs are safe.\n",
+              "code_example": "# BAD: Direct execution\n@tool\ndef run_query(query: str) -> str:\n    return cursor.execute(query)\n\n# GOOD: With validation\n@tool\ndef run_query(query: str) -> str:\n    if not re.match(r\"^SELECT \", query, re.IGNORECASE):\n        raise ValueError(\"Only SELECT queries allowed\")\n    return cursor.execute(query)\n",
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T14:28:48.369517",
+            "reason": "A @tool decorated function accepts string parameters that flow directly to dangerous operations (file access, command execution, SQL queries, network requests) without input validation or sanitization. This enables Tool Misuse (ASI-02) where attackers can use the tool to perform unauthorized actions.\n"
+          }
+        }
+      ]
+    },
+    {
+      "slug": "pii-leak",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-007",
+        "MCPV-008"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "supply-chain-yolo",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-011"
+      ],
+      "missed_ids": [
+        "MCPV-012"
+      ],
+      "findings_total": 4,
+      "false_positives": 3,
+      "matches": [
+        {
+          "label_id": "MCPV-011",
+          "server": "supply-chain-yolo",
+          "reason": "strength 1: signal match: exec",
+          "finding": {
+            "scanner": "agent-audit",
+            "server": "supply-chain-yolo",
+            "message": "Unsandboxed Code Execution in Agent",
+            "rule_id": "AGENT-017",
+            "severity": "critical",
+            "category": "unexpected_code_execution",
+            "tool": null,
+            "raw": {
+              "rule_id": "AGENT-017",
+              "title": "Unsandboxed Code Execution in Agent",
+              "description": "Agent executes dynamically generated code (via eval, exec, subprocess, or code interpreter tools) without sandbox isolation. This enables RCE attacks where manipulated prompts lead to arbitrary code execution on the host system (ASI-05).\n",
+              "severity": "critical",
+              "category": "unexpected_code_execution",
+              "location": {
+                "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+                "start_line": 69,
+                "end_line": 69,
+                "start_column": null,
+                "end_column": null,
+                "snippet": "exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102"
+              },
+              "confidence": 0.15,
+              "tier": "SUPPRESSED",
+              "suppressed": false,
+              "suppressed_reason": null,
+              "suppressed_by": null,
+              "needs_review": false,
+              "cwe_id": "CWE-94",
+              "owasp_id": "ASI-05",
+              "asi_categories": [
+                "ASI-05"
+              ],
+              "remediation": {
+                "description": "NEVER execute LLM-generated code on the host system without hardware-enforced sandbox isolation. Use Docker containers with read-only filesystems, disabled networking, and resource limits. Apply static analysis to generated code before execution.\n",
+                "code_example": "# BAD: Direct execution\n@tool\ndef run_code(code: str):\n    exec(code)  # RCE vulnerability\n\n# GOOD: Sandboxed execution\n@tool\ndef run_code(code: str):\n    result = docker_sandbox.execute(\n        code, timeout=30, network=False, read_only=True\n    )\n    return result\n",
+                "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+              },
+              "metadata": {},
+              "detected_at": "2026-09-12T14:28:48.626516",
+              "reason": "Agent executes dynamically generated code (via eval, exec, subprocess, or code interpreter tools) without sandbox isolation. This enables RCE attacks where manipulated prompts lead to arbitrary code execution on the host system (ASI-05).\n"
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "agent-audit",
+          "server": "supply-chain-yolo",
+          "message": "No Error Handling in Tool Execution",
+          "rule_id": "AGENT-022",
+          "severity": "medium",
+          "category": "cascading_failures",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-022",
+            "title": "No Error Handling in Tool Execution",
+            "description": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n",
+            "severity": "medium",
+            "category": "cascading_failures",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+              "start_line": 55,
+              "end_line": 55,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "def install_plugin(url: str, name: str) -> str:"
+            },
+            "confidence": 0.15,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-754",
+            "owasp_id": "ASI-08",
+            "asi_categories": [
+              "ASI-08"
+            ],
+            "remediation": {
+              "description": "Wrap all tool function bodies in try/except with graceful error messages. Never let raw exceptions propagate to the agent planner.\n",
+              "code_example": null,
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T14:28:48.626346",
+            "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
+          }
+        },
+        {
+          "scanner": "agent-audit",
+          "server": "supply-chain-yolo",
+          "message": "Tool With Unrestricted Code Execution",
+          "rule_id": "AGENT-035",
+          "severity": "critical",
+          "category": "tool_misuse",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-035",
+            "title": "Tool With Unrestricted Code Execution",
+            "description": "A tool function contains eval(), exec(), os.system(), or subprocess with shell=True without sandboxing. This allows arbitrary code execution through the agent, enabling complete system compromise.\n",
+            "severity": "critical",
+            "category": "tool_misuse",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+              "start_line": 69,
+              "end_line": 69,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102"
+            },
+            "confidence": 0.15,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-77",
+            "owasp_id": "ASI-02",
+            "asi_categories": [
+              "ASI-02"
+            ],
+            "remediation": {
+              "description": "Avoid using eval/exec in tool functions. If code execution is necessary, use a sandboxed environment (Docker, gVisor, or restricted subprocess with shell=False and fixed argument lists).\n",
+              "code_example": "# BAD: Unrestricted execution\n@tool\ndef run_code(code: str) -> str:\n    return exec(code)\n\n# GOOD: Sandboxed execution\n@tool\ndef run_code(code: str) -> str:\n    # Use RestrictedPython or Docker sandbox\n    return sandbox.execute(code, timeout=5)\n",
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {},
+            "detected_at": "2026-09-12T14:28:48.626529",
+            "reason": "A tool function contains eval(), exec(), os.system(), or subprocess with shell=True without sandboxing. This allows arbitrary code execution through the agent, enabling complete system compromise.\n"
+          }
+        },
+        {
+          "scanner": "agent-audit",
+          "server": "supply-chain-yolo",
+          "message": "Tool Function Without Input Validation",
+          "rule_id": "AGENT-034",
+          "severity": "high",
+          "category": "tool_misuse",
+          "tool": null,
+          "raw": {
+            "rule_id": "AGENT-034",
+            "title": "Tool Function Without Input Validation",
+            "description": "A tool function accepts string or Any parameters without performing input validation in the function body. This enables tool misuse where attackers can pass malicious inputs to trigger unauthorized actions.\n",
+            "severity": "high",
+            "category": "tool_misuse",
+            "location": {
+              "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+              "start_line": 55,
+              "end_line": 55,
+              "start_column": null,
+              "end_column": null,
+              "snippet": "def install_plugin(url: str, name: str) -> str:"
+            },
+            "confidence": 0.121125,
+            "tier": "SUPPRESSED",
+            "suppressed": false,
+            "suppressed_reason": null,
+            "suppressed_by": null,
+            "needs_review": false,
+            "cwe_id": "CWE-20",
+            "owasp_id": "ASI-02",
+            "asi_categories": [
+              "ASI-02"
+            ],
+            "remediation": {
+              "description": "Add input validation at the start of tool functions. Use isinstance() checks, regex validation, or pydantic Field constraints to ensure inputs are safe before processing.\n",
+              "code_example": "# BAD: No validation\n@tool\ndef run_query(query: str) -> str:\n    return cursor.execute(query)\n\n# GOOD: With validation\n@tool\ndef run_query(query: str) -> str:\n    if not isinstance(query, str) or len(query) > 1000:\n        raise ValueError(\"Invalid query\")\n    if not re.match(r\"^SELECT \", query, re.IGNORECASE):\n        raise ValueError(\"Only SELECT queries allowed\")\n    return cursor.execute(query)\n",
+              "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+            },
+            "metadata": {
+              "taint_analysis": {
+                "dangerous_flows": [
+                  {
+                    "var": "url",
+                    "sink": "exec",
+                    "sink_type": "code_exec",
+                    "line": 69,
+                    "path": [
+                      "url",
+                      "source"
+                    ],
+                    "confidence": 0.85
+                  },
+                  {
+                    "var": "url",
+                    "sink": "compile",
+                    "sink_type": "code_exec",
+                    "line": 69,
+                    "path": [
+                      "url",
+                      "source"
+                    ],
+                    "confidence": 0.85
+                  },
+                  {
+                    "var": "name",
+                    "sink": "exec",
+                    "sink_type": "code_exec",
+                    "line": 69,
+                    "path": [
+                      "name",
+                      "destination"
+                    ],
+                    "confidence": 0.85
+                  }
+                ],
+                "sanitization_points": []
+              }
+            },
+            "detected_at": "2026-09-12T14:28:48.626498",
+            "reason": "A tool function accepts string or Any parameters without performing input validation in the function body. This enables tool misuse where attackers can pass malicious inputs to trigger unauthorized actions.\n"
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive."
+  ]
+}

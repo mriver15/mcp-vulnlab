@@ -1,0 +1,20 @@
+{
+  "findings": [
+    {
+      "server": "exfil-write",
+      "rule_id": "MCP-TRAV-001",
+      "severity": "CRITICAL",
+      "category": "data-exfiltration",
+      "tool": "save_report",
+      "message": "save_report joins a caller-supplied name onto a sandbox path with no confinement check, allowing an unconfined file write."
+    },
+    {
+      "server": "exfil-write",
+      "rule_id": "MCP-TRAV-002",
+      "severity": "HIGH",
+      "category": "data-exfiltration",
+      "tool": "report://{path}",
+      "message": "Resource template report://{path} exempts its path parameter from the SDK path traversal check, enabling arbitrary file read."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "findings": [
+    {
+      "server": "control-echo",
+      "rule_id": "MCP-INJ-009",
+      "severity": "MEDIUM",
+      "category": "prompt-injection",
+      "tool": "render_greeting",
+      "message": "Tool render_greeting reflects caller-supplied input into its response."
+    }
+  ]
+}

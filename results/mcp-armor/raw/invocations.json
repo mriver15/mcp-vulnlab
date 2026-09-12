@@ -1,0 +1,155 @@
+[
+  {
+    "slug": "control-echo",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/control-echo.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/control-echo.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": "results/mcp-armor/configs/control-echo.json"
+  },
+  {
+    "slug": "control-files",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/control-files.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/control-files.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 3,
+    "config": "results/mcp-armor/configs/control-files.json"
+  },
+  {
+    "slug": "control-gated-admin",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/control-gated-admin.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/control-gated-admin.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": "results/mcp-armor/configs/control-gated-admin.json"
+  },
+  {
+    "slug": "exfil-write",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/exfil-write.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/exfil-write.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": "results/mcp-armor/configs/exfil-write.json"
+  },
+  {
+    "slug": "injection-echo",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/injection-echo.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/injection-echo.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": "results/mcp-armor/configs/injection-echo.json"
+  },
+  {
+    "slug": "no-auth-file",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/no-auth-file.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/no-auth-file.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": "results/mcp-armor/configs/no-auth-file.json"
+  },
+  {
+    "slug": "overbroad-glob",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/overbroad-glob.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/overbroad-glob.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": "results/mcp-armor/configs/overbroad-glob.json"
+  },
+  {
+    "slug": "pii-leak",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/pii-leak.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/pii-leak.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": "results/mcp-armor/configs/pii-leak.json"
+  },
+  {
+    "slug": "supply-chain-yolo",
+    "argv": [
+      "mcp-armor",
+      "scan",
+      "--config",
+      "results/mcp-armor/configs/supply-chain-yolo.json",
+      "--report-type",
+      "json",
+      "--output",
+      "results/mcp-armor/configs/out/supply-chain-yolo.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": "results/mcp-armor/configs/supply-chain-yolo.json"
+  }
+]

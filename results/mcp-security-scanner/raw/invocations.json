@@ -1,0 +1,155 @@
+[
+  {
+    "slug": "control-echo",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/control-echo/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "control-files",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/control-files/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "control-gated-admin",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "exfil-write",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "injection-echo",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "no-auth-file",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "overbroad-glob",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "pii-leak",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/pii-leak/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "supply-chain-yolo",
+    "argv": [
+      "mcp-scan",
+      "scan",
+      "--transport",
+      "stdio",
+      "--command",
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3 /Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+      "--format",
+      "json"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 1,
+    "config": null
+  }
+]

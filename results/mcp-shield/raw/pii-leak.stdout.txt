@@ -1,0 +1,21 @@
+
+   ╭─────────────────────────────────────────────────────────╮
+   │                                                         │
+   │   MCP-Shield v1.0.4                                     │
+   │   Security Scanner for Model Context Protocol Servers   │
+   │                                                         │
+   ╰─────────────────────────────────────────────────────────╯
+
+Scanning "results/mcp-shield/configs/pii-leak.json"
+Found 1 servers:
+  └── ● pii-leak (2 tools)
+    ├── ○ lookup_user — scanning...
+    └── ○ search_users — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● pii-leak (2 tools)
+    ├── ✓ lookup_user — Verified
+    └── ○ search_users — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● pii-leak (2 tools)
+    ├── ✓ lookup_user — Verified
+    └── ✓ search_users — Verified

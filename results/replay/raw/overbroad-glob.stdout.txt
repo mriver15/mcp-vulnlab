@@ -1,0 +1,12 @@
+{
+  "findings": [
+    {
+      "server": "overbroad-glob",
+      "rule_id": "MCP-SCOPE-010",
+      "severity": "HIGH",
+      "category": "overbroad-tool-schema",
+      "tool": "find_files",
+      "message": "find_files exposes an unrestricted glob root with wildcard patterns and advertises whole-filesystem scope in its description."
+    }
+  ]
+}

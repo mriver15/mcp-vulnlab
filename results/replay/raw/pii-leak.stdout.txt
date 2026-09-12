@@ -1,0 +1,12 @@
+{
+  "findings": [
+    {
+      "server": "pii-leak",
+      "rule_id": "MCP-PII-001",
+      "severity": "HIGH",
+      "category": "pii-disclosure",
+      "tool": "lookup_user",
+      "message": "lookup_user returns unmasked sensitive personal data including a national identifier and payment card number."
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "findings": [
+    {
+      "server": "no-auth-file",
+      "rule_id": "MCP-AUTHZ-002",
+      "severity": "CRITICAL",
+      "category": "missing-auth",
+      "tool": "delete_file",
+      "message": "delete_file performs an irreversible deletion with no authorization check and no confirmation, and is reachable by an autonomous agent."
+    }
+  ]
+}

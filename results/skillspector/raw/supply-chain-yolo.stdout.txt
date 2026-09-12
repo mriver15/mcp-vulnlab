@@ -1,0 +1,753 @@
+{
+  "skill": {
+    "name": "unknown",
+    "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo",
+    "scanned_at": "2026-09-12T14:12:21.490676+00:00"
+  },
+  "risk_assessment": {
+    "score": 100,
+    "severity": "CRITICAL",
+    "recommendation": "DO_NOT_INSTALL",
+    "max_issue_severity": "CRITICAL"
+  },
+  "components": [
+    {
+      "path": "README.md",
+      "type": "markdown",
+      "lines": 64,
+      "executable": false,
+      "size_bytes": 2429,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "exploits.json",
+      "type": "json",
+      "lines": 113,
+      "executable": false,
+      "size_bytes": 8971,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "manifest.json",
+      "type": "json",
+      "lines": 12,
+      "executable": false,
+      "size_bytes": 659,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "requirements.txt",
+      "type": "text",
+      "lines": 9,
+      "executable": false,
+      "size_bytes": 340,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "server.py",
+      "type": "python",
+      "lines": 85,
+      "executable": true,
+      "size_bytes": 2919,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    }
+  ],
+  "structured_summaries": [],
+  "issues": [
+    {
+      "id": "AST8",
+      "finding_id": "finding-be39debe0f83498a9e2959543c5f7048",
+      "category": "Dangerous Code Execution",
+      "pattern": "Dangerous chain: exec() wrapping compile",
+      "severity": "CRITICAL",
+      "confidence": 0.95,
+      "location": {
+        "file": "server.py",
+        "start_line": 69,
+        "end_line": 69
+      },
+      "finding": "    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102",
+      "explanation": "A dangerous execution chain combines code execution (exec/eval) with a dynamic source (network, encoded data, dynamic import), creating a high-confidence attack vector.",
+      "remediation": "Remove the execution chain entirely. Never pass network data, decoded bytes, or dynamically imported code to exec()/eval(). Use structured data formats instead.",
+      "code_snippet": "\n    # The sink the corpus is measuring, and the reason this suppression exists.\n    # Never reached unless MCPV_ALLOW_EXEC=1 is set explicitly. See MCPV-011.\n    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102\n    return f\"installed and loaded plugin {name!r} from {url}\"\n\n",
+      "intent": null,
+      "tags": [
+        "Dangerous Code Execution"
+      ],
+      "evidence": {},
+      "match_fingerprint": "e2f8fd57636532f868696364500e61f1c62d44304a5711cd6eb61645e054f14e",
+      "occurrences": [
+        {
+          "file": "server.py",
+          "start_line": 69,
+          "end_line": 69
+        }
+      ]
+    },
+    {
+      "id": "AST1",
+      "finding_id": "finding-9115fff08f5b49b68ee96caf7e8419ab",
+      "category": "Dangerous Code Execution",
+      "pattern": "exec() call detected",
+      "severity": "HIGH",
+      "confidence": 0.85,
+      "location": {
+        "file": "server.py",
+        "start_line": 69,
+        "end_line": 69
+      },
+      "finding": "    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102",
+      "explanation": "Direct exec() call allows arbitrary code execution. An attacker can inject code that runs with the full privileges of the process.",
+      "remediation": "Replace exec() with a safe alternative. If dynamic execution is required, use a sandboxed environment or restricted eval with __builtins__ disabled.",
+      "code_snippet": "\n    # The sink the corpus is measuring, and the reason this suppression exists.\n    # Never reached unless MCPV_ALLOW_EXEC=1 is set explicitly. See MCPV-011.\n    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102\n    return f\"installed and loaded plugin {name!r} from {url}\"\n\n",
+      "intent": null,
+      "tags": [
+        "Dangerous Code Execution"
+      ],
+      "evidence": {},
+      "match_fingerprint": "d5efc707c4db110b37e8bc8b71dc1bb71eb8e27c97afa05411744a403162b9fc",
+      "occurrences": [
+        {
+          "file": "server.py",
+          "start_line": 69,
+          "end_line": 69
+        }
+      ]
+    },
+    {
+      "id": "AST6",
+      "finding_id": "finding-2ffa1e8b123449218fe7abf644c3eac3",
+      "category": "Dangerous Code Execution",
+      "pattern": "compile() call detected",
+      "severity": "MEDIUM",
+      "confidence": 0.65,
+      "location": {
+        "file": "server.py",
+        "start_line": 69,
+        "end_line": 69
+      },
+      "finding": "    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102",
+      "explanation": "compile() creates code objects from strings. When combined with exec()/eval(), it enables obfuscated code execution.",
+      "remediation": "Avoid compile() with dynamic strings. If code generation is needed, use templates or AST manipulation with strict validation.",
+      "code_snippet": "\n    # The sink the corpus is measuring, and the reason this suppression exists.\n    # Never reached unless MCPV_ALLOW_EXEC=1 is set explicitly. See MCPV-011.\n    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102\n    return f\"installed and loaded plugin {name!r} from {url}\"\n\n",
+      "intent": null,
+      "tags": [
+        "Dangerous Code Execution"
+      ],
+      "evidence": {},
+      "match_fingerprint": "6cdac906f81139ffb2d3da0f4ae17ca725d7c6d0c9c939f6a9312efc105dae37",
+      "occurrences": [
+        {
+          "file": "server.py",
+          "start_line": 69,
+          "end_line": 69
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-178d55b7cc1646679bc44c9bca3516ae",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 5,
+        "end_line": null
+      },
+      "finding": "mcp",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "# Every entry floats: no version pins, no hashes, no lockfile in this directory.\n# A scanner should flag the absence of pinning; a human should note that\n# `mcp` with no constraint means CI resolves an arbitrary future major.\nmcp\nrequests\npyyaml\nurllib3",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "13418405e3a050586b43ff6481096cc4283dbc794f65a700b1e9d53bc2411792",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 5,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-bc357ece040a4127ab80a005f4d86360",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: mcp has 12 known advisory(ies) (CVE-2025-53366 (MCP Python SDK vulnerability in the FastMCP Server causes validation error, lead); CVE-2025-66416 (Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection); CVE-2026-52870 (MCP Python SDK: Experimental task handlers allow any client to access and cancel) +9 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 5,
+        "end_line": null
+      },
+      "finding": "mcp",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "39a096d0bac836446c112bdf2439bf78b9303ecd528e662532db9f7085692172",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 5,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-335325ad5fd4490ea61ae01941ff3fc7",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 6,
+        "end_line": null
+      },
+      "finding": "requests",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "# A scanner should flag the absence of pinning; a human should note that\n# `mcp` with no constraint means CI resolves an arbitrary future major.\nmcp\nrequests\npyyaml\nurllib3\ngitpython",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "6e256e7076a0cac063454c717f1df944a851308d6f40181450854ab6f7decb0a",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 6,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-82dc28f339a4475a8c9f2e3b52bda82c",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: requests has 16 known advisory(ies) (CVE-2014-1830 (Exposure of Sensitive Information to an Unauthorized Actor in Requests); CVE-2024-47081 (Requests vulnerable to .netrc credentials leak via malicious URLs); CVE-2024-35195 (Requests `Session` object does not verify requests after making first request wi) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 6,
+        "end_line": null
+      },
+      "finding": "requests",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "09deeb6fdb55899e7b284b11a4a1f240e895ab350d9ef10d889ca4cada77cadd",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 6,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-985675c7bba24d9c9e45212631ebaa4a",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 7,
+        "end_line": null
+      },
+      "finding": "pyyaml",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "# `mcp` with no constraint means CI resolves an arbitrary future major.\nmcp\nrequests\npyyaml\nurllib3\ngitpython",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "5a8f900e3903bfe1424f11066d3916fb8cc1ee980523c572525dc74fad35f772",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 7,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-7299a99a960a491893ec3a6cbf2b7d50",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: pyyaml has 8 known advisory(ies) (CVE-2019-20477 (Deserialization of Untrusted Data in PyYAML); CVE-2020-1747 (Improper Input Validation in PyYAML); CVE-2020-14343 (Improper Input Validation in PyYAML) +5 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 7,
+        "end_line": null
+      },
+      "finding": "pyyaml",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "63d3785d38c76088e3330226a537403e99607363507ca953b3b9cef01fb72913",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 7,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-dba6931c2c67434092960dce3b304593",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 8,
+        "end_line": null
+      },
+      "finding": "urllib3",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "mcp\nrequests\npyyaml\nurllib3\ngitpython",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "b7f3466ef8ce58902c06404facb935b6d87788ce4300ed4963d839a3d0342b1c",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 8,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-dc20fc6f296f45c6b03740faae3ccde0",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: urllib3 has 16 known advisory(ies) (CVE-2025-66471 (urllib3 streaming API improperly handles highly compressed data); CVE-2024-37891 (urllib3's Proxy-Authorization request header isn't stripped during cross-origin ); CVE-2026-21441 (Decompression-bomb safeguards bypassed when following HTTP redirects (streaming ) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 8,
+        "end_line": null
+      },
+      "finding": "urllib3",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "bf364c4fedd30281b04ecd13709f78a004512f2fa5692cd440afedb3365ad4b8",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 8,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC1",
+      "finding_id": "finding-6360c32ed8324e0283e5a08f08b8541b",
+      "category": "Supply Chain",
+      "pattern": "Unpinned Dependencies",
+      "severity": "LOW",
+      "confidence": 0.6,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 9,
+        "end_line": null
+      },
+      "finding": "gitpython\n",
+      "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+      "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+      "code_snippet": "requests\npyyaml\nurllib3\ngitpython",
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "55b9c620fc81789b53dcdc95f2f526fbe1325b67a0b252821498cf006b7c6ae8",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 9,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "SC4",
+      "finding_id": "finding-8539878dba184181ac71674704e24c25",
+      "category": "Supply Chain",
+      "pattern": "Unverifiable Dependency: gitpython has 16 known advisory(ies) (CVE-2026-78676 (GitPython: Dormant multi-line git-config values are corrupted into live injected); CVE-2026-67325 (GitPython: Command Injection via git long-option prefix abbreviation bypass of C); CVE-2024-22190 (Untrusted search path under some conditions on Windows allows arbitrary code exe) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+      "severity": "LOW",
+      "confidence": 0.4,
+      "location": {
+        "file": "requirements.txt",
+        "start_line": 9,
+        "end_line": null
+      },
+      "finding": "gitpython",
+      "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+      "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+      "code_snippet": null,
+      "intent": null,
+      "tags": [
+        "Supply Chain"
+      ],
+      "evidence": {},
+      "match_fingerprint": "4ed7126fda3c9337a57dc81a3a2a283c30ae875fc8a46afc59b06342c1b4c40e",
+      "occurrences": [
+        {
+          "file": "requirements.txt",
+          "start_line": 9,
+          "end_line": null
+        }
+      ]
+    }
+  ],
+  "suppressed_count": 0,
+  "suppressed": [],
+  "metadata": {
+    "has_executable_scripts": true,
+    "skillspector_version": "2.11.2",
+    "llm_requested": false,
+    "llm_available": false,
+    "meta_analysis_applied": false,
+    "inference_usage": [],
+    "filtering_mode": "heuristic"
+  },
+  "execution_successful": true,
+  "analysis_completeness": {
+    "total_components": 5,
+    "scanned_components": 4,
+    "coverage_percent": 80.0,
+    "is_complete": false,
+    "status": "partial",
+    "execution_successful": true,
+    "fully_inspected_files": 4,
+    "partially_inspected_files": 1,
+    "entirely_uninspected_files": 0,
+    "ledger_exceptions": [
+      {
+        "outcome": "partial",
+        "phase": "static",
+        "reason_code": "output_limit",
+        "message": "Inspection reached its configured output limit.",
+        "path": "requirements.txt",
+        "start_line": null,
+        "end_line": null,
+        "fatal": false,
+        "analyzers": [
+          "static_patterns_supply_chain_dependencies_output_limit"
+        ]
+      }
+    ],
+    "scope_exclusions": [],
+    "analyzer_statuses": [
+      {
+        "analyzer_id": "artifact_integrity",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "behavioral_ast",
+        "status": "completed",
+        "planned_work": 1,
+        "completed": 1,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "behavioral_taint_tracking",
+        "status": "completed",
+        "planned_work": 1,
+        "completed": 1,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "bundled_execution_surface",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "mcp_least_privilege",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "manifest_absent",
+        "message": "No compatible manifest was present for this analyzer."
+      },
+      {
+        "analyzer_id": "mcp_rug_pull",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "mcp_tool_poisoning",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "manifest_absent",
+        "message": "No compatible manifest was present for this analyzer."
+      },
+      {
+        "analyzer_id": "meta_analyzer",
+        "status": "disabled",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "disabled_by_configuration",
+        "message": "Analyzer was disabled by the requested configuration."
+      },
+      {
+        "analyzer_id": "static_patterns_agent_snooping",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_anti_refusal",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_data_exfiltration",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_deserialization",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_excessive_agency",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_harmful_content",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_memory_poisoning",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_output_handling",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_privilege_escalation",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_prompt_injection",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_rogue_agent",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_ssrf",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_supply_chain",
+        "status": "degraded",
+        "planned_work": 6,
+        "completed": 5,
+        "partial": 1,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_system_prompt_leakage",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_tool_misuse",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_yara",
+        "status": "completed",
+        "planned_work": 5,
+        "completed": 5,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      }
+    ],
+    "references": [],
+    "limitations": [
+      "Analyzer static_patterns_supply_chain status: degraded."
+    ],
+    "findings_before_filtering": 13,
+    "findings_after_filtering": 13
+  }
+}

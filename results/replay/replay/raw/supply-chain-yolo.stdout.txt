@@ -1,0 +1,12 @@
+{
+  "findings": [
+    {
+      "server": "supply-chain-yolo",
+      "rule_id": "MCP-SC-001",
+      "severity": "CRITICAL",
+      "category": "supply-chain",
+      "tool": "install_plugin",
+      "message": "install_plugin fetches remote source and loads it with no integrity verification, allowlist, or signature check."
+    }
+  ]
+}

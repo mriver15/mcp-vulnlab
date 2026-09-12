@@ -1,0 +1,128 @@
+[
+  {
+    "slug": "control-echo",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-echo"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": null
+  },
+  {
+    "slug": "control-files",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-files"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": null
+  },
+  {
+    "slug": "control-gated-admin",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": null
+  },
+  {
+    "slug": "exfil-write",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": null
+  },
+  {
+    "slug": "injection-echo",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": null
+  },
+  {
+    "slug": "no-auth-file",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": null
+  },
+  {
+    "slug": "overbroad-glob",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": null
+  },
+  {
+    "slug": "pii-leak",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/pii-leak"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": null
+  },
+  {
+    "slug": "supply-chain-yolo",
+    "argv": [
+      "agent-audit",
+      "scan",
+      "--format",
+      "json",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 4,
+    "config": null
+  }
+]

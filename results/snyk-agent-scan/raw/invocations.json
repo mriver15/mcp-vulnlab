@@ -1,0 +1,119 @@
+[
+  {
+    "slug": "control-echo",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/control-echo.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/control-echo.json"
+  },
+  {
+    "slug": "control-files",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/control-files.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/control-files.json"
+  },
+  {
+    "slug": "control-gated-admin",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/control-gated-admin.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/control-gated-admin.json"
+  },
+  {
+    "slug": "exfil-write",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/exfil-write.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/exfil-write.json"
+  },
+  {
+    "slug": "injection-echo",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/injection-echo.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/injection-echo.json"
+  },
+  {
+    "slug": "no-auth-file",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/no-auth-file.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/no-auth-file.json"
+  },
+  {
+    "slug": "overbroad-glob",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/overbroad-glob.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/overbroad-glob.json"
+  },
+  {
+    "slug": "pii-leak",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/pii-leak.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/pii-leak.json"
+  },
+  {
+    "slug": "supply-chain-yolo",
+    "argv": [
+      "snyk-agent-scan",
+      "--json",
+      "--dangerously-run-mcp-servers",
+      "results/snyk-agent-scan/configs/supply-chain-yolo.json"
+    ],
+    "returncode": 1,
+    "error": "exited with status 1 and produced no stdout",
+    "findings": 0,
+    "config": "results/snyk-agent-scan/configs/supply-chain-yolo.json"
+  }
+]

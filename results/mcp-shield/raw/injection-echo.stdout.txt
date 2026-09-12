@@ -1,0 +1,21 @@
+
+   ╭─────────────────────────────────────────────────────────╮
+   │                                                         │
+   │   MCP-Shield v1.0.4                                     │
+   │   Security Scanner for Model Context Protocol Servers   │
+   │                                                         │
+   ╰─────────────────────────────────────────────────────────╯
+
+Scanning "results/mcp-shield/configs/injection-echo.json"
+Found 1 servers:
+  └── ● injection-echo (2 tools)
+    ├── ○ operator_note — scanning...
+    └── ○ echo — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● injection-echo (2 tools)
+    ├── ✓ operator_note — Verified
+    └── ○ echo — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● injection-echo (2 tools)
+    ├── ✓ operator_note — Verified
+    └── ✓ echo — Verified

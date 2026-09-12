@@ -1,0 +1,1751 @@
+{
+  "scanner": "skillspector",
+  "generated_at": "2026-09-12T14:12:21+00:00",
+  "corpus_root": "/Users/river/Projects/mcp-vulnlab",
+  "available": true,
+  "unavailable_reason": null,
+  "summary": {
+    "labels_total": 12,
+    "labels_detected": 3,
+    "recall": 0.25,
+    "findings_total": 37,
+    "true_positives": 3,
+    "false_positives": 34,
+    "fp_rate": 0.918918918918919
+  },
+  "by_category": {
+    "data-exfiltration": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-003",
+        "MCPV-004"
+      ]
+    },
+    "missing-auth": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-010",
+        "MCPV-009"
+      ]
+    },
+    "overbroad-tool-schema": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-005",
+        "MCPV-006"
+      ]
+    },
+    "pii-disclosure": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-007",
+        "MCPV-008"
+      ]
+    },
+    "prompt-injection": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-001",
+        "MCPV-002"
+      ]
+    },
+    "supply-chain": {
+      "total": 2,
+      "detected": 2,
+      "ids": [
+        "MCPV-011",
+        "MCPV-012"
+      ]
+    }
+  },
+  "labels": {
+    "MCPV-003": {
+      "server": "exfil-write",
+      "title": "Arbitrary file write via unconfined path join",
+      "category": "data-exfiltration",
+      "severity": "critical",
+      "tool": "save_report"
+    },
+    "MCPV-004": {
+      "server": "exfil-write",
+      "title": "Path-traversal defence explicitly disabled on a read resource",
+      "category": "data-exfiltration",
+      "severity": "high",
+      "tool": "report://{path}"
+    },
+    "MCPV-001": {
+      "server": "injection-echo",
+      "title": "Tool output labelled trusted carries injected instructions",
+      "category": "prompt-injection",
+      "severity": "high",
+      "tool": "operator_note"
+    },
+    "MCPV-002": {
+      "server": "injection-echo",
+      "title": "Tool arguments reflected verbatim into model context",
+      "category": "prompt-injection",
+      "severity": "medium",
+      "tool": "echo"
+    },
+    "MCPV-009": {
+      "server": "no-auth-file",
+      "title": "Document reads served without any authorization check",
+      "category": "missing-auth",
+      "severity": "high",
+      "tool": "read_file"
+    },
+    "MCPV-010": {
+      "server": "no-auth-file",
+      "title": "Irreversible delete with no authorization and no confirmation",
+      "category": "missing-auth",
+      "severity": "critical",
+      "tool": "delete_file"
+    },
+    "MCPV-005": {
+      "server": "overbroad-glob",
+      "title": "Glob search accepts any root and any pattern",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "find_files"
+    },
+    "MCPV-006": {
+      "server": "overbroad-glob",
+      "title": "Unconstrained absolute path parameter on a read tool",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "read_path"
+    },
+    "MCPV-007": {
+      "server": "pii-leak",
+      "title": "Single-record lookup returns unmasked sensitive fields",
+      "category": "pii-disclosure",
+      "severity": "high",
+      "tool": "lookup_user"
+    },
+    "MCPV-008": {
+      "server": "pii-leak",
+      "title": "Substring search dumps the entire customer table",
+      "category": "pii-disclosure",
+      "severity": "critical",
+      "tool": "search_users"
+    },
+    "MCPV-011": {
+      "server": "supply-chain-yolo",
+      "title": "Remote plugin source loaded with no integrity verification",
+      "category": "supply-chain",
+      "severity": "critical",
+      "tool": "install_plugin"
+    },
+    "MCPV-012": {
+      "server": "supply-chain-yolo",
+      "title": "Floating dependency manifest with no pins or hashes",
+      "category": "supply-chain",
+      "severity": "high",
+      "tool": "(server)"
+    }
+  },
+  "servers": [
+    {
+      "slug": "control-echo",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 2,
+      "false_positives": 2,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "skillspector",
+          "server": "control-echo",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-544019b289964f8b9dee94ba2acd4d45",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "README.md",
+              "start_line": 25,
+              "end_line": null
+            },
+            "finding": "without checking",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"categories\": [],\n  \"tags\": [\"false-positive-control\", \"benign\"],\n  \"added\": \"2026-09-12\",\n  \"notes\": \"Deliberately includes a tool that renders caller input, because rendering input is not itself a vulnerability. A scanner that flags render_greeting for 'reflecting user input' without checking the allowlist and escaping is producing noise. Do not 'fix' this server to appease such a scanner.\"\n}",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "9341b6f34d6af9081a0d6673f4217b7307d273da9f43357efd9029e15c5da76c",
+            "occurrences": [
+              {
+                "file": "README.md",
+                "start_line": 25,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "control-echo",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-544019b289964f8b9dee94ba2acd4d45",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "manifest.json",
+              "start_line": 11,
+              "end_line": null
+            },
+            "finding": "without checking",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"categories\": [],\n  \"tags\": [\"false-positive-control\", \"benign\"],\n  \"added\": \"2026-09-12\",\n  \"notes\": \"Deliberately includes a tool that renders caller input, because rendering input is not itself a vulnerability. A scanner that flags render_greeting for 'reflecting user input' without checking the allowlist and escaping is producing noise. Do not 'fix' this server to appease such a scanner.\"\n}",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "9341b6f34d6af9081a0d6673f4217b7307d273da9f43357efd9029e15c5da76c",
+            "occurrences": [
+              {
+                "file": "manifest.json",
+                "start_line": 11,
+                "end_line": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "control-files",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 1,
+      "false_positives": 1,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "skillspector",
+          "server": "control-files",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-a6d572681c65457297430db9a69d94f4",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "README.md",
+              "start_line": 38,
+              "end_line": null
+            },
+            "finding": "/etc/passwd",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "```\n\n`read_document(doc_id=\"handbook\")` succeeds.\n`read_document(doc_id=\"../../etc/passwd\")` raises, as it should.",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "ac75eea6ed115d0252fb13bbb10e9c4421764d5a7612787edcde6a78569d8f88",
+            "occurrences": [
+              {
+                "file": "README.md",
+                "start_line": 38,
+                "end_line": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "control-gated-admin",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "exfil-write",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-003",
+        "MCPV-004"
+      ],
+      "findings_total": 1,
+      "false_positives": 1,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "skillspector",
+          "server": "exfil-write",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-76436818769d4cdd988c8f9664d1dc46",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 63,
+              "end_line": null
+            },
+            "finding": "/etc/passwd",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "      \"severity\": \"high\",\n      \"tool\": \"report://{path}\",\n      \"description\": \"The MCP Python SDK 2.x validates resource URI template parameters and rejects traversal, absolute paths, and null bytes by default. This server passes ResourceSecurity(exempt_params={\\\"path\\\"}) on the report://{path} resource, which turns that check off for precisely the parameter that is concatenated onto a filesystem path. The weakness is not a missing control but a deliberately disabled one, which is the more interesting failure mode: a scanner that only looks for absent validation will not flag it.\",\n      \"impact\": \"An attacker reads any file the server process can read, by requesting a URI such as report://../../../../etc/passwd. Because MCP resources are frequently auto-included in model context, the read may not even require an explicit adversary turn \u2014 the content simply arrives.\",\n      \"exploit\": {\n        \"vector\": \"A resource read request whose {path} component exceeds the sandbox, made directly by the client or triggered by the model.\",\n        \"steps\": [",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "ac75eea6ed115d0252fb13bbb10e9c4421764d5a7612787edcde6a78569d8f88",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 63,
+                "end_line": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "injection-echo",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-001",
+        "MCPV-002"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "no-auth-file",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-010"
+      ],
+      "missed_ids": [
+        "MCPV-009"
+      ],
+      "findings_total": 10,
+      "false_positives": 9,
+      "matches": [
+        {
+          "label_id": "MCPV-010",
+          "server": "no-auth-file",
+          "reason": "strength 1: signal match: destructive, high-impact",
+          "finding": {
+            "scanner": "skillspector",
+            "server": "no-auth-file",
+            "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "rule_id": "EA2",
+            "severity": "medium",
+            "category": "Excessive Agency",
+            "tool": null,
+            "raw": {
+              "id": "EA2",
+              "finding_id": "finding-22213e4d2f2743c1b67d77b23f118332",
+              "category": "Excessive Agency",
+              "pattern": "Autonomous Decision Making",
+              "severity": "MEDIUM",
+              "confidence": 0.75,
+              "location": {
+                "file": "exploits.json",
+                "start_line": 90,
+                "end_line": null
+              },
+              "finding": "No confirmation",
+              "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+              "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+              "code_snippet": "        \"static_hints\": [\n          \"unlink/rmtree/truncate reachable from a tool body with no guard.\",\n          \"Destructive tool annotated ToolAnnotations(destructiveHint=False) or left unannotated.\",\n          \"No confirmation, dry-run, or two-step commit in the code path.\",\n          \"No authorization predicate preceding the destructive call.\"\n        ]\n      },",
+              "intent": null,
+              "tags": [
+                "Excessive Agency"
+              ],
+              "evidence": {},
+              "match_fingerprint": "afca04afeb75db76cbddc1ffb2a73598f31d2d03b5941c69a9de6af31da2733a",
+              "occurrences": [
+                {
+                  "file": "exploits.json",
+                  "start_line": 90,
+                  "end_line": null
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-8a4c540ba58d4a79934227eabb46f54b",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.85,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 97,
+              "end_line": null
+            },
+            "finding": "auto-execute",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "      \"remediation\": {\n        \"summary\": \"Require authorization, make destruction recoverable, and gate it behind an explicit human confirmation. Annotate the tool as destructive so clients can surface the risk before calling it.\",\n        \"config\": \"from mcp.types import ToolAnnotations\\n\\n@server.tool(\\n    description=\\\"Move a document to the recycle bin after human confirmation.\\\",\\n    annotations=ToolAnnotations(destructiveHint=True, idempotentHint=False),\\n)\\ndef delete_file(path: str, token: str, confirm: bool = False) -> str:\\n    role = _verify(token)\\n    if role not in {\\\"admin\\\", \\\"records\\\"}:\\n        raise PermissionError(\\\"not permitted to delete\\\")\\n    if not confirm:\\n        return \\\"refused: destructive operation requires confirm=True (HITL gate)\\\"\\n    target = (STORE / path).resolve()\\n    if not target.is_relative_to(STORE.resolve()):\\n        raise ValueError(\\\"path escapes store\\\")\\n    target.rename(RECYCLE / target.name)   # recoverable, not unlink\\n    return f\\\"moved {path} to recycle bin\\\"\",\n        \"guardrail\": \"A destructiveHint-aware client policy that refuses to auto-execute destructive tools without an interactive confirmation, plus a retention window on the recycle bin.\"\n      },\n      \"references\": [\n        \"https://genai.owasp.org/llmrisk/llm06-excessive-agency/\",",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "fefc003e149501e9f8f8f1caca441e2958e734da4fda229462de59c9d1fe5193",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 97,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "README.md",
+              "start_line": 29,
+              "end_line": null
+            },
+            "finding": "no confirmation",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+            "occurrences": [
+              {
+                "file": "README.md",
+                "start_line": 29,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 58,
+              "end_line": null
+            },
+            "finding": "no confirmation",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 58,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 62,
+              "end_line": null
+            },
+            "finding": "no confirmation",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 62,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 71,
+              "end_line": null
+            },
+            "finding": "no confirmation",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 71,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 82,
+              "end_line": null
+            },
+            "finding": "no confirmation",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 82,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "manifest.json",
+              "start_line": 5,
+              "end_line": null
+            },
+            "finding": "no confirmation",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+            "occurrences": [
+              {
+                "file": "manifest.json",
+                "start_line": 5,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "server.py",
+              "start_line": 8,
+              "end_line": null
+            },
+            "finding": "no confirmation",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+            "occurrences": [
+              {
+                "file": "server.py",
+                "start_line": 8,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "no-auth-file",
+          "message": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+          "rule_id": "EA2",
+          "severity": "medium",
+          "category": "Excessive Agency",
+          "tool": null,
+          "raw": {
+            "id": "EA2",
+            "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+            "category": "Excessive Agency",
+            "pattern": "Autonomous Decision Making",
+            "severity": "MEDIUM",
+            "confidence": 0.75,
+            "location": {
+              "file": "server.py",
+              "start_line": 62,
+              "end_line": null
+            },
+            "finding": "no confirmation",
+            "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+            "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+            "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+            "intent": null,
+            "tags": [
+              "Excessive Agency"
+            ],
+            "evidence": {},
+            "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+            "occurrences": [
+              {
+                "file": "server.py",
+                "start_line": 62,
+                "end_line": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "overbroad-glob",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-005",
+        "MCPV-006"
+      ],
+      "findings_total": 10,
+      "false_positives": 10,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "README.md",
+              "start_line": 24,
+              "end_line": null
+            },
+            "finding": "/etc/passwd",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "\n```\nfind_files('**/*.env', '/')\nread_path('/etc/passwd')\n```\n\nThat matters because an over-broad schema is an instruction. The model does not",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "ac75eea6ed115d0252fb13bbb10e9c4421764d5a7612787edcde6a78569d8f88",
+            "occurrences": [
+              {
+                "file": "README.md",
+                "start_line": 24,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "README.md",
+              "start_line": 44,
+              "end_line": null
+            },
+            "finding": "/etc/passwd",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "\n```\nfind_files('**/*.env', '/')\nread_path('/etc/passwd')\n```\n\nThat matters because an over-broad schema is an instruction. The model does not",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "ac75eea6ed115d0252fb13bbb10e9c4421764d5a7612787edcde6a78569d8f88",
+            "occurrences": [
+              {
+                "file": "README.md",
+                "start_line": 44,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 69,
+              "end_line": null
+            },
+            "finding": "/etc/passwd",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "\n```\nfind_files('**/*.env', '/')\nread_path('/etc/passwd')\n```\n\nThat matters because an over-broad schema is an instruction. The model does not",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "ac75eea6ed115d0252fb13bbb10e9c4421764d5a7612787edcde6a78569d8f88",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 69,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 73,
+              "end_line": null
+            },
+            "finding": "/etc/passwd",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "\n```\nfind_files('**/*.env', '/')\nread_path('/etc/passwd')\n```\n\nThat matters because an over-broad schema is an instruction. The model does not",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "ac75eea6ed115d0252fb13bbb10e9c4421764d5a7612787edcde6a78569d8f88",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 73,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-b4b006018f4141d1b078be55140c9396",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "server.py",
+              "start_line": 43,
+              "end_line": null
+            },
+            "finding": "/etc/passwd",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "\n```\nfind_files('**/*.env', '/')\nread_path('/etc/passwd')\n```\n\nThat matters because an over-broad schema is an instruction. The model does not",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "ac75eea6ed115d0252fb13bbb10e9c4421764d5a7612787edcde6a78569d8f88",
+            "occurrences": [
+              {
+                "file": "server.py",
+                "start_line": 43,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-fda963b035ea42e7914c15b862f2d265",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "README.md",
+              "start_line": 43,
+              "end_line": null
+            },
+            "finding": ".env\"",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": ".venv/bin/python corpus/servers/overbroad-glob/server.py\n```\n\nThen call `find_files(pattern=\"**/*.env\", root=\"/\")` and\n`read_path(path=\"/etc/passwd\")`. Full steps in `exploits.json`.\n\n## Remediation",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "933e7e6dda63d615cb9ac0846682521855cd79c351e84f3fa87d934c18b752db",
+            "occurrences": [
+              {
+                "file": "README.md",
+                "start_line": 43,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-082703eea1d145f5a0b8365a285ccaf1",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "README.md",
+              "start_line": 23,
+              "end_line": null
+            },
+            "finding": ".env'",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "        \"steps\": [\n          \"Start the server: `.venv/bin/python corpus/servers/overbroad-glob/server.py`\",\n          \"Call find_files with pattern='**/*' and root='/Users' to enumerate a home directory tree.\",\n          \"Call find_files with pattern='**/*.env' and root='/' to collect environment files across the host.\",\n          \"Call find_files with pattern='**/id_rsa' and root='/' to locate private keys.\",\n          \"Observe that no root is rejected and no pattern is refused; the only bound is an arbitrary 1000-entry truncation of the results.\"\n        ],",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "1d7505be6268307507c320128a1d61ae0b567925073d352885b24399720f99c3",
+            "occurrences": [
+              {
+                "file": "README.md",
+                "start_line": 23,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-082703eea1d145f5a0b8365a285ccaf1",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 18,
+              "end_line": null
+            },
+            "finding": ".env'",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "        \"steps\": [\n          \"Start the server: `.venv/bin/python corpus/servers/overbroad-glob/server.py`\",\n          \"Call find_files with pattern='**/*' and root='/Users' to enumerate a home directory tree.\",\n          \"Call find_files with pattern='**/*.env' and root='/' to collect environment files across the host.\",\n          \"Call find_files with pattern='**/id_rsa' and root='/' to locate private keys.\",\n          \"Observe that no root is rejected and no pattern is refused; the only bound is an arbitrary 1000-entry truncation of the results.\"\n        ],",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "1d7505be6268307507c320128a1d61ae0b567925073d352885b24399720f99c3",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 18,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-082703eea1d145f5a0b8365a285ccaf1",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.6,
+            "location": {
+              "file": "server.py",
+              "start_line": 28,
+              "end_line": null
+            },
+            "finding": ".env'",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "        \"steps\": [\n          \"Start the server: `.venv/bin/python corpus/servers/overbroad-glob/server.py`\",\n          \"Call find_files with pattern='**/*' and root='/Users' to enumerate a home directory tree.\",\n          \"Call find_files with pattern='**/*.env' and root='/' to collect environment files across the host.\",\n          \"Call find_files with pattern='**/id_rsa' and root='/' to locate private keys.\",\n          \"Observe that no root is rejected and no pattern is refused; the only bound is an arbitrary 1000-entry truncation of the results.\"\n        ],",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "1d7505be6268307507c320128a1d61ae0b567925073d352885b24399720f99c3",
+            "occurrences": [
+              {
+                "file": "server.py",
+                "start_line": 28,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "overbroad-glob",
+          "message": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+          "rule_id": "PE3",
+          "severity": "high",
+          "category": "Privilege Escalation",
+          "tool": null,
+          "raw": {
+            "id": "PE3",
+            "finding_id": "finding-e416505f0dd64cef92045fd30f0b5fa3",
+            "category": "Privilege Escalation",
+            "pattern": "Credential Access",
+            "severity": "HIGH",
+            "confidence": 0.9,
+            "location": {
+              "file": "exploits.json",
+              "start_line": 70,
+              "end_line": null
+            },
+            "finding": "~/.ssh/id_rsa",
+            "explanation": "Code accesses credential files (SSH keys, AWS credentials, etc.). This could indicate credential theft attempts.",
+            "remediation": "Remove references to credential paths. Use environment variables or secrets managers. For docs, use placeholder paths (e.g., /path/to/config). Never load .env or token files in production code paths.",
+            "code_snippet": "        \"steps\": [\n          \"Start the server: `.venv/bin/python corpus/servers/overbroad-glob/server.py`\",\n          \"Call read_path with path='/etc/passwd' and observe the contents returned (truncated to `limit`).\",\n          \"Call read_path with path='~/.ssh/id_rsa' to show home-directory expansion via expanduser().\",\n          \"Confirm the SDK offers no protection: contrast with an equivalent resource URI template, which ResourceSecurity rejects by default.\"\n        ],\n        \"poc\": \"read_path(path=\\\"/etc/passwd\\\", limit=4000)  # -> file contents\"",
+            "intent": null,
+            "tags": [
+              "Privilege Escalation"
+            ],
+            "evidence": {},
+            "match_fingerprint": "eac4f80257ce1fb2109b6e64d685fca76690bad211aafd625a57af0ba8121508",
+            "occurrences": [
+              {
+                "file": "exploits.json",
+                "start_line": 70,
+                "end_line": null
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "pii-leak",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-007",
+        "MCPV-008"
+      ],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "supply-chain-yolo",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 2,
+      "detected_ids": [
+        "MCPV-011",
+        "MCPV-012"
+      ],
+      "missed_ids": [],
+      "findings_total": 13,
+      "false_positives": 11,
+      "matches": [
+        {
+          "label_id": "MCPV-011",
+          "server": "supply-chain-yolo",
+          "reason": "strength 1: signal match: exec",
+          "finding": {
+            "scanner": "skillspector",
+            "server": "supply-chain-yolo",
+            "message": "A dangerous execution chain combines code execution (exec/eval) with a dynamic source (network, encoded data, dynamic import), creating a high-confidence attack vector.",
+            "rule_id": "AST8",
+            "severity": "critical",
+            "category": "Dangerous Code Execution",
+            "tool": null,
+            "raw": {
+              "id": "AST8",
+              "finding_id": "finding-be39debe0f83498a9e2959543c5f7048",
+              "category": "Dangerous Code Execution",
+              "pattern": "Dangerous chain: exec() wrapping compile",
+              "severity": "CRITICAL",
+              "confidence": 0.95,
+              "location": {
+                "file": "server.py",
+                "start_line": 69,
+                "end_line": 69
+              },
+              "finding": "    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102",
+              "explanation": "A dangerous execution chain combines code execution (exec/eval) with a dynamic source (network, encoded data, dynamic import), creating a high-confidence attack vector.",
+              "remediation": "Remove the execution chain entirely. Never pass network data, decoded bytes, or dynamically imported code to exec()/eval(). Use structured data formats instead.",
+              "code_snippet": "\n    # The sink the corpus is measuring, and the reason this suppression exists.\n    # Never reached unless MCPV_ALLOW_EXEC=1 is set explicitly. See MCPV-011.\n    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102\n    return f\"installed and loaded plugin {name!r} from {url}\"\n\n",
+              "intent": null,
+              "tags": [
+                "Dangerous Code Execution"
+              ],
+              "evidence": {},
+              "match_fingerprint": "e2f8fd57636532f868696364500e61f1c62d44304a5711cd6eb61645e054f14e",
+              "occurrences": [
+                {
+                  "file": "server.py",
+                  "start_line": 69,
+                  "end_line": 69
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label_id": "MCPV-012",
+          "server": "supply-chain-yolo",
+          "reason": "strength 1: signal match: supply chain",
+          "finding": {
+            "scanner": "skillspector",
+            "server": "supply-chain-yolo",
+            "message": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+            "rule_id": "SC1",
+            "severity": "low",
+            "category": "Supply Chain",
+            "tool": null,
+            "raw": {
+              "id": "SC1",
+              "finding_id": "finding-178d55b7cc1646679bc44c9bca3516ae",
+              "category": "Supply Chain",
+              "pattern": "Unpinned Dependencies",
+              "severity": "LOW",
+              "confidence": 0.6,
+              "location": {
+                "file": "requirements.txt",
+                "start_line": 5,
+                "end_line": null
+              },
+              "finding": "mcp",
+              "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+              "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+              "code_snippet": "# Every entry floats: no version pins, no hashes, no lockfile in this directory.\n# A scanner should flag the absence of pinning; a human should note that\n# `mcp` with no constraint means CI resolves an arbitrary future major.\nmcp\nrequests\npyyaml\nurllib3",
+              "intent": null,
+              "tags": [
+                "Supply Chain"
+              ],
+              "evidence": {},
+              "match_fingerprint": "13418405e3a050586b43ff6481096cc4283dbc794f65a700b1e9d53bc2411792",
+              "occurrences": [
+                {
+                  "file": "requirements.txt",
+                  "start_line": 5,
+                  "end_line": null
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Direct exec() call allows arbitrary code execution. An attacker can inject code that runs with the full privileges of the process.",
+          "rule_id": "AST1",
+          "severity": "high",
+          "category": "Dangerous Code Execution",
+          "tool": null,
+          "raw": {
+            "id": "AST1",
+            "finding_id": "finding-9115fff08f5b49b68ee96caf7e8419ab",
+            "category": "Dangerous Code Execution",
+            "pattern": "exec() call detected",
+            "severity": "HIGH",
+            "confidence": 0.85,
+            "location": {
+              "file": "server.py",
+              "start_line": 69,
+              "end_line": 69
+            },
+            "finding": "    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102",
+            "explanation": "Direct exec() call allows arbitrary code execution. An attacker can inject code that runs with the full privileges of the process.",
+            "remediation": "Replace exec() with a safe alternative. If dynamic execution is required, use a sandboxed environment or restricted eval with __builtins__ disabled.",
+            "code_snippet": "\n    # The sink the corpus is measuring, and the reason this suppression exists.\n    # Never reached unless MCPV_ALLOW_EXEC=1 is set explicitly. See MCPV-011.\n    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102\n    return f\"installed and loaded plugin {name!r} from {url}\"\n\n",
+            "intent": null,
+            "tags": [
+              "Dangerous Code Execution"
+            ],
+            "evidence": {},
+            "match_fingerprint": "d5efc707c4db110b37e8bc8b71dc1bb71eb8e27c97afa05411744a403162b9fc",
+            "occurrences": [
+              {
+                "file": "server.py",
+                "start_line": 69,
+                "end_line": 69
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "compile() creates code objects from strings. When combined with exec()/eval(), it enables obfuscated code execution.",
+          "rule_id": "AST6",
+          "severity": "medium",
+          "category": "Dangerous Code Execution",
+          "tool": null,
+          "raw": {
+            "id": "AST6",
+            "finding_id": "finding-2ffa1e8b123449218fe7abf644c3eac3",
+            "category": "Dangerous Code Execution",
+            "pattern": "compile() call detected",
+            "severity": "MEDIUM",
+            "confidence": 0.65,
+            "location": {
+              "file": "server.py",
+              "start_line": 69,
+              "end_line": 69
+            },
+            "finding": "    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102",
+            "explanation": "compile() creates code objects from strings. When combined with exec()/eval(), it enables obfuscated code execution.",
+            "remediation": "Avoid compile() with dynamic strings. If code generation is needed, use templates or AST manipulation with strict validation.",
+            "code_snippet": "\n    # The sink the corpus is measuring, and the reason this suppression exists.\n    # Never reached unless MCPV_ALLOW_EXEC=1 is set explicitly. See MCPV-011.\n    exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102\n    return f\"installed and loaded plugin {name!r} from {url}\"\n\n",
+            "intent": null,
+            "tags": [
+              "Dangerous Code Execution"
+            ],
+            "evidence": {},
+            "match_fingerprint": "6cdac906f81139ffb2d3da0f4ae17ca725d7c6d0c9c939f6a9312efc105dae37",
+            "occurrences": [
+              {
+                "file": "server.py",
+                "start_line": 69,
+                "end_line": 69
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+          "rule_id": "SC4",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC4",
+            "finding_id": "finding-bc357ece040a4127ab80a005f4d86360",
+            "category": "Supply Chain",
+            "pattern": "Unverifiable Dependency: mcp has 12 known advisory(ies) (CVE-2025-53366 (MCP Python SDK vulnerability in the FastMCP Server causes validation error, lead); CVE-2025-66416 (Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection); CVE-2026-52870 (MCP Python SDK: Experimental task handlers allow any client to access and cancel) +9 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+            "severity": "LOW",
+            "confidence": 0.4,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 5,
+              "end_line": null
+            },
+            "finding": "mcp",
+            "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+            "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+            "code_snippet": null,
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "39a096d0bac836446c112bdf2439bf78b9303ecd528e662532db9f7085692172",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 5,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+          "rule_id": "SC1",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC1",
+            "finding_id": "finding-335325ad5fd4490ea61ae01941ff3fc7",
+            "category": "Supply Chain",
+            "pattern": "Unpinned Dependencies",
+            "severity": "LOW",
+            "confidence": 0.6,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 6,
+              "end_line": null
+            },
+            "finding": "requests",
+            "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+            "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+            "code_snippet": "# A scanner should flag the absence of pinning; a human should note that\n# `mcp` with no constraint means CI resolves an arbitrary future major.\nmcp\nrequests\npyyaml\nurllib3\ngitpython",
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "6e256e7076a0cac063454c717f1df944a851308d6f40181450854ab6f7decb0a",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 6,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+          "rule_id": "SC4",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC4",
+            "finding_id": "finding-82dc28f339a4475a8c9f2e3b52bda82c",
+            "category": "Supply Chain",
+            "pattern": "Unverifiable Dependency: requests has 16 known advisory(ies) (CVE-2014-1830 (Exposure of Sensitive Information to an Unauthorized Actor in Requests); CVE-2024-47081 (Requests vulnerable to .netrc credentials leak via malicious URLs); CVE-2024-35195 (Requests `Session` object does not verify requests after making first request wi) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+            "severity": "LOW",
+            "confidence": 0.4,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 6,
+              "end_line": null
+            },
+            "finding": "requests",
+            "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+            "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+            "code_snippet": null,
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "09deeb6fdb55899e7b284b11a4a1f240e895ab350d9ef10d889ca4cada77cadd",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 6,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+          "rule_id": "SC1",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC1",
+            "finding_id": "finding-985675c7bba24d9c9e45212631ebaa4a",
+            "category": "Supply Chain",
+            "pattern": "Unpinned Dependencies",
+            "severity": "LOW",
+            "confidence": 0.6,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 7,
+              "end_line": null
+            },
+            "finding": "pyyaml",
+            "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+            "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+            "code_snippet": "# `mcp` with no constraint means CI resolves an arbitrary future major.\nmcp\nrequests\npyyaml\nurllib3\ngitpython",
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "5a8f900e3903bfe1424f11066d3916fb8cc1ee980523c572525dc74fad35f772",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 7,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+          "rule_id": "SC4",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC4",
+            "finding_id": "finding-7299a99a960a491893ec3a6cbf2b7d50",
+            "category": "Supply Chain",
+            "pattern": "Unverifiable Dependency: pyyaml has 8 known advisory(ies) (CVE-2019-20477 (Deserialization of Untrusted Data in PyYAML); CVE-2020-1747 (Improper Input Validation in PyYAML); CVE-2020-14343 (Improper Input Validation in PyYAML) +5 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+            "severity": "LOW",
+            "confidence": 0.4,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 7,
+              "end_line": null
+            },
+            "finding": "pyyaml",
+            "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+            "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+            "code_snippet": null,
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "63d3785d38c76088e3330226a537403e99607363507ca953b3b9cef01fb72913",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 7,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+          "rule_id": "SC1",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC1",
+            "finding_id": "finding-dba6931c2c67434092960dce3b304593",
+            "category": "Supply Chain",
+            "pattern": "Unpinned Dependencies",
+            "severity": "LOW",
+            "confidence": 0.6,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 8,
+              "end_line": null
+            },
+            "finding": "urllib3",
+            "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+            "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+            "code_snippet": "mcp\nrequests\npyyaml\nurllib3\ngitpython",
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "b7f3466ef8ce58902c06404facb935b6d87788ce4300ed4963d839a3d0342b1c",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 8,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+          "rule_id": "SC4",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC4",
+            "finding_id": "finding-dc20fc6f296f45c6b03740faae3ccde0",
+            "category": "Supply Chain",
+            "pattern": "Unverifiable Dependency: urllib3 has 16 known advisory(ies) (CVE-2025-66471 (urllib3 streaming API improperly handles highly compressed data); CVE-2024-37891 (urllib3's Proxy-Authorization request header isn't stripped during cross-origin ); CVE-2026-21441 (Decompression-bomb safeguards bypassed when following HTTP redirects (streaming ) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+            "severity": "LOW",
+            "confidence": 0.4,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 8,
+              "end_line": null
+            },
+            "finding": "urllib3",
+            "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+            "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+            "code_snippet": null,
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "bf364c4fedd30281b04ecd13709f78a004512f2fa5692cd440afedb3365ad4b8",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 8,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+          "rule_id": "SC1",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC1",
+            "finding_id": "finding-6360c32ed8324e0283e5a08f08b8541b",
+            "category": "Supply Chain",
+            "pattern": "Unpinned Dependencies",
+            "severity": "LOW",
+            "confidence": 0.6,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 9,
+              "end_line": null
+            },
+            "finding": "gitpython\n",
+            "explanation": "Dependencies lack version pinning, allowing potential malicious package updates. Consider pinning versions.",
+            "remediation": "Pin all dependency versions in requirements.txt or pyproject.toml. Use exact versions (==) or compatible ranges. Run pip-audit regularly.",
+            "code_snippet": "requests\npyyaml\nurllib3\ngitpython",
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "55b9c620fc81789b53dcdc95f2f526fbe1325b67a0b252821498cf006b7c6ae8",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 9,
+                "end_line": null
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "skillspector",
+          "server": "supply-chain-yolo",
+          "message": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+          "rule_id": "SC4",
+          "severity": "low",
+          "category": "Supply Chain",
+          "tool": null,
+          "raw": {
+            "id": "SC4",
+            "finding_id": "finding-8539878dba184181ac71674704e24c25",
+            "category": "Supply Chain",
+            "pattern": "Unverifiable Dependency: gitpython has 16 known advisory(ies) (CVE-2026-78676 (GitPython: Dormant multi-line git-config values are corrupted into live injected); CVE-2026-67325 (GitPython: Command Injection via git long-option prefix abbreviation bypass of C); CVE-2024-22190 (Untrusted search path under some conditions on Windows allows arbitrary code exe) +13 more), but the manifest does not pin a version, so it is unknown whether the installed release is affected",
+            "severity": "LOW",
+            "confidence": 0.4,
+            "location": {
+              "file": "requirements.txt",
+              "start_line": 9,
+              "end_line": null
+            },
+            "finding": "gitpython",
+            "explanation": "Dependency has known vulnerabilities (CVEs). Using packages with unpatched security flaws exposes the environment to known exploits.",
+            "remediation": "Update the dependency to a patched version that addresses the known CVE. Check OSV (osv.dev) or NVD for details on the vulnerability.",
+            "code_snippet": null,
+            "intent": null,
+            "tags": [
+              "Supply Chain"
+            ],
+            "evidence": {},
+            "match_fingerprint": "4ed7126fda3c9337a57dc81a3a2a283c30ae875fc8a46afc59b06342c1b4c40e",
+            "occurrences": [
+              {
+                "file": "requirements.txt",
+                "start_line": 9,
+                "end_line": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "supply-chain-yolo: scanner exited with status 1",
+    "matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive."
+  ]
+}

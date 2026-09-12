@@ -1,0 +1,144 @@
+{
+  "servers": [
+    {
+      "name": "control-echo",
+      "type": "stdio",
+      "endpoint": null,
+      "command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "args": [
+        "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-echo/server.py"
+      ],
+      "headers": {},
+      "env": {},
+      "disabled": false,
+      "additional_permissions": null,
+      "tools": [
+        "ping",
+        "uptime",
+        "render_greeting"
+      ],
+      "resources": [],
+      "prompts": [],
+      "resource_templates": [],
+      "source_file": "results/mcp-armor/configs/control-echo.json"
+    }
+  ],
+  "tools": [
+    {
+      "name": "ping",
+      "description": "Liveness check. Returns 'ok' with the current server time.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "pingArguments"
+      },
+      "server_name": "control-echo",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    },
+    {
+      "name": "uptime",
+      "description": "Return the server's uptime in seconds.",
+      "input_schema": {
+        "properties": {},
+        "type": "object",
+        "title": "uptimeArguments"
+      },
+      "server_name": "control-echo",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    },
+    {
+      "name": "render_greeting",
+      "description": "Render a greeting for a display name. The name must match a strict character allowlist; invalid input is rejected. Output is escaped.",
+      "input_schema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "title": "render_greetingArguments"
+      },
+      "server_name": "control-echo",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    }
+  ],
+  "resources": [],
+  "prompts": [],
+  "resource_templates": [],
+  "config_files": [
+    "results/mcp-armor/configs/control-echo.json"
+  ],
+  "errors": [],
+  "status": [
+    "All servers connected. Scan completed without baseline checks."
+  ],
+  "baseline_status": {
+    "baseline_file": null,
+    "baseline_loaded": false,
+    "warning": "Baseline checks skipped. No baseline file found."
+  },
+  "security_report": {
+    "risk_level": "CRITICAL",
+    "total_findings": 2,
+    "findings_by_severity": {
+      "low": 0,
+      "medium": 0,
+      "high": 0,
+      "critical": 2
+    },
+    "findings_by_type": {
+      "Excessive Tool Permissions": 1,
+      "Prompt Injection": 1
+    },
+    "grouped_findings": [
+      {
+        "finding_type": "Excessive Tool Permissions",
+        "severity": "critical",
+        "description": "Excessive host permissions detected for MCP tools on the affected server.",
+        "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "configuration",
+            "entity_name": "control-echo",
+            "server_name": "control-echo",
+            "config_file": "results/mcp-armor/configs/control-echo.json",
+            "additional_info": {
+              "risky_tools": [
+                "ping",
+                "uptime",
+                "render_greeting"
+              ],
+              "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+            }
+          }
+        ]
+      },
+      {
+        "finding_type": "Prompt Injection",
+        "severity": "critical",
+        "description": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+        "remediation": "Inspect affected MCP components and remove hidden instructions or block the component to prevent unauthorized actions and manipulation of the agent\u2019s context.",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "tool",
+            "entity_name": "uptime",
+            "server_name": "control-echo",
+            "config_file": "results/mcp-armor/configs/control-echo.json",
+            "affected_tool": "uptime",
+            "additional_info": {
+              "tool": "uptime",
+              "classification": "malicious",
+              "score": 0.88
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

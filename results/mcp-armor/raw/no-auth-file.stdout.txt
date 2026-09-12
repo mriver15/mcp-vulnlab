@@ -1,0 +1,161 @@
+{
+  "servers": [
+    {
+      "name": "no-auth-file",
+      "type": "stdio",
+      "endpoint": null,
+      "command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "args": [
+        "/Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file/server.py"
+      ],
+      "headers": {},
+      "env": {},
+      "disabled": false,
+      "additional_permissions": null,
+      "tools": [
+        "read_file",
+        "delete_file"
+      ],
+      "resources": [],
+      "prompts": [],
+      "resource_templates": [],
+      "source_file": "results/mcp-armor/configs/no-auth-file.json"
+    }
+  ],
+  "tools": [
+    {
+      "name": "read_file",
+      "description": "Read a document from the shared store. Callers pass `actor` so the access is recorded for audit.",
+      "input_schema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "actor": {
+            "default": "anonymous",
+            "title": "Actor",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "type": "object",
+        "title": "read_fileArguments"
+      },
+      "server_name": "no-auth-file",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    },
+    {
+      "name": "delete_file",
+      "description": "Permanently delete a document from the shared store. Callers pass `actor` so the deletion is recorded for audit.",
+      "input_schema": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "actor": {
+            "default": "anonymous",
+            "title": "Actor",
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "type": "object",
+        "title": "delete_fileArguments"
+      },
+      "server_name": "no-auth-file",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    }
+  ],
+  "resources": [],
+  "prompts": [],
+  "resource_templates": [],
+  "config_files": [
+    "results/mcp-armor/configs/no-auth-file.json"
+  ],
+  "errors": [],
+  "status": [
+    "All servers connected. Scan completed without baseline checks."
+  ],
+  "baseline_status": {
+    "baseline_file": null,
+    "baseline_loaded": false,
+    "warning": "Baseline checks skipped. No baseline file found."
+  },
+  "security_report": {
+    "risk_level": "CRITICAL",
+    "total_findings": 3,
+    "findings_by_severity": {
+      "low": 0,
+      "medium": 0,
+      "high": 0,
+      "critical": 3
+    },
+    "findings_by_type": {
+      "Excessive Tool Permissions": 1,
+      "Prompt Injection": 2
+    },
+    "grouped_findings": [
+      {
+        "finding_type": "Excessive Tool Permissions",
+        "severity": "critical",
+        "description": "Excessive host permissions detected for MCP tools on the affected server.",
+        "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "configuration",
+            "entity_name": "no-auth-file",
+            "server_name": "no-auth-file",
+            "config_file": "results/mcp-armor/configs/no-auth-file.json",
+            "additional_info": {
+              "risky_tools": [
+                "read_file",
+                "delete_file"
+              ],
+              "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+            }
+          }
+        ]
+      },
+      {
+        "finding_type": "Prompt Injection",
+        "severity": "critical",
+        "description": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+        "remediation": "Inspect affected MCP components and remove hidden instructions or block the component to prevent unauthorized actions and manipulation of the agent\u2019s context.",
+        "total_entities": 2,
+        "entities_affected": [
+          {
+            "entity_type": "tool",
+            "entity_name": "read_file",
+            "server_name": "no-auth-file",
+            "config_file": "results/mcp-armor/configs/no-auth-file.json",
+            "affected_tool": "read_file",
+            "additional_info": {
+              "tool": "read_file",
+              "classification": "malicious",
+              "score": 1.0
+            }
+          },
+          {
+            "entity_type": "tool",
+            "entity_name": "delete_file",
+            "server_name": "no-auth-file",
+            "config_file": "results/mcp-armor/configs/no-auth-file.json",
+            "affected_tool": "delete_file",
+            "additional_info": {
+              "tool": "delete_file",
+              "classification": "malicious",
+              "score": 1.0
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+
+   ╭─────────────────────────────────────────────────────────╮
+   │                                                         │
+   │   MCP-Shield v1.0.4                                     │
+   │   Security Scanner for Model Context Protocol Servers   │
+   │                                                         │
+   ╰─────────────────────────────────────────────────────────╯
+
+Scanning "results/mcp-shield/configs/control-files.json"
+Found 1 servers:
+  └── ● control-files (3 tools)
+    ├── ○ list_documents — scanning...
+    ├── ○ read_document — scanning...
+    └── ○ save_note — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● control-files (3 tools)
+    ├── ✓ list_documents — Verified
+    ├── ○ read_document — scanning...
+    └── ○ save_note — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● control-files (3 tools)
+    ├── ✓ list_documents — Verified
+    ├── ✓ read_document — Verified
+    └── ○ save_note — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● control-files (3 tools)
+    ├── ✓ list_documents — Verified
+    ├── ✓ read_document — Verified
+    └── ✓ save_note — Verified

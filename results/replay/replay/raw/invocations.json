@@ -1,0 +1,119 @@
+[
+  {
+    "slug": "control-echo",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "control-echo",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-echo/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1
+  },
+  {
+    "slug": "control-files",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "control-files",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-files/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0
+  },
+  {
+    "slug": "control-gated-admin",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "control-gated-admin",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0
+  },
+  {
+    "slug": "exfil-write",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "exfil-write",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2
+  },
+  {
+    "slug": "injection-echo",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "injection-echo",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1
+  },
+  {
+    "slug": "no-auth-file",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "no-auth-file",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1
+  },
+  {
+    "slug": "overbroad-glob",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "overbroad-glob",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1
+  },
+  {
+    "slug": "pii-leak",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "pii-leak",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/pii-leak/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1
+  },
+  {
+    "slug": "supply-chain-yolo",
+    "argv": [
+      "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "-m",
+      "harness.replay",
+      "supply-chain-yolo",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1
+  }
+]

@@ -1,0 +1,110 @@
+[
+  {
+    "slug": "control-echo",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/control-echo.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/control-echo.json"
+  },
+  {
+    "slug": "control-files",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/control-files.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/control-files.json"
+  },
+  {
+    "slug": "control-gated-admin",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/control-gated-admin.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/control-gated-admin.json"
+  },
+  {
+    "slug": "exfil-write",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/exfil-write.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/exfil-write.json"
+  },
+  {
+    "slug": "injection-echo",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/injection-echo.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/injection-echo.json"
+  },
+  {
+    "slug": "no-auth-file",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/no-auth-file.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/no-auth-file.json"
+  },
+  {
+    "slug": "overbroad-glob",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/overbroad-glob.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/overbroad-glob.json"
+  },
+  {
+    "slug": "pii-leak",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/pii-leak.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/pii-leak.json"
+  },
+  {
+    "slug": "supply-chain-yolo",
+    "argv": [
+      "mcp-shield",
+      "--path",
+      "results/mcp-shield/configs/supply-chain-yolo.json"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": "results/mcp-shield/configs/supply-chain-yolo.json"
+  }
+]

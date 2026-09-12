@@ -1,0 +1,15 @@
+
+   ╭─────────────────────────────────────────────────────────╮
+   │                                                         │
+   │   MCP-Shield v1.0.4                                     │
+   │   Security Scanner for Model Context Protocol Servers   │
+   │                                                         │
+   ╰─────────────────────────────────────────────────────────╯
+
+Scanning "results/mcp-shield/configs/exfil-write.json"
+Found 1 servers:
+  └── ● exfil-write (1 tool)
+    └── ○ save_report — scanning...
+[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● exfil-write (1 tool)
+    └── ✓ save_report — Verified

@@ -1,0 +1,29 @@
+
+   ╭─────────────────────────────────────────────────────────╮
+   │                                                         │
+   │   MCP-Shield v1.0.4                                     │
+   │   Security Scanner for Model Context Protocol Servers   │
+   │                                                         │
+   ╰─────────────────────────────────────────────────────────╯
+
+Scanning "results/mcp-shield/configs/control-echo.json"
+Found 1 servers:
+  └── ● control-echo (3 tools)
+    ├── ○ ping — scanning...
+    ├── ○ uptime — scanning...
+    └── ○ render_greeting — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● control-echo (3 tools)
+    ├── ✓ ping — Verified
+    ├── ○ uptime — scanning...
+    └── ○ render_greeting — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● control-echo (3 tools)
+    ├── ✓ ping — Verified
+    ├── ✓ uptime — Verified
+    └── ○ render_greeting — scanning...
+[2K[1A[2K[1A[2K[1A[2K[1A[2K[1A[2K[GFound 1 servers:
+  └── ● control-echo (3 tools)
+    ├── ✓ ping — Verified
+    ├── ✓ uptime — Verified
+    └── ✓ render_greeting — Verified

@@ -1,0 +1,132 @@
+{
+  "servers": [
+    {
+      "name": "control-gated-admin",
+      "type": "stdio",
+      "endpoint": null,
+      "command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "args": [
+        "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin/server.py"
+      ],
+      "headers": {},
+      "env": {},
+      "disabled": false,
+      "additional_permissions": null,
+      "tools": [
+        "get_customer",
+        "delete_record"
+      ],
+      "resources": [],
+      "prompts": [],
+      "resource_templates": [],
+      "source_file": "results/mcp-armor/configs/control-gated-admin.json"
+    }
+  ],
+  "tools": [
+    {
+      "name": "get_customer",
+      "description": "Look up a customer's support profile. Requires a token. Returns non-sensitive fields only; the tax identifier is masked.",
+      "input_schema": {
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "token": {
+            "title": "Token",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "token"
+        ],
+        "type": "object",
+        "title": "get_customerArguments"
+      },
+      "server_name": "control-gated-admin",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    },
+    {
+      "name": "delete_record",
+      "description": "Move a customer record to the recycle bin. Requires the records-admin role and an explicit confirm=True. Reversible.",
+      "input_schema": {
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "token": {
+            "title": "Token",
+            "type": "string"
+          },
+          "confirm": {
+            "default": false,
+            "title": "Confirm",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "email",
+          "token"
+        ],
+        "type": "object",
+        "title": "delete_recordArguments"
+      },
+      "server_name": "control-gated-admin",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    }
+  ],
+  "resources": [],
+  "prompts": [],
+  "resource_templates": [],
+  "config_files": [
+    "results/mcp-armor/configs/control-gated-admin.json"
+  ],
+  "errors": [],
+  "status": [
+    "All servers connected. Scan completed without baseline checks."
+  ],
+  "baseline_status": {
+    "baseline_file": null,
+    "baseline_loaded": false,
+    "warning": "Baseline checks skipped. No baseline file found."
+  },
+  "security_report": {
+    "risk_level": "CRITICAL",
+    "total_findings": 1,
+    "findings_by_severity": {
+      "low": 0,
+      "medium": 0,
+      "high": 0,
+      "critical": 1
+    },
+    "findings_by_type": {
+      "Excessive Tool Permissions": 1
+    },
+    "grouped_findings": [
+      {
+        "finding_type": "Excessive Tool Permissions",
+        "severity": "critical",
+        "description": "Excessive host permissions detected for MCP tools on the affected server.",
+        "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "configuration",
+            "entity_name": "control-gated-admin",
+            "server_name": "control-gated-admin",
+            "config_file": "results/mcp-armor/configs/control-gated-admin.json",
+            "additional_info": {
+              "risky_tools": [
+                "get_customer",
+                "delete_record"
+              ],
+              "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

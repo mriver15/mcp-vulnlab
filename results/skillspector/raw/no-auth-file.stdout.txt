@@ -1,0 +1,637 @@
+{
+  "skill": {
+    "name": "unknown",
+    "source": "/Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file",
+    "scanned_at": "2026-09-12T14:12:11.137122+00:00"
+  },
+  "risk_assessment": {
+    "score": 13,
+    "severity": "LOW",
+    "recommendation": "SAFE",
+    "max_issue_severity": "MEDIUM"
+  },
+  "components": [
+    {
+      "path": "README.md",
+      "type": "markdown",
+      "lines": 68,
+      "executable": false,
+      "size_bytes": 2742,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "exploits.json",
+      "type": "json",
+      "lines": 109,
+      "executable": false,
+      "size_bytes": 8059,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "manifest.json",
+      "type": "json",
+      "lines": 12,
+      "executable": false,
+      "size_bytes": 677,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    },
+    {
+      "path": "server.py",
+      "type": "python",
+      "lines": 88,
+      "executable": true,
+      "size_bytes": 2623,
+      "source_url": null,
+      "source_identity": null,
+      "source_digest": null
+    }
+  ],
+  "structured_summaries": [],
+  "issues": [
+    {
+      "id": "EA2",
+      "finding_id": "finding-22213e4d2f2743c1b67d77b23f118332",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 90,
+        "end_line": null
+      },
+      "finding": "No confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "        \"static_hints\": [\n          \"unlink/rmtree/truncate reachable from a tool body with no guard.\",\n          \"Destructive tool annotated ToolAnnotations(destructiveHint=False) or left unannotated.\",\n          \"No confirmation, dry-run, or two-step commit in the code path.\",\n          \"No authorization predicate preceding the destructive call.\"\n        ]\n      },",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "afca04afeb75db76cbddc1ffb2a73598f31d2d03b5941c69a9de6af31da2733a",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 90,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-8a4c540ba58d4a79934227eabb46f54b",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.85,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 97,
+        "end_line": null
+      },
+      "finding": "auto-execute",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "      \"remediation\": {\n        \"summary\": \"Require authorization, make destruction recoverable, and gate it behind an explicit human confirmation. Annotate the tool as destructive so clients can surface the risk before calling it.\",\n        \"config\": \"from mcp.types import ToolAnnotations\\n\\n@server.tool(\\n    description=\\\"Move a document to the recycle bin after human confirmation.\\\",\\n    annotations=ToolAnnotations(destructiveHint=True, idempotentHint=False),\\n)\\ndef delete_file(path: str, token: str, confirm: bool = False) -> str:\\n    role = _verify(token)\\n    if role not in {\\\"admin\\\", \\\"records\\\"}:\\n        raise PermissionError(\\\"not permitted to delete\\\")\\n    if not confirm:\\n        return \\\"refused: destructive operation requires confirm=True (HITL gate)\\\"\\n    target = (STORE / path).resolve()\\n    if not target.is_relative_to(STORE.resolve()):\\n        raise ValueError(\\\"path escapes store\\\")\\n    target.rename(RECYCLE / target.name)   # recoverable, not unlink\\n    return f\\\"moved {path} to recycle bin\\\"\",\n        \"guardrail\": \"A destructiveHint-aware client policy that refuses to auto-execute destructive tools without an interactive confirmation, plus a retention window on the recycle bin.\"\n      },\n      \"references\": [\n        \"https://genai.owasp.org/llmrisk/llm06-excessive-agency/\",",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "fefc003e149501e9f8f8f1caca441e2958e734da4fda229462de59c9d1fe5193",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 97,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "README.md",
+        "start_line": 29,
+        "end_line": null
+      },
+      "finding": "no confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+      "occurrences": [
+        {
+          "file": "README.md",
+          "start_line": 29,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 58,
+        "end_line": null
+      },
+      "finding": "no confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 58,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 62,
+        "end_line": null
+      },
+      "finding": "no confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 62,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 71,
+        "end_line": null
+      },
+      "finding": "no confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 71,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "exploits.json",
+        "start_line": 82,
+        "end_line": null
+      },
+      "finding": "no confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+      "occurrences": [
+        {
+          "file": "exploits.json",
+          "start_line": 82,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "manifest.json",
+        "start_line": 5,
+        "end_line": null
+      },
+      "finding": "no confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+      "occurrences": [
+        {
+          "file": "manifest.json",
+          "start_line": 5,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "server.py",
+        "start_line": 8,
+        "end_line": null
+      },
+      "finding": "no confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+      "occurrences": [
+        {
+          "file": "server.py",
+          "start_line": 8,
+          "end_line": null
+        }
+      ]
+    },
+    {
+      "id": "EA2",
+      "finding_id": "finding-4311d74ed8344bf58152ecba07b287e0",
+      "category": "Excessive Agency",
+      "pattern": "Autonomous Decision Making",
+      "severity": "MEDIUM",
+      "confidence": 0.75,
+      "location": {
+        "file": "server.py",
+        "start_line": 62,
+        "end_line": null
+      },
+      "finding": "no confirmation",
+      "explanation": "Skill enables autonomous high-impact decisions without human-in-the-loop verification. Critical operations (destructive commands, financial transactions, data deletion) should require explicit user confirmation.",
+      "remediation": "Add human-in-the-loop confirmation for destructive, irreversible, or high-impact operations. Never auto-execute commands that modify files, send data, or alter system state.",
+      "code_snippet": "  \"slug\": \"no-auth-file\",\n  \"title\": \"Unauthenticated Document Store\",\n  \"kind\": \"vulnerable\",\n  \"summary\": \"An internal document service that records who is calling but never checks whether they are allowed, and exposes an irreversible delete with no confirmation step.\",\n  \"entrypoint\": \"server.py\",\n  \"args\": [],\n  \"categories\": [\"missing-auth\"],",
+      "intent": null,
+      "tags": [
+        "Excessive Agency"
+      ],
+      "evidence": {},
+      "match_fingerprint": "8d917baac03779a421e90f894620a765c8fd0787d50e2d8abf3d4267050d15a4",
+      "occurrences": [
+        {
+          "file": "server.py",
+          "start_line": 62,
+          "end_line": null
+        }
+      ]
+    }
+  ],
+  "suppressed_count": 0,
+  "suppressed": [],
+  "metadata": {
+    "has_executable_scripts": true,
+    "skillspector_version": "2.11.2",
+    "llm_requested": false,
+    "llm_available": false,
+    "meta_analysis_applied": false,
+    "inference_usage": [],
+    "filtering_mode": "heuristic"
+  },
+  "execution_successful": true,
+  "analysis_completeness": {
+    "total_components": 4,
+    "scanned_components": 4,
+    "coverage_percent": 100.0,
+    "is_complete": true,
+    "status": "complete",
+    "execution_successful": true,
+    "fully_inspected_files": 4,
+    "partially_inspected_files": 0,
+    "entirely_uninspected_files": 0,
+    "ledger_exceptions": [],
+    "scope_exclusions": [],
+    "analyzer_statuses": [
+      {
+        "analyzer_id": "artifact_integrity",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "behavioral_ast",
+        "status": "completed",
+        "planned_work": 1,
+        "completed": 1,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "behavioral_taint_tracking",
+        "status": "completed",
+        "planned_work": 1,
+        "completed": 1,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "bundled_execution_surface",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "no_applicable_files",
+        "message": "No files matched this analyzer's applicability contract."
+      },
+      {
+        "analyzer_id": "mcp_least_privilege",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "manifest_absent",
+        "message": "No compatible manifest was present for this analyzer."
+      },
+      {
+        "analyzer_id": "mcp_rug_pull",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "mcp_tool_poisoning",
+        "status": "not_applicable",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "manifest_absent",
+        "message": "No compatible manifest was present for this analyzer."
+      },
+      {
+        "analyzer_id": "meta_analyzer",
+        "status": "disabled",
+        "planned_work": 0,
+        "completed": 0,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0,
+        "reason_code": "disabled_by_configuration",
+        "message": "Analyzer was disabled by the requested configuration."
+      },
+      {
+        "analyzer_id": "static_patterns_agent_snooping",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_anti_refusal",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_data_exfiltration",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_deserialization",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_excessive_agency",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_harmful_content",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_memory_poisoning",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_output_handling",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_privilege_escalation",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_prompt_injection",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_rogue_agent",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_ssrf",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_supply_chain",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_system_prompt_leakage",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_patterns_tool_misuse",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      },
+      {
+        "analyzer_id": "static_yara",
+        "status": "completed",
+        "planned_work": 4,
+        "completed": 4,
+        "partial": 0,
+        "skipped": 0,
+        "failed": 0,
+        "unaccounted": 0
+      }
+    ],
+    "references": [],
+    "limitations": [],
+    "findings_before_filtering": 10,
+    "findings_after_filtering": 10
+  }
+}

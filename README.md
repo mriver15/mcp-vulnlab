@@ -15,6 +15,33 @@ detection-rate scorecard.
 
 ---
 
+## Summary
+
+Seven scanners were measured against the corpus. The best recall is
+`cisco-mcp-scanner` at **83.3%** (10/12 labels); the best precision is
+`mcp-armor` at **50.0%** recall with a 57.1% false-positive rate, and it is the
+only one to catch both prompt-injection labels with a local, offline model.
+Snyk's scanner could not be automated headlessly, and the rest of the field is
+either static/adjacent or a different tier (proxy firewalls, hosted gateways).
+
+| scanner | recall | detected | false-positive rate |
+|---|---:|---:|---:|
+| `cisco-mcp-scanner` 4.8.4 | **83.3%** | 10/12 | 75.0% |
+| `mcp-armor` 1.0.2 | **50.0%** | 6/12 | 57.1% |
+| `skillspector` 2.11.2 (NVIDIA) | **25.0%** | 3/12 | 91.9% |
+| `agent-audit` 0.19.2 | **8.3%** | 1/12 | 90.0% |
+| `mcp-security-scanner` 0.1.5 | **0.0%** | 0/12 | 100.0% |
+| `mcp-shield` 1.0.4 | **0.0%** | 0/12 | n/a |
+| `snyk-agent-scan` 0.6.3 | *not run* | — | — |
+
+The headline finding: **`MCPV-004` — a path-traversal defence explicitly
+disabled, not absent — is missed by every scanner that ran.** Full breakdown,
+per-category recall, caveats, and reproduction commands:
+**[docs/scorecard.md](docs/scorecard.md)**. The raw scanner output behind these
+numbers is committed under [`results/`](results/).
+
+---
+
 ## Why this exists
 
 There is no shortage of MCP scanners. NVIDIA, Snyk, Cisco and others all ship
@@ -149,19 +176,9 @@ corpus and inflate recall — `corpus/labels/README.md` calls this out as a rule
 
 ## Scorecard
 
-The first real measurement is reproduced below; the full per-category breakdown,
-the caveats these numbers require, and the reproduction commands are in
-**[docs/scorecard.md](docs/scorecard.md)**.
-
-| scanner | recall | detected | false-positive rate |
-|---|---:|---:|---:|
-| `cisco-mcp-scanner` 4.8.4 | **83.3%** | 10/12 | 75.0% |
-| `mcp-armor` 1.0.2 | **50.0%** | 6/12 | 57.1% |
-| `skillspector` 2.11.2 (NVIDIA) | **25.0%** | 3/12 | 91.9% |
-| `agent-audit` 0.19.2 | **8.3%** | 1/12 | 90.0% |
-| `mcp-security-scanner` 0.1.5 (sidhpurwala) | **0.0%** | 0/12 | 100.0% |
-| `mcp-shield` 1.0.4 | **0.0%** | 0/12 | n/a |
-| `snyk-agent-scan` 0.6.3 | *not run* | — | — |
+The headline table is in the [Summary](#summary) above; the full per-category
+breakdown, the caveats these numbers require, and the reproduction commands are
+in **[docs/scorecard.md](docs/scorecard.md)**.
 
 The headline finding: **`MCPV-004` — a path-traversal defence explicitly
 disabled, not absent — is missed by every scanner that ran.** Its mirror image is

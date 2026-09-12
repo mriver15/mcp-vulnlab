@@ -1,0 +1,466 @@
+{
+  "scanner": "replay",
+  "generated_at": "2026-09-12T13:40:33+00:00",
+  "corpus_root": "/Users/river/Projects/mcp-vulnlab",
+  "available": true,
+  "unavailable_reason": null,
+  "summary": {
+    "labels_total": 12,
+    "labels_detected": 7,
+    "recall": 0.5833333333333334,
+    "findings_total": 8,
+    "true_positives": 7,
+    "false_positives": 1,
+    "fp_rate": 0.125
+  },
+  "by_category": {
+    "data-exfiltration": {
+      "total": 2,
+      "detected": 2,
+      "ids": [
+        "MCPV-003",
+        "MCPV-004"
+      ]
+    },
+    "missing-auth": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-010",
+        "MCPV-009"
+      ]
+    },
+    "overbroad-tool-schema": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-005",
+        "MCPV-006"
+      ]
+    },
+    "pii-disclosure": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-007",
+        "MCPV-008"
+      ]
+    },
+    "prompt-injection": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-001",
+        "MCPV-002"
+      ]
+    },
+    "supply-chain": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-011",
+        "MCPV-012"
+      ]
+    }
+  },
+  "labels": {
+    "MCPV-003": {
+      "server": "exfil-write",
+      "title": "Arbitrary file write via unconfined path join",
+      "category": "data-exfiltration",
+      "severity": "critical",
+      "tool": "save_report"
+    },
+    "MCPV-004": {
+      "server": "exfil-write",
+      "title": "Path-traversal defence explicitly disabled on a read resource",
+      "category": "data-exfiltration",
+      "severity": "high",
+      "tool": "report://{path}"
+    },
+    "MCPV-001": {
+      "server": "injection-echo",
+      "title": "Tool output labelled trusted carries injected instructions",
+      "category": "prompt-injection",
+      "severity": "high",
+      "tool": "operator_note"
+    },
+    "MCPV-002": {
+      "server": "injection-echo",
+      "title": "Tool arguments reflected verbatim into model context",
+      "category": "prompt-injection",
+      "severity": "medium",
+      "tool": "echo"
+    },
+    "MCPV-009": {
+      "server": "no-auth-file",
+      "title": "Document reads served without any authorization check",
+      "category": "missing-auth",
+      "severity": "high",
+      "tool": "read_file"
+    },
+    "MCPV-010": {
+      "server": "no-auth-file",
+      "title": "Irreversible delete with no authorization and no confirmation",
+      "category": "missing-auth",
+      "severity": "critical",
+      "tool": "delete_file"
+    },
+    "MCPV-005": {
+      "server": "overbroad-glob",
+      "title": "Glob search accepts any root and any pattern",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "find_files"
+    },
+    "MCPV-006": {
+      "server": "overbroad-glob",
+      "title": "Unconstrained absolute path parameter on a read tool",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "read_path"
+    },
+    "MCPV-007": {
+      "server": "pii-leak",
+      "title": "Single-record lookup returns unmasked sensitive fields",
+      "category": "pii-disclosure",
+      "severity": "high",
+      "tool": "lookup_user"
+    },
+    "MCPV-008": {
+      "server": "pii-leak",
+      "title": "Substring search dumps the entire customer table",
+      "category": "pii-disclosure",
+      "severity": "critical",
+      "tool": "search_users"
+    },
+    "MCPV-011": {
+      "server": "supply-chain-yolo",
+      "title": "Remote plugin source loaded with no integrity verification",
+      "category": "supply-chain",
+      "severity": "critical",
+      "tool": "install_plugin"
+    },
+    "MCPV-012": {
+      "server": "supply-chain-yolo",
+      "title": "Floating dependency manifest with no pins or hashes",
+      "category": "supply-chain",
+      "severity": "high",
+      "tool": "(server)"
+    }
+  },
+  "servers": [
+    {
+      "slug": "control-echo",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 1,
+      "false_positives": 1,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "replay",
+          "server": "control-echo",
+          "message": "Tool render_greeting reflects caller-supplied input into its response.",
+          "rule_id": "MCP-INJ-009",
+          "severity": "medium",
+          "category": "prompt-injection",
+          "tool": "render_greeting",
+          "raw": {
+            "server": "control-echo",
+            "rule_id": "MCP-INJ-009",
+            "severity": "MEDIUM",
+            "category": "prompt-injection",
+            "tool": "render_greeting",
+            "message": "Tool render_greeting reflects caller-supplied input into its response."
+          }
+        }
+      ]
+    },
+    {
+      "slug": "control-files",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "control-gated-admin",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 0,
+      "false_positives": 0,
+      "matches": [],
+      "unmatched": []
+    },
+    {
+      "slug": "exfil-write",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 2,
+      "detected_ids": [
+        "MCPV-003",
+        "MCPV-004"
+      ],
+      "missed_ids": [],
+      "findings_total": 2,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-003",
+          "server": "exfil-write",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "replay",
+            "server": "exfil-write",
+            "message": "save_report joins a caller-supplied name onto a sandbox path with no confinement check, allowing an unconfined file write.",
+            "rule_id": "MCP-TRAV-001",
+            "severity": "critical",
+            "category": "data-exfiltration",
+            "tool": "save_report",
+            "raw": {
+              "server": "exfil-write",
+              "rule_id": "MCP-TRAV-001",
+              "severity": "CRITICAL",
+              "category": "data-exfiltration",
+              "tool": "save_report",
+              "message": "save_report joins a caller-supplied name onto a sandbox path with no confinement check, allowing an unconfined file write."
+            }
+          }
+        },
+        {
+          "label_id": "MCPV-004",
+          "server": "exfil-write",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "replay",
+            "server": "exfil-write",
+            "message": "Resource template report://{path} exempts its path parameter from the SDK path traversal check, enabling arbitrary file read.",
+            "rule_id": "MCP-TRAV-002",
+            "severity": "high",
+            "category": "data-exfiltration",
+            "tool": "report://{path}",
+            "raw": {
+              "server": "exfil-write",
+              "rule_id": "MCP-TRAV-002",
+              "severity": "HIGH",
+              "category": "data-exfiltration",
+              "tool": "report://{path}",
+              "message": "Resource template report://{path} exempts its path parameter from the SDK path traversal check, enabling arbitrary file read."
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    },
+    {
+      "slug": "injection-echo",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-001"
+      ],
+      "missed_ids": [
+        "MCPV-002"
+      ],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-001",
+          "server": "injection-echo",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "replay",
+            "server": "injection-echo",
+            "message": "Tool operator_note returns instruction-shaped text that the tool description labels as trusted, creating a prompt injection sink.",
+            "rule_id": "MCP-INJ-001",
+            "severity": "high",
+            "category": "prompt-injection",
+            "tool": "operator_note",
+            "raw": {
+              "server": "injection-echo",
+              "rule_id": "MCP-INJ-001",
+              "severity": "HIGH",
+              "category": "prompt-injection",
+              "tool": "operator_note",
+              "message": "Tool operator_note returns instruction-shaped text that the tool description labels as trusted, creating a prompt injection sink."
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    },
+    {
+      "slug": "no-auth-file",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-010"
+      ],
+      "missed_ids": [
+        "MCPV-009"
+      ],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-010",
+          "server": "no-auth-file",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "replay",
+            "server": "no-auth-file",
+            "message": "delete_file performs an irreversible deletion with no authorization check and no confirmation, and is reachable by an autonomous agent.",
+            "rule_id": "MCP-AUTHZ-002",
+            "severity": "critical",
+            "category": "missing-auth",
+            "tool": "delete_file",
+            "raw": {
+              "server": "no-auth-file",
+              "rule_id": "MCP-AUTHZ-002",
+              "severity": "CRITICAL",
+              "category": "missing-auth",
+              "tool": "delete_file",
+              "message": "delete_file performs an irreversible deletion with no authorization check and no confirmation, and is reachable by an autonomous agent."
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    },
+    {
+      "slug": "overbroad-glob",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-005"
+      ],
+      "missed_ids": [
+        "MCPV-006"
+      ],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-005",
+          "server": "overbroad-glob",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "replay",
+            "server": "overbroad-glob",
+            "message": "find_files exposes an unrestricted glob root with wildcard patterns and advertises whole-filesystem scope in its description.",
+            "rule_id": "MCP-SCOPE-010",
+            "severity": "high",
+            "category": "overbroad-tool-schema",
+            "tool": "find_files",
+            "raw": {
+              "server": "overbroad-glob",
+              "rule_id": "MCP-SCOPE-010",
+              "severity": "HIGH",
+              "category": "overbroad-tool-schema",
+              "tool": "find_files",
+              "message": "find_files exposes an unrestricted glob root with wildcard patterns and advertises whole-filesystem scope in its description."
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    },
+    {
+      "slug": "pii-leak",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-007"
+      ],
+      "missed_ids": [
+        "MCPV-008"
+      ],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-007",
+          "server": "pii-leak",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "replay",
+            "server": "pii-leak",
+            "message": "lookup_user returns unmasked sensitive personal data including a national identifier and payment card number.",
+            "rule_id": "MCP-PII-001",
+            "severity": "high",
+            "category": "pii-disclosure",
+            "tool": "lookup_user",
+            "raw": {
+              "server": "pii-leak",
+              "rule_id": "MCP-PII-001",
+              "severity": "HIGH",
+              "category": "pii-disclosure",
+              "tool": "lookup_user",
+              "message": "lookup_user returns unmasked sensitive personal data including a national identifier and payment card number."
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    },
+    {
+      "slug": "supply-chain-yolo",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-011"
+      ],
+      "missed_ids": [
+        "MCPV-012"
+      ],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-011",
+          "server": "supply-chain-yolo",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "replay",
+            "server": "supply-chain-yolo",
+            "message": "install_plugin fetches remote source and loads it with no integrity verification, allowlist, or signature check.",
+            "rule_id": "MCP-SC-001",
+            "severity": "critical",
+            "category": "supply-chain",
+            "tool": "install_plugin",
+            "raw": {
+              "server": "supply-chain-yolo",
+              "rule_id": "MCP-SC-001",
+              "severity": "CRITICAL",
+              "category": "supply-chain",
+              "tool": "install_plugin",
+              "message": "install_plugin fetches remote source and loads it with no integrity verification, allowlist, or signature check."
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    }
+  ],
+  "notes": [
+    "matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive."
+  ]
+}

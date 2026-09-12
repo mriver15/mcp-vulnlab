@@ -1,0 +1,112 @@
+{
+  "servers": [
+    {
+      "name": "exfil-write",
+      "type": "stdio",
+      "endpoint": null,
+      "command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3",
+      "args": [
+        "/Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write/server.py"
+      ],
+      "headers": {},
+      "env": {},
+      "disabled": false,
+      "additional_permissions": null,
+      "tools": [
+        "save_report"
+      ],
+      "resources": [],
+      "prompts": [],
+      "resource_templates": [
+        "read_report"
+      ],
+      "source_file": "results/mcp-armor/configs/exfil-write.json"
+    }
+  ],
+  "tools": [
+    {
+      "name": "save_report",
+      "description": "Save a report. The name may include subdirectories, for example 'q3/summary.md'.",
+      "input_schema": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "content": {
+            "title": "Content",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "content"
+        ],
+        "type": "object",
+        "title": "save_reportArguments"
+      },
+      "server_name": "exfil-write",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    }
+  ],
+  "resources": [],
+  "prompts": [],
+  "resource_templates": [
+    {
+      "name": "read_report",
+      "uri_template": "report://{path}",
+      "description": "Read a previously saved report by relative path.",
+      "mime_type": "text/plain",
+      "server_name": "exfil-write",
+      "server_endpoint": "stdio:///Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+    }
+  ],
+  "config_files": [
+    "results/mcp-armor/configs/exfil-write.json"
+  ],
+  "errors": [],
+  "status": [
+    "All servers connected. Scan completed without baseline checks."
+  ],
+  "baseline_status": {
+    "baseline_file": null,
+    "baseline_loaded": false,
+    "warning": "Baseline checks skipped. No baseline file found."
+  },
+  "security_report": {
+    "risk_level": "CRITICAL",
+    "total_findings": 1,
+    "findings_by_severity": {
+      "low": 0,
+      "medium": 0,
+      "high": 0,
+      "critical": 1
+    },
+    "findings_by_type": {
+      "Excessive Tool Permissions": 1
+    },
+    "grouped_findings": [
+      {
+        "finding_type": "Excessive Tool Permissions",
+        "severity": "critical",
+        "description": "Excessive host permissions detected for MCP tools on the affected server.",
+        "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+        "total_entities": 1,
+        "entities_affected": [
+          {
+            "entity_type": "configuration",
+            "entity_name": "exfil-write",
+            "server_name": "exfil-write",
+            "config_file": "results/mcp-armor/configs/exfil-write.json",
+            "additional_info": {
+              "risky_tools": [
+                "save_report"
+              ],
+              "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

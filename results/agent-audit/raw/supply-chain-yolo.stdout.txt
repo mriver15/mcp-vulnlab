@@ -1,0 +1,206 @@
+{
+  "version": "0.19.2",
+  "scan_timestamp": "2026-09-12T14:28:48.636187",
+  "scan_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo",
+  "scanned_files": 1,
+  "summary": {
+    "total": 4,
+    "actionable": 0,
+    "suppressed": 0,
+    "by_severity": {
+      "critical": 2,
+      "medium": 1,
+      "high": 1
+    },
+    "by_category": {
+      "unexpected_code_execution": 1,
+      "cascading_failures": 1,
+      "tool_misuse": 2
+    },
+    "by_tier": {
+      "BLOCK": 0,
+      "WARN": 0,
+      "INFO": 0,
+      "SUPPRESSED": 4
+    },
+    "risk_score": 0.0,
+    "risk_label": "LOW"
+  },
+  "findings": [
+    {
+      "rule_id": "AGENT-017",
+      "title": "Unsandboxed Code Execution in Agent",
+      "description": "Agent executes dynamically generated code (via eval, exec, subprocess, or code interpreter tools) without sandbox isolation. This enables RCE attacks where manipulated prompts lead to arbitrary code execution on the host system (ASI-05).\n",
+      "severity": "critical",
+      "category": "unexpected_code_execution",
+      "location": {
+        "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+        "start_line": 69,
+        "end_line": 69,
+        "start_column": null,
+        "end_column": null,
+        "snippet": "exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102"
+      },
+      "confidence": 0.15,
+      "tier": "SUPPRESSED",
+      "suppressed": false,
+      "suppressed_reason": null,
+      "suppressed_by": null,
+      "needs_review": false,
+      "cwe_id": "CWE-94",
+      "owasp_id": "ASI-05",
+      "asi_categories": [
+        "ASI-05"
+      ],
+      "remediation": {
+        "description": "NEVER execute LLM-generated code on the host system without hardware-enforced sandbox isolation. Use Docker containers with read-only filesystems, disabled networking, and resource limits. Apply static analysis to generated code before execution.\n",
+        "code_example": "# BAD: Direct execution\n@tool\ndef run_code(code: str):\n    exec(code)  # RCE vulnerability\n\n# GOOD: Sandboxed execution\n@tool\ndef run_code(code: str):\n    result = docker_sandbox.execute(\n        code, timeout=30, network=False, read_only=True\n    )\n    return result\n",
+        "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      "metadata": {},
+      "detected_at": "2026-09-12T14:28:48.626516",
+      "reason": "Agent executes dynamically generated code (via eval, exec, subprocess, or code interpreter tools) without sandbox isolation. This enables RCE attacks where manipulated prompts lead to arbitrary code execution on the host system (ASI-05).\n"
+    },
+    {
+      "rule_id": "AGENT-022",
+      "title": "No Error Handling in Tool Execution",
+      "description": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n",
+      "severity": "medium",
+      "category": "cascading_failures",
+      "location": {
+        "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+        "start_line": 55,
+        "end_line": 55,
+        "start_column": null,
+        "end_column": null,
+        "snippet": "def install_plugin(url: str, name: str) -> str:"
+      },
+      "confidence": 0.15,
+      "tier": "SUPPRESSED",
+      "suppressed": false,
+      "suppressed_reason": null,
+      "suppressed_by": null,
+      "needs_review": false,
+      "cwe_id": "CWE-754",
+      "owasp_id": "ASI-08",
+      "asi_categories": [
+        "ASI-08"
+      ],
+      "remediation": {
+        "description": "Wrap all tool function bodies in try/except with graceful error messages. Never let raw exceptions propagate to the agent planner.\n",
+        "code_example": null,
+        "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      "metadata": {},
+      "detected_at": "2026-09-12T14:28:48.626346",
+      "reason": "Agent tool functions lack error handling, causing unhandled exceptions to propagate and potentially trigger cascading failures across the agent's execution pipeline (ASI-08).\n"
+    },
+    {
+      "rule_id": "AGENT-035",
+      "title": "Tool With Unrestricted Code Execution",
+      "description": "A tool function contains eval(), exec(), os.system(), or subprocess with shell=True without sandboxing. This allows arbitrary code execution through the agent, enabling complete system compromise.\n",
+      "severity": "critical",
+      "category": "tool_misuse",
+      "location": {
+        "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+        "start_line": 69,
+        "end_line": 69,
+        "start_column": null,
+        "end_column": null,
+        "snippet": "exec(compile(source, str(destination), \"exec\"), {\"__name__\": f\"plugin_{name}\"})  # noqa: S102"
+      },
+      "confidence": 0.15,
+      "tier": "SUPPRESSED",
+      "suppressed": false,
+      "suppressed_reason": null,
+      "suppressed_by": null,
+      "needs_review": false,
+      "cwe_id": "CWE-77",
+      "owasp_id": "ASI-02",
+      "asi_categories": [
+        "ASI-02"
+      ],
+      "remediation": {
+        "description": "Avoid using eval/exec in tool functions. If code execution is necessary, use a sandboxed environment (Docker, gVisor, or restricted subprocess with shell=False and fixed argument lists).\n",
+        "code_example": "# BAD: Unrestricted execution\n@tool\ndef run_code(code: str) -> str:\n    return exec(code)\n\n# GOOD: Sandboxed execution\n@tool\ndef run_code(code: str) -> str:\n    # Use RestrictedPython or Docker sandbox\n    return sandbox.execute(code, timeout=5)\n",
+        "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      "metadata": {},
+      "detected_at": "2026-09-12T14:28:48.626529",
+      "reason": "A tool function contains eval(), exec(), os.system(), or subprocess with shell=True without sandboxing. This allows arbitrary code execution through the agent, enabling complete system compromise.\n"
+    },
+    {
+      "rule_id": "AGENT-034",
+      "title": "Tool Function Without Input Validation",
+      "description": "A tool function accepts string or Any parameters without performing input validation in the function body. This enables tool misuse where attackers can pass malicious inputs to trigger unauthorized actions.\n",
+      "severity": "high",
+      "category": "tool_misuse",
+      "location": {
+        "file_path": "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo/server.py",
+        "start_line": 55,
+        "end_line": 55,
+        "start_column": null,
+        "end_column": null,
+        "snippet": "def install_plugin(url: str, name: str) -> str:"
+      },
+      "confidence": 0.121125,
+      "tier": "SUPPRESSED",
+      "suppressed": false,
+      "suppressed_reason": null,
+      "suppressed_by": null,
+      "needs_review": false,
+      "cwe_id": "CWE-20",
+      "owasp_id": "ASI-02",
+      "asi_categories": [
+        "ASI-02"
+      ],
+      "remediation": {
+        "description": "Add input validation at the start of tool functions. Use isinstance() checks, regex validation, or pydantic Field constraints to ensure inputs are safe before processing.\n",
+        "code_example": "# BAD: No validation\n@tool\ndef run_query(query: str) -> str:\n    return cursor.execute(query)\n\n# GOOD: With validation\n@tool\ndef run_query(query: str) -> str:\n    if not isinstance(query, str) or len(query) > 1000:\n        raise ValueError(\"Invalid query\")\n    if not re.match(r\"^SELECT \", query, re.IGNORECASE):\n        raise ValueError(\"Only SELECT queries allowed\")\n    return cursor.execute(query)\n",
+        "reference_url": "https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/"
+      },
+      "metadata": {
+        "taint_analysis": {
+          "dangerous_flows": [
+            {
+              "var": "url",
+              "sink": "exec",
+              "sink_type": "code_exec",
+              "line": 69,
+              "path": [
+                "url",
+                "source"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "var": "url",
+              "sink": "compile",
+              "sink_type": "code_exec",
+              "line": 69,
+              "path": [
+                "url",
+                "source"
+              ],
+              "confidence": 0.85
+            },
+            {
+              "var": "name",
+              "sink": "exec",
+              "sink_type": "code_exec",
+              "line": 69,
+              "path": [
+                "name",
+                "destination"
+              ],
+              "confidence": 0.85
+            }
+          ],
+          "sanitization_points": []
+        }
+      },
+      "detected_at": "2026-09-12T14:28:48.626498",
+      "reason": "A tool function accepts string or Any parameters without performing input validation in the function body. This enables tool misuse where attackers can pass malicious inputs to trigger unauthorized actions.\n"
+    }
+  ]
+}

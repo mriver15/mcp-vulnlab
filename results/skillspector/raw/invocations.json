@@ -1,0 +1,137 @@
+[
+  {
+    "slug": "control-echo",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-echo",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 2,
+    "config": null
+  },
+  {
+    "slug": "control-files",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-files",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "control-gated-admin",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/control-gated-admin",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": null
+  },
+  {
+    "slug": "exfil-write",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/exfil-write",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 1,
+    "config": null
+  },
+  {
+    "slug": "injection-echo",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/injection-echo",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": null
+  },
+  {
+    "slug": "no-auth-file",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/no-auth-file",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 10,
+    "config": null
+  },
+  {
+    "slug": "overbroad-glob",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/overbroad-glob",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 10,
+    "config": null
+  },
+  {
+    "slug": "pii-leak",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/pii-leak",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 0,
+    "error": null,
+    "findings": 0,
+    "config": null
+  },
+  {
+    "slug": "supply-chain-yolo",
+    "argv": [
+      "skillspector",
+      "scan",
+      "/Users/river/Projects/mcp-vulnlab/corpus/servers/supply-chain-yolo",
+      "--format",
+      "json",
+      "--no-llm"
+    ],
+    "returncode": 1,
+    "error": null,
+    "findings": 13,
+    "config": null
+  }
+]

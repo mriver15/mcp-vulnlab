@@ -1,0 +1,771 @@
+{
+  "scanner": "mcp-armor",
+  "generated_at": "2026-09-12T14:29:24+00:00",
+  "corpus_root": "/Users/river/Projects/mcp-vulnlab",
+  "available": true,
+  "unavailable_reason": null,
+  "summary": {
+    "labels_total": 12,
+    "labels_detected": 6,
+    "recall": 0.5,
+    "findings_total": 14,
+    "true_positives": 6,
+    "false_positives": 8,
+    "fp_rate": 0.5714285714285714
+  },
+  "by_category": {
+    "data-exfiltration": {
+      "total": 2,
+      "detected": 0,
+      "ids": [
+        "MCPV-003",
+        "MCPV-004"
+      ]
+    },
+    "missing-auth": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-009",
+        "MCPV-010"
+      ]
+    },
+    "overbroad-tool-schema": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-005",
+        "MCPV-006"
+      ]
+    },
+    "pii-disclosure": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-007",
+        "MCPV-008"
+      ]
+    },
+    "prompt-injection": {
+      "total": 2,
+      "detected": 2,
+      "ids": [
+        "MCPV-001",
+        "MCPV-002"
+      ]
+    },
+    "supply-chain": {
+      "total": 2,
+      "detected": 1,
+      "ids": [
+        "MCPV-011",
+        "MCPV-012"
+      ]
+    }
+  },
+  "labels": {
+    "MCPV-003": {
+      "server": "exfil-write",
+      "title": "Arbitrary file write via unconfined path join",
+      "category": "data-exfiltration",
+      "severity": "critical",
+      "tool": "save_report"
+    },
+    "MCPV-004": {
+      "server": "exfil-write",
+      "title": "Path-traversal defence explicitly disabled on a read resource",
+      "category": "data-exfiltration",
+      "severity": "high",
+      "tool": "report://{path}"
+    },
+    "MCPV-001": {
+      "server": "injection-echo",
+      "title": "Tool output labelled trusted carries injected instructions",
+      "category": "prompt-injection",
+      "severity": "high",
+      "tool": "operator_note"
+    },
+    "MCPV-002": {
+      "server": "injection-echo",
+      "title": "Tool arguments reflected verbatim into model context",
+      "category": "prompt-injection",
+      "severity": "medium",
+      "tool": "echo"
+    },
+    "MCPV-009": {
+      "server": "no-auth-file",
+      "title": "Document reads served without any authorization check",
+      "category": "missing-auth",
+      "severity": "high",
+      "tool": "read_file"
+    },
+    "MCPV-010": {
+      "server": "no-auth-file",
+      "title": "Irreversible delete with no authorization and no confirmation",
+      "category": "missing-auth",
+      "severity": "critical",
+      "tool": "delete_file"
+    },
+    "MCPV-005": {
+      "server": "overbroad-glob",
+      "title": "Glob search accepts any root and any pattern",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "find_files"
+    },
+    "MCPV-006": {
+      "server": "overbroad-glob",
+      "title": "Unconstrained absolute path parameter on a read tool",
+      "category": "overbroad-tool-schema",
+      "severity": "high",
+      "tool": "read_path"
+    },
+    "MCPV-007": {
+      "server": "pii-leak",
+      "title": "Single-record lookup returns unmasked sensitive fields",
+      "category": "pii-disclosure",
+      "severity": "high",
+      "tool": "lookup_user"
+    },
+    "MCPV-008": {
+      "server": "pii-leak",
+      "title": "Substring search dumps the entire customer table",
+      "category": "pii-disclosure",
+      "severity": "critical",
+      "tool": "search_users"
+    },
+    "MCPV-011": {
+      "server": "supply-chain-yolo",
+      "title": "Remote plugin source loaded with no integrity verification",
+      "category": "supply-chain",
+      "severity": "critical",
+      "tool": "install_plugin"
+    },
+    "MCPV-012": {
+      "server": "supply-chain-yolo",
+      "title": "Floating dependency manifest with no pins or hashes",
+      "category": "supply-chain",
+      "severity": "high",
+      "tool": "(server)"
+    }
+  },
+  "servers": [
+    {
+      "slug": "control-echo",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 2,
+      "false_positives": 2,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "mcp-armor",
+          "server": "control-echo",
+          "message": "Excessive host permissions detected for MCP tools on the affected server.",
+          "rule_id": "Excessive Tool Permissions",
+          "severity": "critical",
+          "category": "Excessive Tool Permissions",
+          "tool": "control-echo",
+          "raw": {
+            "finding_type": "Excessive Tool Permissions",
+            "severity": "critical",
+            "description": "Excessive host permissions detected for MCP tools on the affected server.",
+            "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "configuration",
+                "entity_name": "control-echo",
+                "server_name": "control-echo",
+                "config_file": "results/mcp-armor/configs/control-echo.json",
+                "additional_info": {
+                  "risky_tools": [
+                    "ping",
+                    "uptime",
+                    "render_greeting"
+                  ],
+                  "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "mcp-armor",
+          "server": "control-echo",
+          "message": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+          "rule_id": "Prompt Injection",
+          "severity": "critical",
+          "category": "Prompt Injection",
+          "tool": "uptime",
+          "raw": {
+            "finding_type": "Prompt Injection",
+            "severity": "critical",
+            "description": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+            "remediation": "Inspect affected MCP components and remove hidden instructions or block the component to prevent unauthorized actions and manipulation of the agent\u2019s context.",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "tool",
+                "entity_name": "uptime",
+                "server_name": "control-echo",
+                "config_file": "results/mcp-armor/configs/control-echo.json",
+                "affected_tool": "uptime",
+                "additional_info": {
+                  "tool": "uptime",
+                  "classification": "malicious",
+                  "score": 0.88
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "control-files",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 3,
+      "false_positives": 3,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "mcp-armor",
+          "server": "control-files",
+          "message": "Hidden command execution patterns found in MCP component metadata, indicating potential command injection vectors.",
+          "rule_id": "Command Injection",
+          "severity": "critical",
+          "category": "Command Injection",
+          "tool": "read_document",
+          "raw": {
+            "finding_type": "Command Injection",
+            "severity": "critical",
+            "description": "Hidden command execution patterns found in MCP component metadata, indicating potential command injection vectors.",
+            "remediation": "Integrate only trusted MCP servers; block components that embed hidden or unsafe commands in metadata. Regularly scan for poisoning and rug-pull activity to prevent unauthorized execution or data exfiltration.",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "tool",
+                "entity_name": "read_document",
+                "server_name": "control-files",
+                "config_file": "results/mcp-armor/configs/control-files.json",
+                "affected_tool": "read_document",
+                "additional_info": {
+                  "pattern_count": 2,
+                  "matched_content": [
+                    "Read a document. `doc_id` must be one of the ids returned by list_documents",
+                    "must be one of the ids returned by list_documents; free-form paths are rejected. read_document {"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "mcp-armor",
+          "server": "control-files",
+          "message": "Excessive host permissions detected for MCP tools on the affected server.",
+          "rule_id": "Excessive Tool Permissions",
+          "severity": "critical",
+          "category": "Excessive Tool Permissions",
+          "tool": "control-files",
+          "raw": {
+            "finding_type": "Excessive Tool Permissions",
+            "severity": "critical",
+            "description": "Excessive host permissions detected for MCP tools on the affected server.",
+            "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "configuration",
+                "entity_name": "control-files",
+                "server_name": "control-files",
+                "config_file": "results/mcp-armor/configs/control-files.json",
+                "additional_info": {
+                  "risky_tools": [
+                    "list_documents",
+                    "read_document",
+                    "save_note"
+                  ],
+                  "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "scanner": "mcp-armor",
+          "server": "control-files",
+          "message": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+          "rule_id": "Prompt Injection",
+          "severity": "critical",
+          "category": "Prompt Injection",
+          "tool": "read_document",
+          "raw": {
+            "finding_type": "Prompt Injection",
+            "severity": "critical",
+            "description": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+            "remediation": "Inspect affected MCP components and remove hidden instructions or block the component to prevent unauthorized actions and manipulation of the agent\u2019s context.",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "tool",
+                "entity_name": "read_document",
+                "server_name": "control-files",
+                "config_file": "results/mcp-armor/configs/control-files.json",
+                "affected_tool": "read_document",
+                "additional_info": {
+                  "tool": "read_document",
+                  "classification": "malicious",
+                  "score": 0.92
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "control-gated-admin",
+      "kind": "control",
+      "labels_total": 0,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [],
+      "findings_total": 1,
+      "false_positives": 1,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "mcp-armor",
+          "server": "control-gated-admin",
+          "message": "Excessive host permissions detected for MCP tools on the affected server.",
+          "rule_id": "Excessive Tool Permissions",
+          "severity": "critical",
+          "category": "Excessive Tool Permissions",
+          "tool": "control-gated-admin",
+          "raw": {
+            "finding_type": "Excessive Tool Permissions",
+            "severity": "critical",
+            "description": "Excessive host permissions detected for MCP tools on the affected server.",
+            "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "configuration",
+                "entity_name": "control-gated-admin",
+                "server_name": "control-gated-admin",
+                "config_file": "results/mcp-armor/configs/control-gated-admin.json",
+                "additional_info": {
+                  "risky_tools": [
+                    "get_customer",
+                    "delete_record"
+                  ],
+                  "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "exfil-write",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 0,
+      "detected_ids": [],
+      "missed_ids": [
+        "MCPV-003",
+        "MCPV-004"
+      ],
+      "findings_total": 1,
+      "false_positives": 1,
+      "matches": [],
+      "unmatched": [
+        {
+          "scanner": "mcp-armor",
+          "server": "exfil-write",
+          "message": "Excessive host permissions detected for MCP tools on the affected server.",
+          "rule_id": "Excessive Tool Permissions",
+          "severity": "critical",
+          "category": "Excessive Tool Permissions",
+          "tool": "exfil-write",
+          "raw": {
+            "finding_type": "Excessive Tool Permissions",
+            "severity": "critical",
+            "description": "Excessive host permissions detected for MCP tools on the affected server.",
+            "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "configuration",
+                "entity_name": "exfil-write",
+                "server_name": "exfil-write",
+                "config_file": "results/mcp-armor/configs/exfil-write.json",
+                "additional_info": {
+                  "risky_tools": [
+                    "save_report"
+                  ],
+                  "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "injection-echo",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 2,
+      "detected_ids": [
+        "MCPV-001",
+        "MCPV-002"
+      ],
+      "missed_ids": [],
+      "findings_total": 2,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-001",
+          "server": "injection-echo",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "mcp-armor",
+            "server": "injection-echo",
+            "message": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+            "rule_id": "Prompt Injection",
+            "severity": "critical",
+            "category": "Prompt Injection",
+            "tool": "operator_note",
+            "raw": {
+              "finding_type": "Prompt Injection",
+              "severity": "critical",
+              "description": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+              "remediation": "Inspect affected MCP components and remove hidden instructions or block the component to prevent unauthorized actions and manipulation of the agent\u2019s context.",
+              "total_entities": 1,
+              "entities_affected": [
+                {
+                  "entity_type": "tool",
+                  "entity_name": "operator_note",
+                  "server_name": "injection-echo",
+                  "config_file": "results/mcp-armor/configs/injection-echo.json",
+                  "affected_tool": "operator_note",
+                  "additional_info": {
+                    "tool": "operator_note",
+                    "classification": "malicious",
+                    "score": 1.0
+                  }
+                }
+              ]
+            }
+          }
+        },
+        {
+          "label_id": "MCPV-002",
+          "server": "injection-echo",
+          "reason": "strength 2: tool name 'echo' appeared in the finding",
+          "finding": {
+            "scanner": "mcp-armor",
+            "server": "injection-echo",
+            "message": "Excessive host permissions detected for MCP tools on the affected server.",
+            "rule_id": "Excessive Tool Permissions",
+            "severity": "critical",
+            "category": "Excessive Tool Permissions",
+            "tool": "injection-echo",
+            "raw": {
+              "finding_type": "Excessive Tool Permissions",
+              "severity": "critical",
+              "description": "Excessive host permissions detected for MCP tools on the affected server.",
+              "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+              "total_entities": 1,
+              "entities_affected": [
+                {
+                  "entity_type": "configuration",
+                  "entity_name": "injection-echo",
+                  "server_name": "injection-echo",
+                  "config_file": "results/mcp-armor/configs/injection-echo.json",
+                  "additional_info": {
+                    "risky_tools": [
+                      "operator_note",
+                      "echo"
+                    ],
+                    "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    },
+    {
+      "slug": "no-auth-file",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-009"
+      ],
+      "missed_ids": [
+        "MCPV-010"
+      ],
+      "findings_total": 2,
+      "false_positives": 1,
+      "matches": [
+        {
+          "label_id": "MCPV-009",
+          "server": "no-auth-file",
+          "reason": "strength 3: tool name matched exactly",
+          "finding": {
+            "scanner": "mcp-armor",
+            "server": "no-auth-file",
+            "message": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+            "rule_id": "Prompt Injection",
+            "severity": "critical",
+            "category": "Prompt Injection",
+            "tool": "read_file",
+            "raw": {
+              "finding_type": "Prompt Injection",
+              "severity": "critical",
+              "description": "MCP components with hidden instructions may alter agent behavior and trigger unintended or malicious actions.",
+              "remediation": "Inspect affected MCP components and remove hidden instructions or block the component to prevent unauthorized actions and manipulation of the agent\u2019s context.",
+              "total_entities": 2,
+              "entities_affected": [
+                {
+                  "entity_type": "tool",
+                  "entity_name": "read_file",
+                  "server_name": "no-auth-file",
+                  "config_file": "results/mcp-armor/configs/no-auth-file.json",
+                  "affected_tool": "read_file",
+                  "additional_info": {
+                    "tool": "read_file",
+                    "classification": "malicious",
+                    "score": 1.0
+                  }
+                },
+                {
+                  "entity_type": "tool",
+                  "entity_name": "delete_file",
+                  "server_name": "no-auth-file",
+                  "config_file": "results/mcp-armor/configs/no-auth-file.json",
+                  "affected_tool": "delete_file",
+                  "additional_info": {
+                    "tool": "delete_file",
+                    "classification": "malicious",
+                    "score": 1.0
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unmatched": [
+        {
+          "scanner": "mcp-armor",
+          "server": "no-auth-file",
+          "message": "Excessive host permissions detected for MCP tools on the affected server.",
+          "rule_id": "Excessive Tool Permissions",
+          "severity": "critical",
+          "category": "Excessive Tool Permissions",
+          "tool": "no-auth-file",
+          "raw": {
+            "finding_type": "Excessive Tool Permissions",
+            "severity": "critical",
+            "description": "Excessive host permissions detected for MCP tools on the affected server.",
+            "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+            "total_entities": 1,
+            "entities_affected": [
+              {
+                "entity_type": "configuration",
+                "entity_name": "no-auth-file",
+                "server_name": "no-auth-file",
+                "config_file": "results/mcp-armor/configs/no-auth-file.json",
+                "additional_info": {
+                  "risky_tools": [
+                    "read_file",
+                    "delete_file"
+                  ],
+                  "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "slug": "overbroad-glob",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-005"
+      ],
+      "missed_ids": [
+        "MCPV-006"
+      ],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-005",
+          "server": "overbroad-glob",
+          "reason": "strength 1: signal match: glob, overbroad",
+          "finding": {
+            "scanner": "mcp-armor",
+            "server": "overbroad-glob",
+            "message": "Excessive host permissions detected for MCP tools on the affected server.",
+            "rule_id": "Excessive Tool Permissions",
+            "severity": "critical",
+            "category": "Excessive Tool Permissions",
+            "tool": "overbroad-glob",
+            "raw": {
+              "finding_type": "Excessive Tool Permissions",
+              "severity": "critical",
+              "description": "Excessive host permissions detected for MCP tools on the affected server.",
+              "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+              "total_entities": 1,
+              "entities_affected": [
+                {
+                  "entity_type": "configuration",
+                  "entity_name": "overbroad-glob",
+                  "server_name": "overbroad-glob",
+                  "config_file": "results/mcp-armor/configs/overbroad-glob.json",
+                  "additional_info": {
+                    "risky_tools": [
+                      "find_files",
+                      "read_path"
+                    ],
+                    "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    },
+    {
+      "slug": "pii-leak",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-007"
+      ],
+      "missed_ids": [
+        "MCPV-008"
+      ],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-007",
+          "server": "pii-leak",
+          "reason": "strength 1: signal match: pii",
+          "finding": {
+            "scanner": "mcp-armor",
+            "server": "pii-leak",
+            "message": "Excessive host permissions detected for MCP tools on the affected server.",
+            "rule_id": "Excessive Tool Permissions",
+            "severity": "critical",
+            "category": "Excessive Tool Permissions",
+            "tool": "pii-leak",
+            "raw": {
+              "finding_type": "Excessive Tool Permissions",
+              "severity": "critical",
+              "description": "Excessive host permissions detected for MCP tools on the affected server.",
+              "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+              "total_entities": 1,
+              "entities_affected": [
+                {
+                  "entity_type": "configuration",
+                  "entity_name": "pii-leak",
+                  "server_name": "pii-leak",
+                  "config_file": "results/mcp-armor/configs/pii-leak.json",
+                  "additional_info": {
+                    "risky_tools": [
+                      "lookup_user",
+                      "search_users"
+                    ],
+                    "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    },
+    {
+      "slug": "supply-chain-yolo",
+      "kind": "vulnerable",
+      "labels_total": 2,
+      "labels_detected": 1,
+      "detected_ids": [
+        "MCPV-011"
+      ],
+      "missed_ids": [
+        "MCPV-012"
+      ],
+      "findings_total": 1,
+      "false_positives": 0,
+      "matches": [
+        {
+          "label_id": "MCPV-011",
+          "server": "supply-chain-yolo",
+          "reason": "strength 1: signal match: supply-chain",
+          "finding": {
+            "scanner": "mcp-armor",
+            "server": "supply-chain-yolo",
+            "message": "Excessive host permissions detected for MCP tools on the affected server.",
+            "rule_id": "Excessive Tool Permissions",
+            "severity": "critical",
+            "category": "Excessive Tool Permissions",
+            "tool": "supply-chain-yolo",
+            "raw": {
+              "finding_type": "Excessive Tool Permissions",
+              "severity": "critical",
+              "description": "Excessive host permissions detected for MCP tools on the affected server.",
+              "remediation": "Enforce least privilege by restricting MCP server privileges on the host. Remove wildcard or admin-level permissions and disable terminal or file-system access flags. ",
+              "total_entities": 1,
+              "entities_affected": [
+                {
+                  "entity_type": "configuration",
+                  "entity_name": "supply-chain-yolo",
+                  "server_name": "supply-chain-yolo",
+                  "config_file": "results/mcp-armor/configs/supply-chain-yolo.json",
+                  "additional_info": {
+                    "risky_tools": [
+                      "install_plugin",
+                      "list_plugins"
+                    ],
+                    "risky_command": "/Users/river/Projects/mcp-vulnlab/.venv/bin/python3"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "unmatched": []
+    }
+  ],
+  "notes": [
+    "matching policy: tool name exact match (3) > tool name substring (2) > detection signal match (1). Signals shorter than 3 characters are ignored. Each finding is attributed to at most one label, strongest match wins, ties broken by label id. Every unattributed finding counts as a false positive."
+  ]
+}
